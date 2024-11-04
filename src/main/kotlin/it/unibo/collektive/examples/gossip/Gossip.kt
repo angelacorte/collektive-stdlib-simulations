@@ -3,39 +3,48 @@ package it.unibo.collektive.examples.gossip
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.operators.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
-import it.unibo.collektive.alchemist.device.sensors.TimeSensor
-import it.unibo.collektive.field.Field.Companion.fold
+import it.unibo.collektive.field.Field.Companion.foldWithId
 
-context(TimeSensor, EnvironmentVariables)
-fun Aggregate<Int>.isHappeningGossipEntrypoint() = isHappeningGossip {
-    getTimeAsDouble() >= 20
-}.also { set("value", it) }
-
-context(TimeSensor)
-fun Aggregate<Int>.gossipEntrypoint() =
-    when {
-        getTimeAsDouble() > 20 -> gossip(-localId) { first, second -> first <= second }
-        else -> gossip(localId) { first, second -> first <= second }
-    }
-
-data class GossipValue<ID: Comparable<ID>, Value>(val value: Value, val path: List<ID> = emptyList())
-
-fun <ID : Comparable<ID>, Value> Aggregate<ID>.gossip(
+context(EnvironmentVariables)
+fun <ID : Comparable<ID>, Value> Aggregate<ID>.gossipMax(
     initial: Value,
-    selector: (Value, Value) -> Boolean,
+    selector: Comparator<Value>,
 ): Value {
-    val local = GossipValue(initial, emptyList<ID>())
+    /**
+     * The best value exchanged in the gossip algorithm.
+     * It contains the [best] value evaluated yet,
+     * the [local] value of the node and the [path] of nodes through which it has passed.
+     */
+    data class GossipValue<ID : Comparable<ID>, Value>(
+        val best: Value,
+        val local: Value,
+        val path: List<ID> = emptyList(),
+    ) {
+        fun base(id: ID) = GossipValue(local, local, listOf(id))
+    }
+    val local = GossipValue<ID, Value>(best = initial, local = initial)
     return share(local) { gossip ->
-        gossip.fold(local) { current, next ->
-            val selected = when {
-                selector(current.value, next.value) || localId in next.path -> current
-                else -> next
+        val neighbors = gossip.neighbors.toSet()
+        val result = gossip.foldWithId(local) { current, id, next ->
+            val valid = next.path.asReversed().asSequence().drop(1).none { it == localId || it in neighbors }
+            val actualNext = if (valid) next else next.base(id)
+            val candidateValue = selector.compare(current.best, actualNext.best)
+            when {
+                candidateValue > 0 -> current
+                candidateValue == 0 -> listOf(current, next).minBy { it.path.size }
+                else -> actualNext
             }
-            selected.copy(path = selected.path + localId)
         }
-    }.value
+        set("path-length", (result.path + localId).size)
+        GossipValue(result.best, initial, result.path + localId)
+    }.best
 }
 
-fun <ID: Comparable<ID>> Aggregate<ID>.isHappeningGossip(
+/**
+ * A gossip algorithm that computes whether any device is experiencing a certain [condition].
+ */
+context(EnvironmentVariables)
+fun <ID : Comparable<ID>> Aggregate<ID>.isHappeningGossip(
     condition: () -> Boolean,
-): Boolean = gossip(condition()) { _, _ -> condition() }
+): Boolean = gossipMax(condition()) { first, second -> first.compareTo(second) }
+

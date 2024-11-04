@@ -19,6 +19,7 @@ fun <ID : Comparable<ID>, Type> Aggregate<ID>.firstGossip(
                 else -> next.copy(path = next.path + localId)
             }
         }
+        set("neighbors-size", gossip.neighbors.size)
         set("path-length", (result.path + localId).size)
         result
     }.value

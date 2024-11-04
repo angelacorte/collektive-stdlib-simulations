@@ -7,7 +7,7 @@ import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 
 context(TimeSensor, EnvironmentVariables)
 fun Aggregate<Int>.isHappeningGossipEntrypoint() = isHappeningGossip {
-    (getTimeAsDouble() in 20.0..40.0) && (localId % 2 == 0)
+    (getTimeAsDouble() % 100 < 50) && (localId % 2 == 0)
 }
 
 context(EnvironmentVariables, TimeSensor, RandomGenerator)

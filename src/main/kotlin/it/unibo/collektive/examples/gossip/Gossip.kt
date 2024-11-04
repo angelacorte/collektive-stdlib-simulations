@@ -35,6 +35,7 @@ fun <ID : Comparable<ID>, Value> Aggregate<ID>.gossipMax(
                 else -> actualNext
             }
         }
+        set("neighbors-size", neighbors.size)
         set("path-length", (result.path + localId).size)
         GossipValue(result.best, initial, result.path + localId)
     }.best

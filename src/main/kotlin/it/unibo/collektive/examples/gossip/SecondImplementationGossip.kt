@@ -28,6 +28,7 @@ fun <ID : Comparable<ID>, Value> Aggregate<ID>.secondGossip(
                 else -> actualNext
             }
         }
+        set("neighbors-size", gossip.neighbors.size)
         set("path-length", (result.path + localId).size)
         GossipValue(result.best, initial, result.path + localId)
     }.best

@@ -6,6 +6,5 @@ build/
 charts/
 data_summary_*
 timeprocessed
-.env
 /.kotlin/
 /node_modules/

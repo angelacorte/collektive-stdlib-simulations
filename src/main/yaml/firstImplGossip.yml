@@ -6,14 +6,19 @@ variables:
     max: 20
     step: 1
     default: 0
+  walking_speed: &walk-speed { default: 1.4, min: 1, max: 2, step: 0.1 }
 
 seeds:
   scenario: *seed
   simulation: *seed
 
+environment:
+  type: ImageEnvironment
+  parameters: [rectangle.png]
+
 network-model:
   type: ConnectWithinDistance
-  parameters: [5]
+  parameters: [8]
 
 _pool: &program
   - time-distribution: 1
@@ -21,10 +26,11 @@ _pool: &program
     actions:
       - type: RunCollektiveProgram
         parameters: [it.unibo.collektive.examples.gossip.EntrypointsKt.firstGossipEntrypoint]
+  - { type: Event, time-distribution: 10, actions: { type: LevyWalk, parameters: [ *walk-speed ] } }
 
 deployments:
   - type: Rectangle
-    parameters: [200, 0, 0, 20, 20]
+    parameters: [200, 2, 2, 50, 50]
     programs:
       - *program
     properties:
@@ -52,6 +58,10 @@ export:
         value-filter: onlyfinite
         precision: 3
       - molecule: path-length
+        aggregators: [ min, max, mean, variance ]
+        value-filter: onlyfinite
+        precision: 3
+      - molecule: neighbors-size
         aggregators: [ min, max, mean, variance ]
         value-filter: onlyfinite
         precision: 3

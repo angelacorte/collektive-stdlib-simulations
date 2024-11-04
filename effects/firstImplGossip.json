@@ -31,12 +31,12 @@
     "size": {
       "max": 100,
       "min": 0,
-      "val": 22
+      "val": 13
     },
     "molFilter": false,
-    "molString": "it.unibo.collektive.examples.gossip.EntrypointsKt.isHappeningGossipEntrypoint",
+    "molString": "it.unibo.collektive.examples.gossip.EntrypointsKt.firstGossipEntrypoint",
     "molPropertyFilter": true,
-    "property": "if (it \u003d\u003d true) 1 else 0",
+    "property": "",
     "writingPropertyValue": true,
     "c": "HUE",
     "reverse": false,

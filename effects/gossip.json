@@ -31,10 +31,10 @@
     "size": {
       "max": 100,
       "min": 0,
-      "val": 22
+      "val": 13
     },
     "molFilter": false,
-    "molString": "it.unibo.collektive.examples.gossip.GossipKt.gossipEntrypoint",
+    "molString": "it.unibo.collektive.examples.gossip.EntrypointsKt.gossipEntrypoint",
     "molPropertyFilter": true,
     "property": "",
     "writingPropertyValue": true,

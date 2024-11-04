@@ -1,0 +1,36 @@
+incarnation: collektive
+
+variables:
+  seed: &seed
+    min: 0
+    max: 20
+    step: 1
+    default: 0
+
+seeds:
+  scenario: *seed
+  simulation: *seed
+
+network-model:
+  type: ConnectWithinDistance
+  parameters: [5]
+
+_pool: &program
+  - time-distribution: 1
+    type: Event
+    actions:
+      - type: RunCollektiveProgram
+        parameters: [it.unibo.collektive.examples.gossip.EntrypointsKt.isHappeningGossipEntrypoint]
+
+deployments:
+  - type: Rectangle
+    parameters: [20, 0, 0, 10, 10]
+    programs:
+      - *program
+    properties:
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.TimeSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+
+terminate:
+  type: AfterTime
+  parameters: 250

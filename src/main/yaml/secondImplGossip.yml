@@ -50,18 +50,18 @@ export:
     data:
       - time
       - molecule: best-value
-        aggregators: [min, max, mean, variance]
+        aggregators: [min, max, mean, stdev]
         value-filter: onlyfinite
         precision: 3
       - molecule: local-value
-        aggregators: [ min, max, mean, variance ]
+        aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
       - molecule: path-length
-        aggregators: [ min, max, mean, variance ]
+        aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3
       - molecule: neighbors-size
-        aggregators: [ min, max, mean, variance ]
+        aggregators: [ min, max, mean, stdev ]
         value-filter: onlyfinite
         precision: 3

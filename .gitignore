@@ -3,7 +3,7 @@
 .idea/
 .spyproject/
 build/
-charts/
+#charts/
 data_summary_*
 timeprocessed
 /.kotlin/

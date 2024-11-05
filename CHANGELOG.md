@@ -1,3 +1,50 @@
+## 1.0.0 (2024-11-05)
+
+### Features
+
+* add common entrypoint file ([3862e35](https://github.com/angelacorte/collektive-stdlib-simulations/commit/3862e3507dd033d88c468f6acce8591501267718))
+* add docker compose ([a582d23](https://github.com/angelacorte/collektive-stdlib-simulations/commit/a582d2343a71e8276702a1b372e4e3f33d6b0078))
+* add dockerfile for charts and simulations ([69b6685](https://github.com/angelacorte/collektive-stdlib-simulations/commit/69b668593f7a301d03acc97b59cd169bd197bb92))
+* add first implementation gossip ([f4104d5](https://github.com/angelacorte/collektive-stdlib-simulations/commit/f4104d569817ed6aaa4817d8d27f1c0fa5ce664f))
+* add function to return new random based on time elapsed ([02e9096](https://github.com/angelacorte/collektive-stdlib-simulations/commit/02e909611174cb02f90fb4bd40dc46527fdb1cf1))
+* add gossip functions implementation and entrypoint ([6f2a0f4](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6f2a0f47069408957896a62c74e66cbd6ca98785))
+* add gossip simulation launcher ([1cc50e6](https://github.com/angelacorte/collektive-stdlib-simulations/commit/1cc50e64078221044c5e990d2461a77517b231b7))
+* add is happening gossip simulation ([b2da2aa](https://github.com/angelacorte/collektive-stdlib-simulations/commit/b2da2aafff04b4d48f0f66d7acd352421735d433))
+* add Levy Walk into simulations ([6b19f1e](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6b19f1e5734cb968dd61154de9441b4cb18d888a))
+* add performance improved gossip ([6a2da56](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6a2da5660f15f0d736473a8ca1528a19da9a89e5))
+* add random generator property ([6285e8b](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6285e8b8936f2fa7d4a493b88781cfb5113dab0d))
+* add second implementation gossip ([faca3b2](https://github.com/angelacorte/collektive-stdlib-simulations/commit/faca3b287f1c6c2c85e060e46931cecec2103362))
+* add time sensor ([3fff33b](https://github.com/angelacorte/collektive-stdlib-simulations/commit/3fff33bedfc30076b9e14ce690a7b25ec9a174a4))
+
+### Dependency updates
+
+* **deps:** update Collektive version ([1f8ec42](https://github.com/angelacorte/collektive-stdlib-simulations/commit/1f8ec428e27f4fef5be136bae12965d78716cc2a))
+
+### Bug Fixes
+
+* change max seed ([041ee03](https://github.com/angelacorte/collektive-stdlib-simulations/commit/041ee03006883990b16dd951ac571b355ec49deb))
+* project name ([f42f778](https://github.com/angelacorte/collektive-stdlib-simulations/commit/f42f7784c86a4235fd562e35b928fb48fd1958d0))
+* ReferenceRrror on semantic release ([7741e1e](https://github.com/angelacorte/collektive-stdlib-simulations/commit/7741e1ec5ac4ae21524feaa8e8f22199d4bbe64f))
+
+### Build and continuous integration
+
+* fix release error ([4e46c2c](https://github.com/angelacorte/collektive-stdlib-simulations/commit/4e46c2ce33dab863f3b7b3013959c3cf3b3b53fc))
+* temporary remove check-simulations-docker ([bfd3668](https://github.com/angelacorte/collektive-stdlib-simulations/commit/bfd3668faa83bb0314ae550f3bba2fa2a5809eff))
+* temporary remove login to dockerhub ([edbbea7](https://github.com/angelacorte/collektive-stdlib-simulations/commit/edbbea7da10e48977b62212bd8fec0f5e69a4fa0))
+
+### General maintenance
+
+* add .env for semantic release ([e059d18](https://github.com/angelacorte/collektive-stdlib-simulations/commit/e059d18b91edffd2ee2512bf250b434e253031f1))
+* add alchemist effects ([d108c5a](https://github.com/angelacorte/collektive-stdlib-simulations/commit/d108c5aa6dd2e850170e04ab4e76c5661f82504f))
+* add neighbors-size concentration in molecules ([bbe1899](https://github.com/angelacorte/collektive-stdlib-simulations/commit/bbe189930aee54e4a4aeab2d2f234c1d573473c3))
+* add node modules to gitignore ([dededdd](https://github.com/angelacorte/collektive-stdlib-simulations/commit/dededddb4c0011854acdcb43965ffb94c12163e3))
+* **build:** remove warnings as errors ([0a4c87b](https://github.com/angelacorte/collektive-stdlib-simulations/commit/0a4c87b83de3454498086dcc2fac16827eac44e6))
+* change project name ([9060141](https://github.com/angelacorte/collektive-stdlib-simulations/commit/9060141fb6de47490f3dd4ef2140482a6b18227e))
+* rollback to release config js ([0910798](https://github.com/angelacorte/collektive-stdlib-simulations/commit/09107985281a49a0356dbc3b1b7725e6cd037494))
+* silent alchemist warnings ([a1c9523](https://github.com/angelacorte/collektive-stdlib-simulations/commit/a1c9523098700b00ce9ec241f4c93fa3ed523bcc))
+* update effects ([0d17f40](https://github.com/angelacorte/collektive-stdlib-simulations/commit/0d17f40bfcfaae3095c8149196f10f43da5f1f83))
+* update gitignore ([db3f4ec](https://github.com/angelacorte/collektive-stdlib-simulations/commit/db3f4ec55516408f4d01a490127d3d5950e8fe75))
+
 ## [1.2.1](https://github.com/DanySK/alchemist-experiments-bootstrap/compare/1.2.0...1.2.1) (2024-02-09)
 
 

@@ -1,3 +1,15 @@
+## [1.0.1](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.0.0...1.0.1) (2024-11-05)
+
+### Bug Fixes
+
+* change variance into standard deviation for data export ([836d346](https://github.com/angelacorte/collektive-stdlib-simulations/commit/836d346ba4c1dfdfaa299f826097de3b6fbd1feb))
+
+### General maintenance
+
+* add simulation export data ([c8c56b6](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c8c56b6245ec843bbd13d87afdf0b507ce43a12a))
+* **release:** update gradle.properties .env versions to 1.0.0 [skip ci] ([67d8add](https://github.com/angelacorte/collektive-stdlib-simulations/commit/67d8add314c48571b4fa74571efca400bb5cb7c6))
+* remove kotlin reflection dependency ([4303bcc](https://github.com/angelacorte/collektive-stdlib-simulations/commit/4303bccc9c3181860119df524bbc5ce6570884b5))
+
 ## 1.0.0 (2024-11-05)
 
 ### Features

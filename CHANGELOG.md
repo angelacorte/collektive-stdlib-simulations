@@ -1,3 +1,30 @@
+## [1.0.2](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.0.1...1.0.2) (2024-11-07)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v10.7.0 ([9591f52](https://github.com/angelacorte/collektive-stdlib-simulations/commit/9591f5273257adffe6972c1931ac3c0ebebf2ee6))
+* **core-deps:** update dependency org.jetbrains.kotlin.jvm to v2.0.21 ([#1](https://github.com/angelacorte/collektive-stdlib-simulations/issues/1)) ([b362731](https://github.com/angelacorte/collektive-stdlib-simulations/commit/b362731c4f40c2b0c8c182a996ad5408ce0b9fda))
+* **deps:** update alchemist to v34.1.12 ([c462857](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c462857697125c73456a60fe8f63929d2f6a6b38))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.114 ([c1813a7](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c1813a7940115c7b67e94ef856f97689d33bb6e0))
+* **deps:** update dependency xarray to v2024.10.0 ([272d941](https://github.com/angelacorte/collektive-stdlib-simulations/commit/272d941b7a2f2bc76e226b11adb72cdf2aa1f8be))
+* **deps:** update node.js to v22 ([c99b46b](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c99b46b676e6536209ded8a93fa99843467ddce2))
+* **deps:** update plugin gitsemver to v3.1.7 ([eb395dd](https://github.com/angelacorte/collektive-stdlib-simulations/commit/eb395dd73228d818044bd8c3d34b0043ffcef4e9))
+* **deps:** update plugin kotlin-qa to v0.61.1 ([512b67c](https://github.com/angelacorte/collektive-stdlib-simulations/commit/512b67c469e44010e323b989e060d8413a884227))
+* **deps:** update plugin kotlin-qa to v0.69.0 ([be1bc33](https://github.com/angelacorte/collektive-stdlib-simulations/commit/be1bc33538576d7d6be390aa7861377be03de133))
+* **deps:** update plugin multijvmtesting to v1 ([53a1f01](https://github.com/angelacorte/collektive-stdlib-simulations/commit/53a1f01661413eeb9e7b02f522282b9e6abacace))
+* **deps:** update plugin tasktree to v4 ([ffd5c0c](https://github.com/angelacorte/collektive-stdlib-simulations/commit/ffd5c0cb5db4db83c6a1439649328bcf2fd865a7))
+
+### Bug Fixes
+
+* follow Collektive's renovate configuration ([b1b4681](https://github.com/angelacorte/collektive-stdlib-simulations/commit/b1b4681be1f027a5e3646dec84a3e3c551e409fa))
+* mergify bot account ([dd281c4](https://github.com/angelacorte/collektive-stdlib-simulations/commit/dd281c405c70c39629d38533dee3696cc9bd5503))
+* mergify config ([00969d9](https://github.com/angelacorte/collektive-stdlib-simulations/commit/00969d9333513845c40f057e165eaf0697846ff4))
+* typo in mergify bot account ([2798520](https://github.com/angelacorte/collektive-stdlib-simulations/commit/279852062cda684de45ba9fc53995a34bcbab4a4))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.1 [skip ci] ([1d53f81](https://github.com/angelacorte/collektive-stdlib-simulations/commit/1d53f81e1530f07b0fd4780e89c3672f8a5de0b8))
+
 ## [1.0.1](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.0.0...1.0.1) (2024-11-05)
 
 ### Bug Fixes

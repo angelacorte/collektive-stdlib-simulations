@@ -3,5 +3,6 @@
    "extends": [
       "github>Collektive/renovate-config:kotlin"
    ],
+   "dependencyDashboard": true,
    "includeForks": true
 }

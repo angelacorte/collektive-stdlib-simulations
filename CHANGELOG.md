@@ -1,3 +1,13 @@
+## [1.0.3](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.0.2...1.0.3) (2024-11-08)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v10.9.0 ([797bceb](https://github.com/angelacorte/collektive-stdlib-simulations/commit/797bceb7cafdbdfcf1d8c97f8e5ebc6bfc298154))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.2 [skip ci] ([2a9b96e](https://github.com/angelacorte/collektive-stdlib-simulations/commit/2a9b96ebf9a3579014c9a3178f2c2fe02cc74f51))
+
 ## [1.0.2](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.0.1...1.0.2) (2024-11-07)
 
 ### Dependency updates

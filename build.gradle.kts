@@ -24,6 +24,7 @@ sourceSets {
         dependencies {
             implementation(libs.bundles.alchemist)
             implementation(libs.bundles.collektive)
+            implementation(libs.kotlin.time)
         }
         resources {
             srcDir("src/main/yaml")

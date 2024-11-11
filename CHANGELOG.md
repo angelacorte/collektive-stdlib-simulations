@@ -1,3 +1,23 @@
+## [1.1.0](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.0.4...1.1.0) (2024-11-11)
+
+### Features
+
+* add absolute time sensor ([06cdd70](https://github.com/angelacorte/collektive-stdlib-simulations/commit/06cdd70023bf01440cb46af790e43e77c974528d))
+* add time replication ([e82e2d1](https://github.com/angelacorte/collektive-stdlib-simulations/commit/e82e2d1e344514898a561903de4e47311598e6e7))
+* add yaml form time replication and shared time ([fbfd358](https://github.com/angelacorte/collektive-stdlib-simulations/commit/fbfd35854caea6404502de7a63b8c2d59d2b2ea6))
+
+### Dependency updates
+
+* **deps:** add kotlinx datetime dependency ([050dbd8](https://github.com/angelacorte/collektive-stdlib-simulations/commit/050dbd88a644ac9d42c70b82fb89b9adc24b65d4))
+
+### Bug Fixes
+
+* rollback to right time sensor ([b14f248](https://github.com/angelacorte/collektive-stdlib-simulations/commit/b14f2484bdf505b1962245abbbc7599c89954dc9))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.0.4 [skip ci] ([26f93af](https://github.com/angelacorte/collektive-stdlib-simulations/commit/26f93af234b2397b125c48879e48ac096c078e2d))
+
 ## [1.0.4](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.0.3...1.0.4) (2024-11-11)
 
 ### Dependency updates

@@ -1,3 +1,17 @@
+## [1.0.4](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.0.3...1.0.4) (2024-11-11)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v10.10.0 ([c3357e0](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c3357e0ac237209b3ed551a06895be86d74e4bc2))
+* **deps:** update alchemist to v34.1.14 ([be5963f](https://github.com/angelacorte/collektive-stdlib-simulations/commit/be5963f838e0e80dba55a77e0f66bd448088d1fb))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.115 ([066eecb](https://github.com/angelacorte/collektive-stdlib-simulations/commit/066eecbb7d964b82e48d114e2bd2cb3916c2ec2d))
+* **deps:** update plugin multijvmtesting to v1.3.0 ([7d20d92](https://github.com/angelacorte/collektive-stdlib-simulations/commit/7d20d928743141a2c7eebc5414661f478a9af235))
+
+### General maintenance
+
+* add dependency dashboard flag ([c41d780](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c41d7801faa862813ff9b58dd1f48f1f0ec0c2a3))
+* **release:** update gradle.properties .env versions to 1.0.3 [skip ci] ([d954388](https://github.com/angelacorte/collektive-stdlib-simulations/commit/d9543886824f89c56814641edcb62040beef0590))
+
 ## [1.0.3](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.0.2...1.0.3) (2024-11-08)
 
 ### Dependency updates

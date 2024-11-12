@@ -8,6 +8,7 @@ import it.unibo.collektive.alchemist.device.sensors.AbsoluteTime
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.ZERO
 import kotlin.time.DurationUnit
 
 class AbsoluteTimeProperty<T : Any, P : Position<P>>(
@@ -28,7 +29,7 @@ class AbsoluteTimeProperty<T : Any, P : Position<P>>(
         val delta = if (this::timeOfLastReplica.isInitialized) {
             (newReplicaTime - timeOfLastReplica)
         } else {
-            Duration.ZERO
+            ZERO
         }
         timeOfLastReplica = newReplicaTime
         return delta

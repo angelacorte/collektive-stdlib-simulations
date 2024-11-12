@@ -5,9 +5,13 @@ import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 
-context(RandomGenerator)
-fun Aggregate<Int>.random() = repeat(nextRandomDouble()) { it }
+fun Aggregate<Int>.random(randomGenerator: RandomGenerator) = repeat(randomGenerator.nextRandomDouble()) { it }
 
-context(EnvironmentVariables, TimeSensor, RandomGenerator)
-fun Aggregate<Int>.randomFromTimeElapsed() =
-    if (getTimeAsDouble() % 200 < 100) random() else random()
+fun Aggregate<Int>.randomFromTimeElapsed(
+    timeSensor: TimeSensor,
+    randomGenerator: RandomGenerator,
+) = if (timeSensor.getTimeAsDouble() % 200 in 10.0 .. 50.0) {
+    random(randomGenerator)
+} else {
+    random(randomGenerator)
+}

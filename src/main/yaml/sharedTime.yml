@@ -22,6 +22,8 @@ environment:
 
 _pool: &program
   - time-distribution: 1
+#      type: ExponentialTime
+#      parameters: [0.5]
     type: Event
     actions:
       - type: RunCollektiveProgram

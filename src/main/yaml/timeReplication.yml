@@ -37,6 +37,8 @@ deployments:
     properties:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.TimeSensorProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.AbsoluteTimeProperty
+
 
 #terminate:
 #  type: AfterTime

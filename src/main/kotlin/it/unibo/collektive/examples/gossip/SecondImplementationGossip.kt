@@ -5,8 +5,8 @@ import it.unibo.collektive.aggregate.api.operators.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.field.Field.Companion.foldWithId
 
-context(EnvironmentVariables)
 fun <ID : Comparable<ID>, Value> Aggregate<ID>.secondGossip(
+    env: EnvironmentVariables,
     initial: Value,
     selector: Comparator<Value>,
 ): Value {
@@ -28,8 +28,8 @@ fun <ID : Comparable<ID>, Value> Aggregate<ID>.secondGossip(
                 else -> actualNext
             }
         }
-        set("neighbors-size", gossip.neighbors.size)
-        set("path-length", (result.path + localId).size)
+        env["neighbors-size"] = gossip.neighbors.size
+        env["path-length"] = (result.path + localId).size
         GossipValue(result.best, initial, result.path + localId)
     }.best
 }

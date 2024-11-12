@@ -1,3 +1,23 @@
+## [1.2.0](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.1.1...1.2.0) (2024-11-12)
+
+### Features
+
+* add time replication ([8dd7a06](https://github.com/angelacorte/collektive-stdlib-simulations/commit/8dd7a062509f0869cc1c57b10b3f604af60883d9))
+* add time sensor ([f57e7f9](https://github.com/angelacorte/collektive-stdlib-simulations/commit/f57e7f946953edb1f7bb70b70863e03735b6f994))
+* use stdlib gossip ([38fbae8](https://github.com/angelacorte/collektive-stdlib-simulations/commit/38fbae8f53ac746ef0161434a2e25a203608339d))
+
+### Dependency updates
+
+* **deps:** update alchemist to v35 ([bc6ecdc](https://github.com/angelacorte/collektive-stdlib-simulations/commit/bc6ecdc6c6e0bc3a853eab9ef493e8feb1a3314e))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.1.1 [skip ci] ([be98e58](https://github.com/angelacorte/collektive-stdlib-simulations/commit/be98e589dc52a50b08401aaedd2e4a1d0fe40be1))
+
+### Refactoring
+
+* remove context receivers ([f18ab5d](https://github.com/angelacorte/collektive-stdlib-simulations/commit/f18ab5d206f3ba86957aea91e684d108644a3827))
+
 ## [1.1.1](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.1.0...1.1.1) (2024-11-12)
 
 ### Dependency updates

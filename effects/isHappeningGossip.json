@@ -34,7 +34,7 @@
       "val": 22
     },
     "molFilter": false,
-    "molString": "it.unibo.collektive.examples.gossip.EntrypointsKt.isHappeningGossipEntrypoint",
+    "molString": "it.unibo.collektive.examples.EntrypointsKt.isHappeningGossipEntrypoint",
     "molPropertyFilter": true,
     "property": "if (it \u003d\u003d true) 1 else 0",
     "writingPropertyValue": true,

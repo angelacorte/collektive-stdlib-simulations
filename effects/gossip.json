@@ -34,7 +34,7 @@
       "val": 13
     },
     "molFilter": false,
-    "molString": "it.unibo.collektive.examples.gossip.EntrypointsKt.gossipEntrypoint",
+    "molString": "it.unibo.collektive.examples.EntrypointsKt.gossipEntrypoint",
     "molPropertyFilter": true,
     "property": "",
     "writingPropertyValue": true,

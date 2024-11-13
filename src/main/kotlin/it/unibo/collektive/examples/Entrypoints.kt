@@ -70,14 +70,14 @@ fun Aggregate<Int>.isHappeningGossipEntrypoint(
 /**
  * Entrypoint for the simulation of the `sharingTime` function defined into Collektive's DSl.
  */
-fun Aggregate<Int>.sharingTime(absoluteTime: AbsoluteTime) =
+fun Aggregate<Int>.sharedTimerEntrypoint(absoluteTime: AbsoluteTime) =
     sharedTimer(5.toDuration(DurationUnit.SECONDS), absoluteTime.getDeltaTime())
 
 /**
  * Entrypoint for the simulation of the `timeReplicated` function defined into Collektive's DSl,
  * it replicates the non-self-stabilizing gossip algorithm defined into Collektive's DSl.
  */
-fun Aggregate<Int>.timeRep(
+fun Aggregate<Int>.timeReplicationEntrypoint(
     absoluteTime: AbsoluteTime,
     env: EnvironmentVariables,
     randomGenerator: RandomGenerator,

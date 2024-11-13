@@ -25,7 +25,7 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [it.unibo.collektive.examples.EntrypointsKt.timeRep]
+        parameters: [it.unibo.collektive.examples.EntrypointsKt.timeReplicationEntrypoint]
 #  - { type: Event, time-distribution: 10, actions: { type: LevyWalk, parameters: [ *walk-speed ] } }
 
 

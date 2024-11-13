@@ -24,7 +24,7 @@ fun Aggregate<Int>.gossipEntrypoint(
     timeSensor: TimeSensor,
 ) = gossipMax(
     randomFromTimeElapsed(timeSensor, randomGenerator)
-        .also { env["local-value"] = it }
+        .also { env["local-value"] = it },
 ) { first, second ->
     second.compareTo(first)
 }.also { env["best-value"] = it }
@@ -38,8 +38,8 @@ fun Aggregate<Int>.firstGossipEntrypoint(
     timeSensor: TimeSensor,
 ) = firstGossip(
     env,
-    randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it } )
-{ first, second ->
+    randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it },
+) { first, second ->
     first <= second
 }.also { env["best-value"] = it }
 
@@ -53,7 +53,7 @@ fun Aggregate<Int>.secondGossipEntrypoint(
 ) = secondGossip(
     env,
     randomFromTimeElapsed(timeSensor, randomGenerator)
-        .also { env["local-value"] = it }
+        .also { env["local-value"] = it },
 ) { first, second ->
     second.compareTo(first)
 }.also { env["best-value"] = it }
@@ -87,7 +87,7 @@ fun Aggregate<Int>.timeReplicationEntrypoint(
     process = {
         nonSelfStabilizingGossip(
             randomFromTimeElapsed(timeSensor, randomGenerator)
-                .also { env["local-value"] = it }
+                .also { env["local-value"] = it },
         ) { first, second -> if (first <= second) first else second }
             .also { env["best-value"] = it }
     },

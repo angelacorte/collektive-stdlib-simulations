@@ -119,7 +119,7 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
                 "--override",
                 "launcher: { parameters: { batch: [], autoStart: false } }",
                 "--verbosity",
-                "error"
+                "error",
             )
         }
         runAllGraphic.dependsOn(graphic)
@@ -130,7 +130,7 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
             File("data").mkdirs()
             args(
                 "--verbosity",
-                "error"
+                "error",
             )
         }
         runAllBatch.dependsOn(batch)

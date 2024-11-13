@@ -6,7 +6,6 @@ import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 import it.unibo.collektive.examples.gossip.firstGossip
-import it.unibo.collektive.examples.gossip.randomFromTimeElapsed
 import it.unibo.collektive.examples.gossip.secondGossip
 import it.unibo.collektive.examples.timeReplication.sharedTimer
 import it.unibo.collektive.examples.timeReplication.timeReplicated

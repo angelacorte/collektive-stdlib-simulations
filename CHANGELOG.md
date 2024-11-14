@@ -1,3 +1,31 @@
+## [1.2.1](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.2.0...1.2.1) (2024-11-14)
+
+### Dependency updates
+
+* **core-deps:** update dependency it.unibo.collektive.collektive-plugin to v10.11.1 ([5e9b9da](https://github.com/angelacorte/collektive-stdlib-simulations/commit/5e9b9da4e4acd34c642996c5d60a899506bca282))
+* **deps:** update plugin com.gradle.enterprise to v3.18.2 ([6c0eb94](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6c0eb94bb3f6dda8c32809150cba30046534eff7))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.13 ([c41f138](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c41f13840440293bacfb7ee31558f6820484be01))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.14 ([89b072e](https://github.com/angelacorte/collektive-stdlib-simulations/commit/89b072eb8c344cd2062d9a69c4c3a456f6b0fa94))
+
+### General maintenance
+
+* **build:** remove context receivers ([1c26b5f](https://github.com/angelacorte/collektive-stdlib-simulations/commit/1c26b5fab7d13b4967479b8d9946002795d2ed82))
+* **release:** update gradle.properties .env versions to 1.2.0 [skip ci] ([50cdc74](https://github.com/angelacorte/collektive-stdlib-simulations/commit/50cdc746de7afd3ea7a4856572602eaaedb34d0d))
+
+### Style improvements
+
+* reformat according to ktilnt ([391ca47](https://github.com/angelacorte/collektive-stdlib-simulations/commit/391ca478b77f8ac5ad92c77f5339b5cb7b1fa4d2))
+
+### Refactoring
+
+* move entrypoints file ([ff35403](https://github.com/angelacorte/collektive-stdlib-simulations/commit/ff35403a85e8bcfb8fa2aba281a0e01e36c9c2b4))
+* rename entrypoints ([96067f8](https://github.com/angelacorte/collektive-stdlib-simulations/commit/96067f8380cd50f400b4a63ed49f91d731c8ba83))
+* rename file with random generator ([a631833](https://github.com/angelacorte/collektive-stdlib-simulations/commit/a6318330d1c1af228e70b70416e549f6622babad))
+* rename parameter name ([e0e34f2](https://github.com/angelacorte/collektive-stdlib-simulations/commit/e0e34f2a8cee4804810b32e4c45a3c40beb63d9d))
+
 ## [1.2.0](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.1.1...1.2.0) (2024-11-12)
 
 ### Features

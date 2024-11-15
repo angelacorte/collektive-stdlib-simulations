@@ -21,7 +21,7 @@ fun <ID : Comparable<ID>> Aggregate<ID>.timer(
     lowerBound: Duration,
     decayRate: (Duration) -> Duration,
 ): Duration =
-    repeat(initial) { time ->
+    evolve(initial) { time ->
         min(initial, max(lowerBound, decayRate(time)))
     }
 

@@ -41,7 +41,7 @@ fun <ID : Comparable<ID>> Aggregate<ID>.sharedTimer(timeToLive: Duration, proces
  * `false` otherwise.
  */
 private fun <ID : Comparable<ID>> Aggregate<ID>.cyclicTimerWithDecay(timeout: Duration, decayRate: Duration): Boolean =
-    repeat(timeout) { timer ->
+    evolve(timeout) { timer ->
         if (timer == ZERO) {
             timeout
         } else {

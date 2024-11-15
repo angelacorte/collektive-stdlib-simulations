@@ -1,3 +1,21 @@
+## [1.2.2](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.2.1...1.2.2) (2024-11-15)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v11 ([1616949](https://github.com/angelacorte/collektive-stdlib-simulations/commit/1616949bee676edb8b27e849f789ecf399b4c363))
+
+### Bug Fixes
+
+* use evolve instead of repeat as in Collektive v11 ([59ad357](https://github.com/angelacorte/collektive-stdlib-simulations/commit/59ad357983828e25fe4c61c388b50635b9f5d587))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.15 ([145d9ec](https://github.com/angelacorte/collektive-stdlib-simulations/commit/145d9ec7465468838b57c64290860b3e08f559e1))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.2.1 [skip ci] ([afdc82b](https://github.com/angelacorte/collektive-stdlib-simulations/commit/afdc82b13dcde0e740101fac8a11448fa78cd123))
+
 ## [1.2.1](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.2.0...1.2.1) (2024-11-14)
 
 ### Dependency updates

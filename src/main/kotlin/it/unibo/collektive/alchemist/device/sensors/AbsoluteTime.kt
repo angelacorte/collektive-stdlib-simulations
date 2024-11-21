@@ -4,7 +4,7 @@ import kotlinx.datetime.Instant
 import kotlin.time.Duration
 
 interface AbsoluteTime {
-    fun getAbsoluteTime(): Instant
+    val absoluteTime: Instant
 
-    fun getDeltaTime(): Duration
+    val deltaTime: Duration
 }

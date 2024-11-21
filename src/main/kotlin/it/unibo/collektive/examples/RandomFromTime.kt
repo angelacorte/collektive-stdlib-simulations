@@ -9,8 +9,7 @@ fun Aggregate<Int>.random(randomGenerator: RandomGenerator) = evolve(randomGener
 fun Aggregate<Int>.randomFromTimeElapsed(
     timeSensor: TimeSensor,
     randomGenerator: RandomGenerator,
-) = if (timeSensor.getTimeAsDouble() % 500 == 0.0) {
-    random(randomGenerator)
-} else {
-    random(randomGenerator)
+) = when {
+    timeSensor.getTimeAsDouble() % 1000 <= 150.0 -> random(randomGenerator)
+    else -> random(randomGenerator)
 }

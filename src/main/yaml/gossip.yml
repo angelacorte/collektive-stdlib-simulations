@@ -1,17 +1,19 @@
 incarnation: collektive
 
 variables:
+  min: &min
+    formula: System.getenv("MIN").toDouble()
+    language: kotlin
+  max: &max
+    formula: System.getenv("MAX").toDouble()
+    language: kotlin
+  step: 1
+  default: &default
+    formula: System.getenv("DEFAULT").toDouble()
+    language: kotlin
   seed: &seed
-    min:
-      formula: System.getenv("MIN").toInt()
-      language: kotlin
-    max:
-      formula: System.getenv("MAX").toInt()
-      language: kotlin
-    step: 1
-    default:
-      formula: System.getenv("DEFAULT").toInt()
-      language: kotlin
+    type: LinearVariable
+    parameters: [ *default, *min, *max, 1 ]
   walking_speed: &walk-speed { default: 1.4, min: 1, max: 2, step: 0.1 }
 
 seeds:

@@ -129,6 +129,8 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
             args(
+                "--override",
+                "launcher: { parameters: { batch: [seed], autoStart: true } }",
                 "--verbosity",
                 "error",
             )

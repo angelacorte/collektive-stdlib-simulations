@@ -5,6 +5,7 @@ import it.unibo.collektive.aggregate.api.operators.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
+import it.unibo.collektive.examples.gossip.SelfStabilizingGossip.gossip
 import it.unibo.collektive.examples.gossip.firstGossip
 import it.unibo.collektive.examples.gossip.secondGossip
 import it.unibo.collektive.field.Field.Companion.fold
@@ -18,12 +19,15 @@ fun Aggregate<Int>.gossipEntrypoint(
     env: EnvironmentVariables,
     randomGenerator: RandomGenerator,
     timeSensor: TimeSensor,
-) = gossipMax(
+) = gossip(
+    env,
     randomFromTimeElapsed(timeSensor, randomGenerator)
         .also { env["local-value"] = it },
 ) { first, second ->
     second.compareTo(first)
-}.also { env["best-value"] = it }
+}.also {
+    env["best-value"] = it
+}
 
 /**
  * Entrypoint for the simulation of the first implementation of the gossip algorithm with Collektive.

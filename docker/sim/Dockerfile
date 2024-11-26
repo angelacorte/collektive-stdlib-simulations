@@ -1,5 +1,6 @@
 FROM eclipse-temurin:21
-RUN mkdir /experiment
+RUN mkdir -p /experiment /data
+VOLUME "/data"
 WORKDIR /experiment
 COPY effects effects
 COPY gradle gradle
@@ -7,9 +8,11 @@ COPY src src
 COPY docker docker
 COPY *.kts ./
 COPY *.properties ./
-RUN sed -i '/alias(libs.plugins.gitSemVer)/d' build.gradle.kts
 COPY gradlew* ./
-RUN CI=true ./gradlew runAllGraphic
-RUN rm -rf data
-RUN ./gradlew --stop
-CMD ./gradlew runAllBatch
+RUN sed -i '/alias(libs.plugins.gitSemVer)/d' build.gradle.kts
+RUN sed -i '/alias(libs.plugins.multiJvmTesting)/d' build.gradle.kts
+RUN sed -i '/multiJvm {/,/}/d' build.gradle.kts
+ARG MAX
+ARG MIN
+ARG DEFAULT
+CMD MAX=$MAX MIN=$MIN DEFAULT=$DEFAULT ./gradlew runGossipBatch

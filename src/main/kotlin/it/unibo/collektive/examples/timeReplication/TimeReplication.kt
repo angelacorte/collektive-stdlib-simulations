@@ -10,6 +10,8 @@ package it.unibo.collektive.examples.timeReplication
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.AbsoluteTime
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.ZERO
 
@@ -23,14 +25,15 @@ import kotlin.time.Duration.Companion.ZERO
  * The [default] value is returned if no replica is alive.
  */
 fun <ID : Comparable<ID>, Type : Any> Aggregate<ID>.timeReplicated(
-    absoluteTime: AbsoluteTime,
-    process: Aggregate<ID>.() -> Type,
     default: Type,
+    now: Instant = Clock.System.now(),
     timeToLive: Duration,
     maxReplicas: Int,
+    process: Aggregate<ID>.() -> Type,
 ): Type {
     // time elapsed without a new replica being created
-    val timeElapsed = sharedTimer(timeToLive, absoluteTime.getDeltaTime())
+    val deltaTime: Duration = evolving(now) { previousTime -> now.yielding { now - previousTime } }
+    val timeElapsed = sharedTimer(timeToLive, deltaTime)
     val result = evolve(emptyList<Replica<ID, Type>>()) { replicas ->
         // kill the oldest one if there are more than maxReplicas, or if enough time has passed
         val applyReplicas = when {

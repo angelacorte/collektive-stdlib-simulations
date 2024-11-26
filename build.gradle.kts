@@ -99,11 +99,11 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
             mainClass.set("it.unibo.alchemist.Alchemist")
             classpath = sourceSets["main"].runtimeClasspath
             args("run", it.absolutePath)
-            javaLauncher.set(
-                javaToolchains.launcherFor {
-                    languageVersion.set(JavaLanguageVersion.of(multiJvm.latestJava))
-                },
-            )
+//            javaLauncher.set(
+//                javaToolchains.launcherFor {
+//                    languageVersion.set(JavaLanguageVersion.of(multiJvm.latestJava))
+//                },
+//            )
             if (System.getenv("CI") == "true") {
                 args("--override", "terminate: { type: AfterTime, parameters: [2] } ")
             } else {
@@ -129,6 +129,8 @@ File(rootProject.rootDir.path + "/src/main/yaml").listFiles()
             maxHeapSize = "${minOf(heap.toInt(), Runtime.getRuntime().availableProcessors() * taskSize)}m"
             File("data").mkdirs()
             args(
+                "--override",
+                "launcher: { parameters: { batch: [seed], autoStart: true } }",
                 "--verbosity",
                 "error",
             )

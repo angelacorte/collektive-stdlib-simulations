@@ -1,6 +1,9 @@
 FROM eclipse-temurin:21
 RUN mkdir -p /experiment /data
 VOLUME "/data"
+ENV MAX=${MAX}
+ENV MIN=${MIN}
+ENV DEFAULT=${DEFAULT}
 WORKDIR /experiment
 COPY effects effects
 COPY gradle gradle
@@ -15,4 +18,4 @@ RUN sed -i '/multiJvm {/,/}/d' build.gradle.kts
 ARG MAX
 ARG MIN
 ARG DEFAULT
-CMD MAX=$MAX MIN=$MIN DEFAULT=$DEFAULT ./gradlew runGossipBatch
+CMD ./gradlew runGossipBatch

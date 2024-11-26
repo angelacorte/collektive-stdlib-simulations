@@ -1,15 +1,12 @@
 package it.unibo.collektive.examples
 
 import it.unibo.collektive.aggregate.api.Aggregate
-import it.unibo.collektive.aggregate.api.operators.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 import it.unibo.collektive.examples.gossip.SelfStabilizingGossip.gossip
 import it.unibo.collektive.examples.gossip.firstGossip
 import it.unibo.collektive.examples.gossip.secondGossip
-import it.unibo.collektive.field.Field.Companion.fold
-import it.unibo.collektive.stdlib.SelfStabilizingGossip.gossipMax
 import it.unibo.collektive.stdlib.SelfStabilizingGossip.isHappeningAnywhere
 
 /**
@@ -100,10 +97,3 @@ fun Aggregate<Int>.isHappeningGossipEntrypoint(
 //        maxReplicas = 7,
 //    )
 //}
-
-fun <ID : Any, Value> Aggregate<ID>.nssg(
-    value: Value,
-    aggregation: (Value, Value) -> Value,
-): Value = share(value) {
-    it.fold(value, aggregation)
-}

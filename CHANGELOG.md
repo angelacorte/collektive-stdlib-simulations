@@ -1,3 +1,49 @@
+## [1.3.0](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.2.2...1.3.0) (2024-11-26)
+
+### Features
+
+* dockerize for COSS exam ([c692bb5](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c692bb57302a019fc74c1341a6d49842d3fb7c2d))
+
+### Dependency updates
+
+* **deps:** update alchemist to v35.0.3 ([7d68c5d](https://github.com/angelacorte/collektive-stdlib-simulations/commit/7d68c5d5d327c1d8fadb30f3949151288bed7b56))
+* **deps:** update dependency gradle to v8.11 ([487c79e](https://github.com/angelacorte/collektive-stdlib-simulations/commit/487c79ea0a4af33201c147332630d504e0ef61c7))
+* **deps:** update dependency gradle to v8.11.1 ([cef47b0](https://github.com/angelacorte/collektive-stdlib-simulations/commit/cef47b031e4a0b75eb2a2bdea409fde6128693d5))
+* **deps:** update dependency it.unibo.alchemist:alchemist to v35.0.1 ([3ffa8c1](https://github.com/angelacorte/collektive-stdlib-simulations/commit/3ffa8c17b75be088f89953f172a97fd8c44072f0))
+* **deps:** update dependency it.unibo.alchemist:alchemist-euclidean-geometry to v35.0.2 ([73804c4](https://github.com/angelacorte/collektive-stdlib-simulations/commit/73804c4892a155965e78c37877014241110bde20))
+* **deps:** update dependency xarray to v2024.11.0 ([4d69242](https://github.com/angelacorte/collektive-stdlib-simulations/commit/4d69242012d4cb35c7eb02125fa3bf4aa83f97fb))
+* **deps:** update plugin kotlin-qa to v0.70.0 ([f6bf552](https://github.com/angelacorte/collektive-stdlib-simulations/commit/f6bf552acc6768caaefa351e09cae4c76f254420))
+* **deps:** update plugin kotlin-qa to v0.70.1 ([e79127f](https://github.com/angelacorte/collektive-stdlib-simulations/commit/e79127f3e7c2af0fd1bcd2615baa4f0ba587e7cc))
+* **deps:** update plugin kotlin-qa to v0.70.2 ([d572cfd](https://github.com/angelacorte/collektive-stdlib-simulations/commit/d572cfdee7af6388e9a6ca393e973ee1c02cc02e))
+* **deps:** update plugin kotlin-qa to v0.71.0 ([7312568](https://github.com/angelacorte/collektive-stdlib-simulations/commit/7312568e8b6ac467a4255fdb51716d882ca08d29))
+* **deps:** update plugin kotlin-qa to v0.73.0 ([0058c47](https://github.com/angelacorte/collektive-stdlib-simulations/commit/0058c47070ceaa980209a90846b66e890e423fa3))
+* **deps:** update plugin kotlin-qa to v0.74.0 ([44c2ae7](https://github.com/angelacorte/collektive-stdlib-simulations/commit/44c2ae7759f24474c73d3ae13e4165947c5ed242))
+* **deps:** update plugin multijvmtesting to v1.3.1 ([e04c2bf](https://github.com/angelacorte/collektive-stdlib-simulations/commit/e04c2bf539d776e12328032764098d2885ad5045))
+* **deps:** update plugin multijvmtesting to v1.3.2 ([89fb7f3](https://github.com/angelacorte/collektive-stdlib-simulations/commit/89fb7f3aa4a181d4c3ca186be010fae5ab8852cb))
+
+### Bug Fixes
+
+* **ci:** temporary check only gossip graphic simulation ([e10f04e](https://github.com/angelacorte/collektive-stdlib-simulations/commit/e10f04e451acc76ebe2d887b658898b5ed9c40c6))
+* run only stabilizing gossip simulations ([6ca6006](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6ca60065e7c785c364f19c0baa826e8074fa799d))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.16 ([ef03b45](https://github.com/angelacorte/collektive-stdlib-simulations/commit/ef03b45475b11cce1ab18251d36c8cc1c7a20d6e))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.17 ([261c973](https://github.com/angelacorte/collektive-stdlib-simulations/commit/261c973ffc4e904f44a2bf1d9b927d8bd24177e3))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.18 ([1c1b8f9](https://github.com/angelacorte/collektive-stdlib-simulations/commit/1c1b8f94dc16c896ccafc20b47b61faf3bc4c4c3))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.19 ([dda85f9](https://github.com/angelacorte/collektive-stdlib-simulations/commit/dda85f93b595d9ae952fba80cea18d234b3d9412))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.20 ([1e35c31](https://github.com/angelacorte/collektive-stdlib-simulations/commit/1e35c31c2aed8717a2bb7182b325d03100b6fb0e))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.21 ([6397dbb](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6397dbbba7763ddf4397f9bede3ee26957184f50))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.22 ([9ad8126](https://github.com/angelacorte/collektive-stdlib-simulations/commit/9ad81269259edf6cbd3713bab59e8b5ac0146d55))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.23 ([e5c81d7](https://github.com/angelacorte/collektive-stdlib-simulations/commit/e5c81d73665dbf00c0ba519e389f5363f7effc2e))
+
+### General maintenance
+
+* add check simulations docker ([35b55e2](https://github.com/angelacorte/collektive-stdlib-simulations/commit/35b55e28ce2699c9cd507722fe9079c3eb294e5a))
+* add data ([d75ee05](https://github.com/angelacorte/collektive-stdlib-simulations/commit/d75ee05703c305f06b8d7c06401e9aed01f23595))
+* **release:** update gradle.properties .env versions to 1.2.2 [skip ci] ([756a4e2](https://github.com/angelacorte/collektive-stdlib-simulations/commit/756a4e205d35d9d8d50199438fd84b61ed04a339))
+* update readme ([824d5d4](https://github.com/angelacorte/collektive-stdlib-simulations/commit/824d5d45b36ada7680e6362c4d36a249cc4b2352))
+
 ## [1.2.2](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.2.1...1.2.2) (2024-11-15)
 
 ### Dependency updates

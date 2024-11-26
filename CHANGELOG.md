@@ -1,3 +1,13 @@
+## [1.3.1](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.3.0...1.3.1) (2024-11-26)
+
+### Bug Fixes
+
+* use env variables instead of args ([7a8caca](https://github.com/angelacorte/collektive-stdlib-simulations/commit/7a8caca0d4082aaf20c91cb26ee4ee629a77e06d))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.3.0 [skip ci] ([b86374c](https://github.com/angelacorte/collektive-stdlib-simulations/commit/b86374c035850eb8f9ca51e43ddab43b93320fd0))
+
 ## [1.3.0](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.2.2...1.3.0) (2024-11-26)
 
 ### Features

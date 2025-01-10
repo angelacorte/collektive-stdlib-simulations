@@ -1,3 +1,47 @@
+## [1.4.0](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.3.1...1.4.0) (2025-01-10)
+
+### Features
+
+* temporary add levy walk in gossip simulation ([c3628f3](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c3628f33f7c632e4c2e3649c8ae352df517bad19))
+
+### Dependency updates
+
+* **deps:** update alpine docker tag to v3.21.0 ([db4b14f](https://github.com/angelacorte/collektive-stdlib-simulations/commit/db4b14fb692498381e383c541356e69061e42af7))
+* **deps:** update alpine docker tag to v3.21.1 ([44f78c5](https://github.com/angelacorte/collektive-stdlib-simulations/commit/44f78c5c82e17f6b3f76cccae85bf07ddf09c8a5))
+* **deps:** update alpine docker tag to v3.21.2 ([c797010](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c79701065eff8c6fa124a4bff2f3ac6a55dab609))
+* **deps:** update dependency gradle to v8.12 ([c7a5183](https://github.com/angelacorte/collektive-stdlib-simulations/commit/c7a5183589810cb345a6ad6fce6fab760ca845a7))
+* **deps:** update dependency it.unibo.alchemist:alchemist-swingui to v36 ([0975540](https://github.com/angelacorte/collektive-stdlib-simulations/commit/09755403cc213bb68236576791f8a303ffa8371d))
+* **deps:** update dependency matplotlib to v3.10.0 ([06bc087](https://github.com/angelacorte/collektive-stdlib-simulations/commit/06bc0879c553f4f1bf5f96b90ab2813e53f7220a))
+* **deps:** update dependency matplotlib to v3.9.3 ([d3d7859](https://github.com/angelacorte/collektive-stdlib-simulations/commit/d3d78598753f8a21331e797b8ef9254b7178e5a9))
+* **deps:** update dependency matplotlib to v3.9.4 ([69eb376](https://github.com/angelacorte/collektive-stdlib-simulations/commit/69eb3766830f703ba77a5c77445745dc8b89e914))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.116 ([744b061](https://github.com/angelacorte/collektive-stdlib-simulations/commit/744b0617053eeb991f24524871692fb10d848d9c))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.117 ([0a64761](https://github.com/angelacorte/collektive-stdlib-simulations/commit/0a64761734f48e91a4bced708e80705647d4566d))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.118 ([22a06cb](https://github.com/angelacorte/collektive-stdlib-simulations/commit/22a06cbd1f68f91b5b468cdeb20b866b209eb785))
+* **deps:** update dependency semantic-release-preconfigured-conventional-commits to v1.1.119 ([5095e04](https://github.com/angelacorte/collektive-stdlib-simulations/commit/5095e04115866d3a4bdac572a2a2a62688604b98))
+* **deps:** update dependency xarray to v2025 ([458533b](https://github.com/angelacorte/collektive-stdlib-simulations/commit/458533b16b98b179c13be4c26c0519ba5d2641d9))
+* **deps:** update node.js to 22.12 ([6f1f318](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6f1f3181150b7b2bdee50d90d729906d24c0dec6))
+* **deps:** update node.js to 22.13 ([5c9cc6f](https://github.com/angelacorte/collektive-stdlib-simulations/commit/5c9cc6fef7af425c28c2bf7dfaaca206a59e36c6))
+* **deps:** update plugin com.gradle.enterprise to v3.19 ([6d5f213](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6d5f2137c58b232857a675b026f6f659ab7ca6ed))
+* **deps:** update plugin kotlin-qa to v0.75.0 ([a1ccd41](https://github.com/angelacorte/collektive-stdlib-simulations/commit/a1ccd417ff50e2b7180b4a84b7ae7934f50bde8d))
+* **deps:** update plugin kotlin-qa to v0.76.0 ([d1e010c](https://github.com/angelacorte/collektive-stdlib-simulations/commit/d1e010cc4d2d80eeda56b1fedc792188d1ea56a8))
+* **deps:** update plugin kotlin-qa to v0.77.0 ([9ab01c0](https://github.com/angelacorte/collektive-stdlib-simulations/commit/9ab01c0b89abd864c26abfa61d52b3c72bfbb459))
+* **deps:** update plugin multijvmtesting to v2 ([a6d8803](https://github.com/angelacorte/collektive-stdlib-simulations/commit/a6d8803d4461bdf0602940dd18ee1753717a5d62))
+* **deps:** update plugin org.gradle.toolchains.foojay-resolver-convention to v0.9.0 ([2ededfd](https://github.com/angelacorte/collektive-stdlib-simulations/commit/2ededfd1f2271264bc53c0532a682949aec2daaf))
+* **deps:** update python docker tag to v3.13.1 ([2d8231c](https://github.com/angelacorte/collektive-stdlib-simulations/commit/2d8231cff519e0e86dfce8e301f9d0714dd7d4b9))
+
+### Build and continuous integration
+
+* **deps:** update actions/upload-artifact action to v4.5.0 ([26ccb10](https://github.com/angelacorte/collektive-stdlib-simulations/commit/26ccb10a9d3e740b588b39b1be8982f7d2631105))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.24 ([b40d98f](https://github.com/angelacorte/collektive-stdlib-simulations/commit/b40d98f8bdb5cb6c04da02b6d4103a99401eb5d2))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.25 ([d12f594](https://github.com/angelacorte/collektive-stdlib-simulations/commit/d12f594c3ad8c63aa7937c1a1688a3f9d4507a30))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.26 ([57f66e0](https://github.com/angelacorte/collektive-stdlib-simulations/commit/57f66e0ff1fd040fe7d9b1d86eb71123f866a7a8))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.27 ([6b05691](https://github.com/angelacorte/collektive-stdlib-simulations/commit/6b0569157e0d5280596babbbb7fd32ac55bee3d2))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v3.5.28 ([5569c37](https://github.com/angelacorte/collektive-stdlib-simulations/commit/5569c372a6988056196978ba2675b3c0c07c0aef))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.3.1 [skip ci] ([def0aa1](https://github.com/angelacorte/collektive-stdlib-simulations/commit/def0aa14dd9cd5de35ad709fa418bddcf4c25e11))
+
 ## [1.3.1](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.3.0...1.3.1) (2024-11-26)
 
 ### Bug Fixes

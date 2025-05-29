@@ -1,32 +1,27 @@
 [versions]
-kotlin = "2.1.10"
-alchemist = "36.0.0"
-collektive = "11.0.0"
+alchemist = "42.2.1"
+collektive = "25.0.1"
+kotlin = "2.1.21"
 
 [libraries]
 alchemist = { module = "it.unibo.alchemist:alchemist", version.ref = "alchemist" }
+alchemist-incarnation-protelis = { module = "it.unibo.alchemist:alchemist-incarnation-protelis", version.ref = "alchemist" }
 alchemist-swingui = { module = "it.unibo.alchemist:alchemist-swingui", version.ref = "alchemist" }
-alchemist-ui-tooling = { module = "it.unibo.alchemist:alchemist-ui-tooling", version.ref = "alchemist" }
 alchemist-euclidean-geometry = { module = "it.unibo.alchemist:alchemist-euclidean-geometry", version.ref = "alchemist" }
-collektive = { module = "it.unibo.collektive:dsl", version.ref = "collektive" }
+collektive = { module = "it.unibo.collektive:collektive-dsl", version.ref = "collektive" }
 collektive-incarnation = { module = "it.unibo.collektive:alchemist-incarnation-collektive", version.ref = "collektive" }
-collektive-plugin = { module = "it.unibo.collektive:compiler-plugin", version.ref = "collektive" }
-collektive-stdlib = { module = "it.unibo.collektive:stdlib", version.ref = "collektive" }
+collektive-stdlib = { module = "it.unibo.collektive:collektive-stdlib", version.ref = "collektive" }
 kotlin-time = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version = "0.6.1"}
 
 [bundles]
-alchemist = [
-    "alchemist",
-    "alchemist-euclidean-geometry",
-    "alchemist-swingui",
-    "alchemist-ui-tooling"
-]
-collektive = ["collektive", "collektive-incarnation", "collektive-plugin", "collektive-stdlib"]
+alchemist = ["alchemist", "alchemist-euclidean-geometry", "alchemist-incarnation-protelis", "alchemist-swingui"]
+collektive = ["collektive", "collektive-incarnation", "collektive-stdlib"]
 
 [plugins]
+multiJvmTesting = "org.danilopianini.multi-jvm-test-plugin:3.4.3"
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-qa = "org.danilopianini.gradle-kotlin-qa:0.88.0"
+taskTree = "com.dorongold.task-tree:4.0.1"
 collektive = { id = "it.unibo.collektive.collektive-plugin", version.ref = "collektive" }
 gitSemVer = { id = "org.danilopianini.git-sensitive-semantic-versioning", version = "4.0.0" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-qa = { id = "org.danilopianini.gradle-kotlin-qa", version = "0.77.0" }
-multiJvmTesting = { id = "org.danilopianini.multi-jvm-test-plugin", version = "2.0.0" }
-taskTree = { id = "com.dorongold.task-tree", version = "4.0.0" }

@@ -4,21 +4,19 @@ import java.io.ByteArrayOutputStream
 import java.util.*
 
 plugins {
-    application
     alias(libs.plugins.gitSemVer)
-    alias(libs.plugins.collektive)
-    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.qa)
-    alias(libs.plugins.multiJvmTesting)
-    alias(libs.plugins.taskTree)
+    alias(libs.plugins.multiJvmTesting) // Pre-configures the Java toolchains
+    alias(libs.plugins.taskTree) // Helps debugging dependencies among gradle tasks
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.collektive)
 }
 
 repositories {
     mavenCentral()
 }
-/*
- * Only required if you plan to use Protelis, remove otherwise
- */
+
 sourceSets {
     main {
         dependencies {

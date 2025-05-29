@@ -30,9 +30,9 @@ import kotlin.time.toDuration
 fun <ID : Comparable<ID>> Aggregate<ID>.sharedTimer(timeToLive: Duration, processTime: Duration): Duration =
     share(ZERO) { clock: Field<ID, Duration> ->
         val clockPerceived = clock.maxValue(base = ZERO)
-        if (clockPerceived <= clock.localValue) {
+        if (clockPerceived <= clock.local.value) {
             // currently as fast as the fastest device in the neighborhood, so keep on counting time
-            clock.localValue + if (cyclicTimerWithDecay(timeToLive, processTime)) 1.toDuration(SECONDS) else ZERO
+            clock.local.value + if (cyclicTimerWithDecay(timeToLive, processTime)) 1.toDuration(SECONDS) else ZERO
         } else {
             clockPerceived
         }
@@ -72,7 +72,7 @@ fun <ID : Comparable<ID>> Aggregate<ID>.countDownWithDecay(timeout: Duration, de
 fun <ID : Comparable<ID>> Aggregate<ID>.sharedClock(deltaTime: Instant): Instant =
     share(DISTANT_PAST) { clock: Field<ID, Instant> ->
         val maxTimePerceived = clock.maxValue(base = DISTANT_PAST)
-        if (maxTimePerceived <= clock.localValue) {
+        if (maxTimePerceived <= clock.local.value) {
             // currently as fast as the fastest device in the neighborhood, so keep on counting time
             deltaTime //+ clock.localValue
         } else {

@@ -4,9 +4,9 @@ import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
+import it.unibo.collektive.examples.gossip.FirstImplementationGossip.firstGossip
+import it.unibo.collektive.examples.gossip.SecondImplementationGossip.secondGossip
 import it.unibo.collektive.examples.gossip.SelfStabilizingGossip.gossip
-import it.unibo.collektive.examples.gossip.firstGossip
-import it.unibo.collektive.examples.gossip.secondGossip
 import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
 
 /**

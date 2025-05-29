@@ -9,9 +9,9 @@
 package it.unibo.collektive.examples.timeReplication
 
 import it.unibo.collektive.aggregate.api.Aggregate
-import it.unibo.collektive.aggregate.api.operators.share
-import it.unibo.collektive.field.Field
-import it.unibo.collektive.field.operations.max
+import it.unibo.collektive.aggregate.api.share
+import it.unibo.collektive.aggregate.Field
+import it.unibo.collektive.stdlib.fields.maxValue
 import kotlinx.datetime.Instant
 import kotlinx.datetime.Instant.Companion.DISTANT_PAST
 import kotlin.time.Duration
@@ -29,7 +29,7 @@ import kotlin.time.toDuration
  */
 fun <ID : Comparable<ID>> Aggregate<ID>.sharedTimer(timeToLive: Duration, processTime: Duration): Duration =
     share(ZERO) { clock: Field<ID, Duration> ->
-        val clockPerceived = clock.max(base = ZERO)
+        val clockPerceived = clock.maxValue(base = ZERO)
         if (clockPerceived <= clock.localValue) {
             // currently as fast as the fastest device in the neighborhood, so keep on counting time
             clock.localValue + if (cyclicTimerWithDecay(timeToLive, processTime)) 1.toDuration(SECONDS) else ZERO
@@ -71,7 +71,7 @@ fun <ID : Comparable<ID>> Aggregate<ID>.countDownWithDecay(timeout: Duration, de
  */
 fun <ID : Comparable<ID>> Aggregate<ID>.sharedClock(deltaTime: Instant): Instant =
     share(DISTANT_PAST) { clock: Field<ID, Instant> ->
-        val maxTimePerceived = clock.max(base = DISTANT_PAST)
+        val maxTimePerceived = clock.maxValue(base = DISTANT_PAST)
         if (maxTimePerceived <= clock.localValue) {
             // currently as fast as the fastest device in the neighborhood, so keep on counting time
             deltaTime //+ clock.localValue

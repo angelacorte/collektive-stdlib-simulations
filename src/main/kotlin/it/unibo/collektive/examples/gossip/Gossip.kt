@@ -1,9 +1,10 @@
 package it.unibo.collektive.examples.gossip
 
+import it.unibo.collektive.aggregate.Field.Companion.foldWithId
 import it.unibo.collektive.aggregate.api.Aggregate
-import it.unibo.collektive.aggregate.api.operators.share
+import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
-import it.unibo.collektive.field.Field.Companion.foldWithId
+import it.unibo.collektive.aggregate.Field.Companion.foldWithId
 
 /**
  * A collection of self-stabilizing gossip algorithms.

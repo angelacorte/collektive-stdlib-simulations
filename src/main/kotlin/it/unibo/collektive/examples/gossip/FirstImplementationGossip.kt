@@ -1,9 +1,9 @@
 package it.unibo.collektive.examples.gossip
 
 import it.unibo.collektive.aggregate.api.Aggregate
-import it.unibo.collektive.aggregate.api.operators.share
+import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
-import it.unibo.collektive.field.Field.Companion.fold
+import it.unibo.collektive.stdlib.fields.fold
 
 fun <ID : Comparable<ID>, Type> Aggregate<ID>.firstGossip(
     env: EnvironmentVariables,
@@ -15,8 +15,8 @@ fun <ID : Comparable<ID>, Type> Aggregate<ID>.firstGossip(
     return share(local) { gossip ->
         val result = gossip.fold(local) { current, next ->
             when {
-                selector(current.value, next.value) || localId in next.path -> current
-                else -> next.copy(path = next.path + localId)
+                selector(current.value, next.value.value) || localId in next.value.path -> current
+                else -> next.value.copy(path = next.value.path + localId)
             }
         }
         env["neighbors-size"] = gossip.neighbors.size

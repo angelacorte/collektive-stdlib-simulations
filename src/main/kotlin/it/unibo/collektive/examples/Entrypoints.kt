@@ -7,7 +7,7 @@ import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 import it.unibo.collektive.examples.gossip.SelfStabilizingGossip.gossip
 import it.unibo.collektive.examples.gossip.firstGossip
 import it.unibo.collektive.examples.gossip.secondGossip
-import it.unibo.collektive.stdlib.SelfStabilizingGossip.isHappeningAnywhere
+import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
 
 /**
  * Entrypoint for the gossip simulation that uses the gossipMax function defined into Collektive's DSl.

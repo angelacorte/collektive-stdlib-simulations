@@ -18,8 +18,9 @@ fun Aggregate<Int>.gossipEntrypoint(
     timeSensor: TimeSensor,
 ) = gossip(
     env,
-    randomFromTimeElapsed(timeSensor, randomGenerator)
-        .also { env["local-value"] = it },
+    localId,
+//    randomFromTimeElapsed(timeSensor, randomGenerator)
+//        .also { env["local-value"] = it },
 ) { first, second ->
     second.compareTo(first)
 }.also {

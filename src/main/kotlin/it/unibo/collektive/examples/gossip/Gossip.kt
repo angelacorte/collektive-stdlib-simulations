@@ -5,6 +5,8 @@ import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.aggregate.Field.Companion.foldWithId
+import it.unibo.collektive.stdlib.fields.fold
+import it.unibo.collektive.stdlib.spreading.GossipValue
 
 /**
  * A collection of self-stabilizing gossip algorithms.
@@ -16,11 +18,14 @@ object SelfStabilizingGossip {
          * the [local] value of the node, and the [path] of nodes through which it has passed.
          */
     data class GossipValue<ID : Comparable<ID>, Value>(
+        @JvmField
         val best: Value,
-        val local: Value,
+//        val local: Value,
+        @JvmField
         val path: List<ID> = emptyList(),
     ) {
-        fun base(id: ID) = GossipValue(local, local, listOf(id))
+        fun base(local: Value, id: ID) = GossipValue(local, listOf(id))
+        fun addHop(id: ID) = GossipValue(best, path + id)
     }
 
     /**
@@ -33,12 +38,12 @@ object SelfStabilizingGossip {
         local: Value,
         comparator: Comparator<Value>,
     ): Value {
-        val localGossip = GossipValue<ID, Value>(best = local, local = local)
+        val localGossip = GossipValue<ID, Value>(best = local)
         return share(localGossip) { gossip ->
             val neighbors = gossip.neighbors.toSet()
-            val result = gossip.foldWithId(localGossip) { current, id, next ->
+            val result = gossip.fold(localGossip) { current, (id, next) ->
                 val valid = next.path.asReversed().asSequence().drop(1).none { it == localId || it in neighbors }
-                val actualNext = if (valid) next else next.base(id)
+                val actualNext = if (valid) next else next.base(local, id)
                 val candidateValue = comparator.compare(current.best, actualNext.best)
                 when {
                     candidateValue > 0 -> current
@@ -48,7 +53,7 @@ object SelfStabilizingGossip {
             }
             env["neighbors-size"] = gossip.neighbors.size
             env["path-length"] = (result.path + localId).size
-            GossipValue(result.best, local, result.path + localId)
+            result.addHop(localId)
         }.best
     }
 }

@@ -1,22 +1,20 @@
 package it.unibo.collektive.examples.gossip
 
-import it.unibo.collektive.aggregate.Field.Companion.foldWithId
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
-import it.unibo.collektive.aggregate.Field.Companion.foldWithId
 import it.unibo.collektive.stdlib.fields.fold
-import it.unibo.collektive.stdlib.spreading.GossipValue
+import kotlin.math.max
 
 /**
  * A collection of self-stabilizing gossip algorithms.
  */
 object SelfStabilizingGossip {
     /*
-         * The best value exchanged in the gossip algorithm.
-         * It contains the [best] value evaluated yet,
-         * the [local] value of the node, and the [path] of nodes through which it has passed.
-         */
+     * The best value exchanged in the gossip algorithm.
+     * It contains the [best] value evaluated yet
+     * and the [path] of nodes through which it has passed.
+     */
     data class GossipValue<ID : Comparable<ID>, Value>(
         @JvmField
         val best: Value,
@@ -34,7 +32,6 @@ object SelfStabilizingGossip {
      * as computed by [comparator].
      */
     inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.gossip(
-        env: EnvironmentVariables,
         local: Value,
         comparator: Comparator<Value>,
     ): Value {
@@ -51,9 +48,33 @@ object SelfStabilizingGossip {
                     else -> actualNext
                 }
             }
-            env["neighbors-size"] = gossip.neighbors.size
-            env["path-length"] = (result.path + localId).size
             result.addHop(localId)
+        }.best
+    }
+
+    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.gossip(
+        env: EnvironmentVariables,
+        local: Value,
+        crossinline selector: (Value, Value) -> Value = { first, _ -> first }, // Default to identity function
+    ): Value {
+        val localGossip = GossipValue<ID, Value>(best = local)
+        return share(localGossip) { gossip ->
+            val neighbors = gossip.neighbors.toSet()
+            val result = gossip.fold(localGossip) { current, (id, next) ->
+                val valid = next.path.asReversed().asSequence().drop(1).none { it == localId || it in neighbors }
+                val actualNext = if (valid) next else next.base(local, id)
+                val candidateValue = selector(current.best, actualNext.best)
+                when {
+                    current.best == actualNext.best -> listOf(current, actualNext).minBy { it.path.size }
+                    candidateValue == current.best -> current
+                    else -> actualNext
+                }
+            }
+            val newres = result.addHop(localId)
+            env["neighbors-size"] = gossip.neighbors.size
+            env["path"] = newres.path
+            env["path-length"] = (newres.path).size
+            newres
         }.best
     }
 }

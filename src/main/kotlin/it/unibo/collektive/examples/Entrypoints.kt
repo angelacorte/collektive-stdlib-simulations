@@ -7,7 +7,30 @@ import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 import it.unibo.collektive.examples.gossip.FirstImplementationGossip.firstGossip
 import it.unibo.collektive.examples.gossip.SecondImplementationGossip.secondGossip
 import it.unibo.collektive.examples.gossip.SelfStabilizingGossip.gossip
+import it.unibo.collektive.examples.gossip.gossipCast
+import it.unibo.collektive.stdlib.consensus.boundedElection
+import it.unibo.collektive.stdlib.consensus.globalElection
+import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
+import it.unibo.collektive.stdlib.spreading.gradientCast
+import it.unibo.collektive.stdlib.spreading.hopGradientCast
 import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
+import it.unibo.collektive.stdlib.util.hops
+import kotlin.math.max
+import kotlin.math.min
+
+fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int {
+    return gossipCast(
+        local = localId,
+        bottom = 0.0,
+        top = Double.POSITIVE_INFINITY,
+        metric = hops().toDouble(),
+        accumulateData = { _, _, data ->
+            env["data"] = data
+            min(data, localId).also { env["best-value"] = it }
+        },
+        accumulateDistance = Double::plus,
+    )
+}
 
 /**
  * Entrypoint for the gossip simulation that uses the gossipMax function defined into Collektive's DSl.
@@ -17,7 +40,6 @@ fun Aggregate<Int>.gossipEntrypoint(
     randomGenerator: RandomGenerator,
     timeSensor: TimeSensor,
 ) = gossip(
-    env,
     localId,
 //    randomFromTimeElapsed(timeSensor, randomGenerator)
 //        .also { env["local-value"] = it },

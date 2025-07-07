@@ -8,9 +8,9 @@
 
 package it.unibo.collektive.examples.timeReplication
 
+import it.unibo.collektive.aggregate.Field
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
-import it.unibo.collektive.aggregate.Field
 import it.unibo.collektive.stdlib.fields.maxValue
 import kotlinx.datetime.Instant
 import kotlinx.datetime.Instant.Companion.DISTANT_PAST
@@ -27,7 +27,10 @@ import kotlin.time.toDuration
  * The timer is shared among all devices,
  * and it is alive for [timeToLive] units of time.
  */
-fun <ID : Comparable<ID>> Aggregate<ID>.sharedTimer(timeToLive: Duration, processTime: Duration): Duration =
+fun <ID : Comparable<ID>> Aggregate<ID>.sharedTimer(
+    timeToLive: Duration,
+    processTime: Duration,
+): Duration =
     share(ZERO) { clock: Field<ID, Duration> ->
         val clockPerceived = clock.maxValue(base = ZERO)
         if (clockPerceived <= clock.local.value) {
@@ -44,7 +47,10 @@ fun <ID : Comparable<ID>> Aggregate<ID>.sharedTimer(timeToLive: Duration, proces
  * It returns `true` if the timer has completed a full cycle,
  * `false` otherwise.
  */
-private fun <ID : Comparable<ID>> Aggregate<ID>.cyclicTimerWithDecay(timeout: Duration, decayRate: Duration): Boolean =
+private fun <ID : Comparable<ID>> Aggregate<ID>.cyclicTimerWithDecay(
+    timeout: Duration,
+    decayRate: Duration,
+): Boolean =
     evolve(timeout) { timer ->
         if (timer == ZERO) {
             timeout
@@ -57,12 +63,13 @@ private fun <ID : Comparable<ID>> Aggregate<ID>.cyclicTimerWithDecay(timeout: Du
  * A timer that decays over time.
  * It starts from a [timeout] and decreases by [decayRate].
  */
-fun <ID : Comparable<ID>> Aggregate<ID>.countDownWithDecay(timeout: Duration, decayRate: Duration): Duration =
-    timer(timeout, ZERO) { time -> time - decayRate }
+fun <ID : Comparable<ID>> Aggregate<ID>.countDownWithDecay(
+    timeout: Duration,
+    decayRate: Duration,
+): Duration = timer(timeout, ZERO) { time -> time - decayRate }
 
 // shared clock -> Instant -> il device piu veloce sta a T
 // sharedTimeelapsed -> Duration -> sono passati deltaT secondi dal momento x
-
 
 /**
  * A shared clock progressing evenly across a network, at the pace set by the fastest device.
@@ -74,7 +81,7 @@ fun <ID : Comparable<ID>> Aggregate<ID>.sharedClock(deltaTime: Instant): Instant
         val maxTimePerceived = clock.maxValue(base = DISTANT_PAST)
         if (maxTimePerceived <= clock.local.value) {
             // currently as fast as the fastest device in the neighborhood, so keep on counting time
-            deltaTime //+ clock.localValue
+            deltaTime // + clock.localValue
         } else {
             maxTimePerceived
         }

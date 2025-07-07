@@ -21,6 +21,7 @@ fun <ID : Comparable<ID>> Aggregate<ID>.timer(
     decay: Duration,
     lowerBound: Duration = Duration.ZERO,
     decayRate: (timeLeft: Duration) -> Duration = { it - decay },
-): Duration = evolve(initial) { timeLeft ->
-    decayRate(timeLeft).coerceIn(lowerBound, initial)
-}
+): Duration =
+    evolve(initial) { timeLeft ->
+        decayRate(timeLeft).coerceIn(lowerBound, initial)
+    }

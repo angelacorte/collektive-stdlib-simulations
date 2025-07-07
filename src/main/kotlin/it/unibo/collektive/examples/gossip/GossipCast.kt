@@ -123,12 +123,7 @@ inline fun <reified Distance : Comparable<Distance>, reified ID : Any, reified V
                 ?.takeUnless { localId in path.hops }
                 ?.takeUnless { path.isInvalidViaShortcut(accDist, neighbors, neighborAccumulatedDistances) }
                 ?.run { accDist to lazy { update(id, distance, bottom, top, accumulateDistance, accumulateData) } }
-        }.excludeSelf()
-        .values
-        .asSequence()
-        .filterNotNull()
-        .sortedBy { it.first }
-        .map { it.second.value }
+        }.excludeSelf().values.asSequence().filterNotNull().sortedBy { it.first }.map { it.second.value }
 }
 
 data class GradientPath<ID : Any, Value, Distance : Comparable<Distance>>(

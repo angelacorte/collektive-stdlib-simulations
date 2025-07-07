@@ -2,9 +2,7 @@ package it.unibo.collektive.examples.gossip
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
-import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.stdlib.fields.fold
-import kotlin.math.max
 
 /**
  * A collection of self-stabilizing gossip algorithms.
@@ -22,7 +20,11 @@ object SelfStabilizingGossip {
         @JvmField
         val path: List<ID> = emptyList(),
     ) {
-        fun base(local: Value, id: ID) = GossipValue(local, listOf(id))
+        fun base(
+            local: Value,
+            id: ID,
+        ) = GossipValue(local, listOf(id))
+
         fun addHop(id: ID) = GossipValue(best, path + id)
     }
 
@@ -38,16 +40,22 @@ object SelfStabilizingGossip {
         val localGossip = GossipValue<ID, Value>(best = local)
         return share(localGossip) { gossip ->
             val neighbors = gossip.neighbors.toSet()
-            val result = gossip.fold(localGossip) { current, (id, next) ->
-                val valid = next.path.asReversed().asSequence().drop(1).none { it == localId || it in neighbors }
-                val actualNext = if (valid) next else next.base(local, id)
-                val candidateValue = comparator.compare(current.best, actualNext.best)
-                when {
-                    candidateValue > 0 -> current
-                    candidateValue == 0 -> listOf(current, next).minBy { it.path.size }
-                    else -> actualNext
+            val result =
+                gossip.fold(localGossip) { current, (id, next) ->
+                    val valid =
+                        next.path
+                            .asReversed()
+                            .asSequence()
+                            .drop(1)
+                            .none { it == localId || it in neighbors }
+                    val actualNext = if (valid) next else next.base(local, id)
+                    val candidateValue = comparator.compare(current.best, actualNext.best)
+                    when {
+                        candidateValue > 0 -> current
+                        candidateValue == 0 -> listOf(current, next).minBy { it.path.size }
+                        else -> actualNext
+                    }
                 }
-            }
             result.addHop(localId)
         }.best
     }
@@ -59,16 +67,22 @@ object SelfStabilizingGossip {
         val localGossip = GossipValue<ID, Value>(best = local)
         return share(localGossip) { gossip ->
             val neighbors = gossip.neighbors.toSet()
-            val result = gossip.fold(localGossip) { current, (id, next) ->
-                val valid = next.path.asReversed().asSequence().drop(1).none { it == localId || it in neighbors }
-                val actualNext = if (valid) next else next.base(local, id)
-                val candidateValue = selector(current.best, actualNext.best)
-                when {
-                    current.best == actualNext.best -> listOf(current, actualNext).minBy { it.path.size }
-                    candidateValue == current.best -> current
-                    else -> actualNext
+            val result =
+                gossip.fold(localGossip) { current, (id, next) ->
+                    val valid =
+                        next.path
+                            .asReversed()
+                            .asSequence()
+                            .drop(1)
+                            .none { it == localId || it in neighbors }
+                    val actualNext = if (valid) next else next.base(local, id)
+                    val candidateValue = selector(current.best, actualNext.best)
+                    when {
+                        current.best == actualNext.best -> listOf(current, actualNext).minBy { it.path.size }
+                        candidateValue == current.best -> current
+                        else -> actualNext
+                    }
                 }
-            }
             result.addHop(localId)
         }.best
     }

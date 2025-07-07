@@ -9,10 +9,9 @@ import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 class TimeSensorProperty<T : Any, P : Position<P>>(
     private val environment: Environment<T, P>,
     override val node: Node<T>,
-) : TimeSensor, NodeProperty<T> {
-    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> =
-        TimeSensorProperty(environment, node)
+) : TimeSensor,
+    NodeProperty<T> {
+    override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = TimeSensorProperty(environment, node)
 
-    override fun getTimeAsDouble(): Double =
-        environment.simulation.time.toDouble()
+    override fun getTimeAsDouble(): Double = environment.simulation.time.toDouble()
 }

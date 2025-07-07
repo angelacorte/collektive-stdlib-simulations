@@ -8,29 +8,27 @@ import it.unibo.collektive.examples.gossip.FirstImplementationGossip.firstGossip
 import it.unibo.collektive.examples.gossip.SecondImplementationGossip.secondGossip
 import it.unibo.collektive.examples.gossip.SelfStabilizingGossip.gossip
 import it.unibo.collektive.examples.gossip.gossipCast
-import it.unibo.collektive.stdlib.consensus.boundedElection
+import it.unibo.collektive.examples.gossip.gradientCast
 import it.unibo.collektive.stdlib.consensus.globalElection
 import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
-import it.unibo.collektive.stdlib.spreading.gradientCast
-import it.unibo.collektive.stdlib.spreading.hopGradientCast
 import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
+import it.unibo.collektive.stdlib.util.Reducer
 import it.unibo.collektive.stdlib.util.hops
-import kotlin.math.max
 import kotlin.math.min
 
-fun Aggregate<Int>.gradientEntrypoint(): Int {
+fun Aggregate<Double>.gradientEntrypoint(): Double {
     val leader = globalElection() == localId
+    val accDist: Reducer<Double> = Double::plus
     return gradientCast(
         source = leader,
         local = localId,
         bottom = 0.0,
         top = Double.POSITIVE_INFINITY,
         metric = hops().toDouble(),
-        maxDiameter = Int.MAX_VALUE,
-        accumulateData = { _, _, data ->
-            data
+        accumulateData = { neighborToSource, hereToNeighbor, data ->
+            accDist(neighborToSource, hereToNeighbor)
         },
-        accumulateDistance = Double::plus,
+        accumulateDistance = accDist,
     )
 }
 
@@ -96,42 +94,41 @@ fun Aggregate<Int>.secondGossipEntrypoint(
 /**
  * Entrypoint for the simulation of the `isHappening` gossip function defined into Collektive's DSl.
  */
-fun Aggregate<Int>.isHappeningGossipEntrypoint(
-    timeSensor: TimeSensor,
-) = isHappeningAnywhere {
-    (timeSensor.getTimeAsDouble() % 100 < 50) && (localId % 2 == 0)
-}
+fun Aggregate<Int>.isHappeningGossipEntrypoint(timeSensor: TimeSensor) =
+    isHappeningAnywhere {
+        (timeSensor.getTimeAsDouble() % 100 < 50) && (localId % 2 == 0)
+    }
 
 /**
  * Entrypoint for the simulation of the `sharingTime` function defined into Collektive's DSl.
  */
-//fun Aggregate<Int>.sharedTimerEntrypoint(absoluteTime: AbsoluteTime) =
+// fun Aggregate<Int>.sharedTimerEntrypoint(absoluteTime: AbsoluteTime) =
 //    sharedTimer(5.toDuration(DurationUnit.SECONDS), absoluteTime.getDeltaTime())
 
 /**
  * Entrypoint for the simulation of the `timeReplicated` function defined into Collektive's DSl,
  * it replicates the non-self-stabilizing gossip algorithm defined into Collektive's DSl.
  */
-//fun Aggregate<Int>.timeReplicationEntrypoint(
+// fun Aggregate<Int>.timeReplicationEntrypoint(
 //    absoluteTime: AbsoluteTime,
 //    env: EnvironmentVariables,
 //    randomGenerator: RandomGenerator,
 //    timeSensor: TimeSensor,
-//) {
+// ) {
 //    val rand = randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it }
 //    timeReplicated(
 //        absoluteTime = absoluteTime,
 //        process = {
 //                  nssg(rand) { first, second -> if (first >= second) first else second }
 //                      .also { env["best-value"] = it }
-////        nonSelfStabilizingGossip(
-////            randomFromTimeElapsed(timeSensor, randomGenerator)
-////                .also { env["local-value"] = it },
-////        ) { first, second -> if (first <= second) first else second }
-////            .also { env["best-value"] = it }
+// //        nonSelfStabilizingGossip(
+// //            randomFromTimeElapsed(timeSensor, randomGenerator)
+// //                .also { env["local-value"] = it },
+// //        ) { first, second -> if (first <= second) first else second }
+// //            .also { env["best-value"] = it }
 //        },
 //        default = 42,
 //        timeToLive = 5.toDuration(DurationUnit.SECONDS),
 //        maxReplicas = 7,
 //    )
-//}
+// }

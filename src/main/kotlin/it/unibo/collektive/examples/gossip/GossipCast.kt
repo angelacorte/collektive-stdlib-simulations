@@ -5,14 +5,44 @@ import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.DelicateCollektiveApi
 import it.unibo.collektive.aggregate.api.exchange
 import it.unibo.collektive.aggregate.api.mapNeighborhood
+import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.stdlib.util.Reducer
 import it.unibo.collektive.stdlib.util.coerceIn
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
+import kotlin.sequences.map
 
 @OptIn(DelicateCollektiveApi::class)
 @JvmOverloads
 inline fun <reified ID : Any, reified Value, reified Distance : Comparable<Distance>> Aggregate<ID>.gossipCast(
+    local: Value,
+    bottom: Distance,
+    top: Distance,
+    metric: Field<ID, Distance>,
+    maxDiameter: Int = Int.MAX_VALUE,
+    noinline selector: (Value, Value) -> Value = { first, _, -> first }, // identity function
+    crossinline accumulateDistance: Reducer<Distance>,
+): Value {
+    val coercedMetric = metric.coerceIn(bottom, top)
+    val localCandidate = GradientPath<ID, Value, Distance>(bottom, local, emptyList())
+    return share(localCandidate) { candidate ->
+        val noLoops = nonLoopingPaths(candidate, coercedMetric, maxDiameter, bottom, top, {_, _, data -> selector(local, data) }, accumulateDistance)
+        val coherent = pathCoherence(noLoops)
+        coherent.fold(localCandidate) { current, next ->
+            val candidateValue = selector(current.data, next.data)
+            when {
+                current.data == next.data -> listOf(current, next).minBy { it.hops.size }
+                candidateValue == current.data -> current
+                else -> next
+            }
+        }
+    }.data ?: local
+}
+
+@OptIn(DelicateCollektiveApi::class)
+@JvmOverloads
+inline fun <reified ID : Any, reified Value, reified Distance : Comparable<Distance>> Aggregate<ID>.gradientCast(
+    source: Boolean,
     local: Value,
     bottom: Distance,
     top: Distance,
@@ -23,56 +53,77 @@ inline fun <reified ID : Any, reified Value, reified Distance : Comparable<Dista
     crossinline accumulateDistance: Reducer<Distance>,
 ): Value {
     val coercedMetric = metric.coerceIn(bottom, top)
-    val fromLocal = GradientPath<ID, Value, Distance>(bottom, local, emptyList())
-    return exchange(fromLocal) { neighborData: Field<ID, GradientPath<ID, Value, Distance>> ->
-        val neighbors = neighborData.neighbors
+    val localCandidate = if(source) GradientPath<ID, Value, Distance>(bottom, local, emptyList()) else null
+    return exchange(localCandidate) { neighborData: Field<ID, GradientPath<ID, Value, Distance>?> ->
         // Accumulated distances with neighbors, to be used to exclude invalid paths
-        val accDistances = neighborData.alignedMapValues(coercedMetric) { path, distance ->
-            accumulateDistance(path.distance, distance)
+        val noLoops: Sequence<GradientPath<ID, Value, Distance>> = nonLoopingPaths<Distance, ID, Value>(
+            neighborData,
+            coercedMetric,
+            maxDiameter,
+            bottom,
+            top,
+            accumulateData,
+            accumulateDistance
+        )
+        val nonLoopingPaths =  noLoops //if (source == null) noLoops + localCandidate else
+        val best = when {
+            localCandidate != null -> sequenceOf(localCandidate)
+            else -> {
+                pathCoherence<Distance, ID, Value>(nonLoopingPaths)
+            }
         }
-        val neighborAccumulatedDistances = accDistances.excludeSelf()
-        val nonLoopingPaths = neighborData.alignedMap(accDistances, coercedMetric) { id, path, accDist, distance ->
-            path.takeUnless { id == localId }
-                .takeUnless { path.length > maxDiameter }
-                .takeUnless { localId in path.hops }
-                .takeUnless { path.isInvalidViaShortcut(accDist, neighbors, neighborAccumulatedDistances) }
-                ?.run { accDist to lazy { update(id, distance, bottom, top, accumulateDistance, accumulateData) } }
-        }.excludeSelf().values.asSequence().filterNotNull().sortedBy { it.first }.map { it.second.value }
-//        val best = when {
-//            fromLocal != null -> sequenceOf(fromLocal)
-//            else -> {
-        val pathsHopSets by lazy { nonLoopingPaths.associate { it.nextHop to it.hops.toSet() } }
-        val best = nonLoopingPaths.filter { reference ->
-            /*
-             * Path-coherence: paths that contain inconsistent information must be removed.
-             * In particular, if some path passes through A and then B, and another reaches the source
-             * through B and then A, we must keep only the shortest
-             * (unless they have the same path-length, namely the network is symmetric).
-             */
-            val refSize = reference.length
-            refSize <= 1 ||
-                nonLoopingPaths.all { other ->
-                    other.length > refSize ||
-                            // the current reference is shorter
-                            // same hop count, same distance (symmetric network or same path)
-                            (other.length == refSize && other.distance == reference.distance) ||
-                            // all common hops appear in the same order
-                            reference.allCommonHopsAppearInTheSameOrderOf(other, pathsHopSets)
-                }
-        }
-//            }
-//        }
         val bestLazyList = best.map { lazy { it } }.toList()
-//        mapNeighborhood { neighborID ->
-//            val gp: GradientPath<ID, Value, Distance> = bestLazyList.firstOrNull { it.value.hops.lastOrNull() != neighborID }?.value ?: fromLocal
-//            gp
-//        }
-        mapNeighborhood { neighbor -> bestLazyList.firstOrNull { it.value.hops.lastOrNull() != neighbor }?.value ?: fromLocal }
-    }.local.value.data// ?: local
+        mapNeighborhood { neighbor -> bestLazyList.firstOrNull { it.value.hops.lastOrNull() != neighbor }?.value }
+    }.local.value?.data ?: local
 }
 
-@PublishedApi
-internal data class GradientPath<ID : Any, Value, Distance : Comparable<Distance>>(
+inline fun <reified Distance : Comparable<Distance>, reified ID : Any, reified Value> pathCoherence(
+    nonLoopingPaths: Sequence<GradientPath<ID, Value, Distance>>
+): Sequence<GradientPath<ID, Value, Distance>> {
+    val pathsHopSets = nonLoopingPaths.associate { it.nextHop to it.hops.toSet() }
+    return nonLoopingPaths.filter { reference ->
+        /*
+                     * Path-coherence: paths that contain inconsistent information must be removed.
+                     * In particular, if some path passes through A and then B, and another reaches the source
+                     * through B and then A, we must keep only the shortest
+                     * (unless they have the same path-length, namely the network is symmetric).
+                     */
+        val refSize = reference.length
+        refSize <= 1 || nonLoopingPaths.all { other ->
+            // the current reference is shorter
+            other.length > refSize ||
+                    // same hop count, same distance (symmetric network or same path)
+                    (other.length == refSize && other.distance == reference.distance) ||
+                    // all common hops appear in the same order
+                    reference.allCommonHopsAppearInTheSameOrderOf(other, pathsHopSets)
+        }
+    }
+}
+
+inline fun <reified Distance : Comparable<Distance>, reified ID : Any, reified Value> Aggregate<ID>.nonLoopingPaths(
+    neighborData: Field<ID, GradientPath<ID, Value, Distance>?>,
+    coercedMetric: Field<ID, Distance>,
+    maxDiameter: Int,
+    bottom: Distance,
+    top: Distance,
+    crossinline accumulateData: (Distance, Distance, Value) -> Value,
+    crossinline accumulateDistance: Reducer<Distance>
+): Sequence<GradientPath<ID, Value, Distance>> {
+    val neighbors = neighborData.neighbors
+    val accDistances = neighborData.alignedMapValues(coercedMetric) { path, distance ->
+        path?.distance?.let { accumulateDistance(it, distance) }
+    }
+    val neighborAccumulatedDistances = accDistances.excludeSelf()
+    return neighborData.alignedMap(accDistances, coercedMetric) { id, path, accDist, distance ->
+        path?.takeUnless { id == localId }
+            ?.takeUnless { path.length > maxDiameter }
+            ?.takeUnless { localId in path.hops }
+            ?.takeUnless { path.isInvalidViaShortcut(accDist, neighbors, neighborAccumulatedDistances) }
+            ?.run { accDist to lazy { update(id, distance, bottom, top, accumulateDistance, accumulateData) } }
+    }.excludeSelf().values.asSequence().filterNotNull().sortedBy { it.first }.map { it.second.value }
+}
+
+data class GradientPath<ID : Any, Value, Distance : Comparable<Distance>>(
     @JvmField
     val distance: Distance,
     @JvmField
@@ -139,10 +190,10 @@ internal data class GradientPath<ID : Any, Value, Distance : Comparable<Distance
         neighbors: Set<ID>,
         neighborAccumulatedDistances: Map<ID, Distance?>,
     ): Boolean = accDist != null &&
-            hops.asSequence()
-                .filter { it in neighbors }
-                .map { neighborAccumulatedDistances[it] }
-                .any { it == null || it < accDist }
+        hops.asSequence()
+            .filter { it in neighbors }
+            .map { neighborAccumulatedDistances[it] }
+            .any { it == null || it < accDist }
 
     // Check if all hops that appear in both paths have the same order
     @PublishedApi

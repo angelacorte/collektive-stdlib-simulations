@@ -18,19 +18,34 @@ import it.unibo.collektive.stdlib.util.hops
 import kotlin.math.max
 import kotlin.math.min
 
-fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int {
-    return gossipCast(
+fun Aggregate<Int>.gradientEntrypoint(): Int {
+    val leader = globalElection() == localId
+    return gradientCast(
+        source = leader,
         local = localId,
         bottom = 0.0,
         top = Double.POSITIVE_INFINITY,
         metric = hops().toDouble(),
+        maxDiameter = Int.MAX_VALUE,
         accumulateData = { _, _, data ->
-            env["data"] = data
-            min(data, localId).also { env["best-value"] = it }
+            data
         },
         accumulateDistance = Double::plus,
     )
 }
+
+fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int =
+    gossipCast(
+        local = localId,
+        bottom = 0.0,
+        top = Double.POSITIVE_INFINITY,
+        metric = hops().toDouble(),
+        maxDiameter = Int.MAX_VALUE,
+        selector = { first, second ->
+            min(first, second).also { env["best-value"] = it }
+        },
+        accumulateDistance = Double::plus,
+    )
 
 /**
  * Entrypoint for the gossip simulation that uses the gossipMax function defined into Collektive's DSl.

@@ -53,7 +53,6 @@ object SelfStabilizingGossip {
     }
 
     inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.gossip(
-        env: EnvironmentVariables,
         local: Value,
         crossinline selector: (Value, Value) -> Value = { first, _ -> first }, // Default to identity function
     ): Value {
@@ -70,11 +69,7 @@ object SelfStabilizingGossip {
                     else -> actualNext
                 }
             }
-            val newres = result.addHop(localId)
-            env["neighbors-size"] = gossip.neighbors.size
-            env["path"] = newres.path
-            env["path-length"] = (newres.path).size
-            newres
+            result.addHop(localId)
         }.best
     }
 }

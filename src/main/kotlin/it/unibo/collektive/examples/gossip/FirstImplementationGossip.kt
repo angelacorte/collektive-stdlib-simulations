@@ -27,7 +27,9 @@ object FirstImplementationGossip {
     }
 
     data class GossipValue<ID : Comparable<ID>, Type>(
+        @JvmField
         val value: Type,
+        @JvmField
         val path: List<ID>,
     )
 }

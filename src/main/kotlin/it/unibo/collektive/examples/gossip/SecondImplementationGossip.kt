@@ -2,9 +2,7 @@ package it.unibo.collektive.examples.gossip
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
-import it.unibo.collektive.aggregate.values
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
-import it.unibo.collektive.stdlib.collapse.fold
 
 object SecondImplementationGossip {
     inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.secondGossip(
@@ -31,8 +29,11 @@ object SecondImplementationGossip {
     }
 
     data class GossipValue<ID : Comparable<ID>, Value>(
+        @JvmField
         val best: Value,
+        @JvmField
         val local: Value,
+        @JvmField
         val path: List<ID> = emptyList(),
     ) {
         fun base(id: ID) = GossipValue(local, local, listOf(id))

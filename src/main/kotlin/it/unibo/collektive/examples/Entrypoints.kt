@@ -11,6 +11,7 @@ import it.unibo.collektive.examples.gossip.gossipCast
 import it.unibo.collektive.examples.gossip.gradientCast
 import it.unibo.collektive.stdlib.consensus.globalElection
 import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
+import it.unibo.collektive.stdlib.spreading.gossipMax
 import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
 import it.unibo.collektive.stdlib.util.Reducer
 import it.unibo.collektive.stdlib.util.hops
@@ -44,6 +45,10 @@ fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int =
         },
         accumulateDistance = Double::plus,
     )
+
+fun Aggregate<Int>.gossipStdlibEntrypoint(env: EnvironmentVariables) = gossipMax(localId).also {
+    env["best-value"] = it
+}
 
 /**
  * Entrypoint for the gossip simulation that uses the gossipMax function defined into Collektive's DSl.

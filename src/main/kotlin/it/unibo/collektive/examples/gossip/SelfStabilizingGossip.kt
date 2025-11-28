@@ -28,39 +28,7 @@ object SelfStabilizingGossip {
         fun addHop(id: ID) = GossipValue(best, path + id)
     }
 
-    /**
-     * Self-stabilizing gossip-max.
-     * Spreads across all (aligned) devices the current maximum [Value] of [local],
-     * as computed by [comparator].
-     */
-    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.gossip(
-        local: Value,
-        comparator: Comparator<Value>,
-    ): Value {
-        val localGossip = GossipValue<ID, Value>(best = local)
-        return share(localGossip) { gossip ->
-            val neighbors = gossip.neighbors.ids.set
-            val result =
-                gossip.all.fold(localGossip) { current, (id, next) ->
-                    val valid =
-                        next.path
-                            .asReversed()
-                            .asSequence()
-                            .drop(1)
-                            .none { it == localId || it in neighbors }
-                    val actualNext = if (valid) next else next.base(local, id)
-                    val candidateValue = comparator.compare(current.best, actualNext.best)
-                    when {
-                        candidateValue > 0 -> current
-                        candidateValue == 0 -> listOf(current, next).minBy { it.path.size }
-                        else -> actualNext
-                    }
-                }
-            result.addHop(localId)
-        }.best
-    }
-
-    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.gossip(
+    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.selfStabGossip(
         local: Value,
         crossinline selector: (Value, Value) -> Value = { first, _ -> first }, // Default to identity function
     ): Value {
@@ -69,13 +37,13 @@ object SelfStabilizingGossip {
             val neighbors = gossip.neighbors.ids.set
             val result =
                 gossip.all.fold(localGossip) { current, (id, next) ->
-                    val valid =
+                    val nextIsValidPath =
                         next.path
                             .asReversed()
                             .asSequence()
-                            .drop(1)
+                            .drop(1) // remove the entry of my neighbor
                             .none { it == localId || it in neighbors }
-                    val actualNext = if (valid) next else next.base(local, id)
+                    val actualNext = if (nextIsValidPath) next else GossipValue(local, listOf(id))
                     val candidateValue = selector(current.best, actualNext.best)
                     when {
                         current.best == actualNext.best -> listOf(current, actualNext).minBy { it.path.size }

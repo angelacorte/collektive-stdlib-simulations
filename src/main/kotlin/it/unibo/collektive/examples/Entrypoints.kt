@@ -6,33 +6,18 @@ import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 import it.unibo.collektive.examples.gossip.FirstImplementationGossip.firstGossip
 import it.unibo.collektive.examples.gossip.SecondImplementationGossip.secondGossip
-import it.unibo.collektive.examples.gossip.SelfStabilizingGossip.gossip
+import it.unibo.collektive.examples.gossip.SelfStabilizingGossip.selfStabGossip
 import it.unibo.collektive.examples.gossip.gossipCast
-import it.unibo.collektive.examples.gossip.gradientCast
-import it.unibo.collektive.stdlib.consensus.globalElection
 import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
 import it.unibo.collektive.stdlib.spreading.gossipMax
 import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
-import it.unibo.collektive.stdlib.util.Reducer
 import it.unibo.collektive.stdlib.util.hops
+import kotlin.math.max
 import kotlin.math.min
 
-fun Aggregate<Double>.gradientEntrypoint(): Double {
-    val leader = globalElection() == localId
-    val accDist: Reducer<Double> = Double::plus
-    return gradientCast(
-        source = leader,
-        local = localId,
-        bottom = 0.0,
-        top = Double.POSITIVE_INFINITY,
-        metric = hops().toDouble(),
-        accumulateData = { neighborToSource, hereToNeighbor, data ->
-            accDist(neighborToSource, hereToNeighbor)
-        },
-        accumulateDistance = accDist,
-    )
-}
-
+/**
+ * Gossip that uses common path evaluation logic with gradient.
+ */
 fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int =
     gossipCast(
         local = localId,
@@ -46,24 +31,28 @@ fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int =
         accumulateDistance = Double::plus,
     )
 
+/**
+ * Uses Gossip in the standard library.
+ */
 fun Aggregate<Int>.gossipStdlibEntrypoint(env: EnvironmentVariables) = gossipMax(localId).also {
     env["best-value"] = it
 }
 
 /**
- * Entrypoint for the gossip simulation that uses the gossipMax function defined into Collektive's DSl.
+ * Uses last version of self-stabilizing gossip before path-gradient optimization.
  */
 fun Aggregate<Int>.gossipEntrypoint(
     env: EnvironmentVariables,
     randomGenerator: RandomGenerator,
     timeSensor: TimeSensor,
-) = gossip(
+) = selfStabGossip(
     localId,
 //    randomFromTimeElapsed(timeSensor, randomGenerator)
 //        .also { env["local-value"] = it },
-) { first, second ->
-    second.compareTo(first)
-}.also {
+    selector = { first, second ->
+        max(first, second)
+    },
+) .also {
     env["best-value"] = it
 }
 

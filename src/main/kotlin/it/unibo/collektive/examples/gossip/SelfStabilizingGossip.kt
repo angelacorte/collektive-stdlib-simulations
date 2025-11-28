@@ -16,7 +16,6 @@ object SelfStabilizingGossip {
     data class GossipValue<ID : Comparable<ID>, Value>(
         @JvmField
         val best: Value,
-//        val local: Value,
         @JvmField
         val path: List<ID> = emptyList(),
     ) {

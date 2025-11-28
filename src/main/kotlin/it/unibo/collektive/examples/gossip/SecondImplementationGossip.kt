@@ -1,9 +1,10 @@
 package it.unibo.collektive.examples.gossip
 
-import it.unibo.collektive.aggregate.Field.Companion.foldWithId
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
+import it.unibo.collektive.aggregate.values
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
+import it.unibo.collektive.stdlib.collapse.fold
 
 object SecondImplementationGossip {
     inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.secondGossip(
@@ -14,7 +15,7 @@ object SecondImplementationGossip {
         val local = GossipValue<ID, Value>(initial, initial)
         return share(local) { gossip ->
             val result =
-                gossip.foldWithId(local) { current, id, next ->
+                gossip.neighbors.list.fold(local) { current, (id, next) ->
                     val actualNext = if (localId in next.path) next.base(id) else next
                     val candidateValue = selector.compare(current.best, actualNext.best)
                     when {

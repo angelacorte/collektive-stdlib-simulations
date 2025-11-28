@@ -6,6 +6,9 @@ import it.unibo.collektive.aggregate.api.DelicateCollektiveApi
 import it.unibo.collektive.aggregate.api.exchange
 import it.unibo.collektive.aggregate.api.mapNeighborhood
 import it.unibo.collektive.aggregate.api.share
+import it.unibo.collektive.aggregate.ids
+import it.unibo.collektive.aggregate.toMap
+import it.unibo.collektive.aggregate.values
 import it.unibo.collektive.stdlib.util.Reducer
 import it.unibo.collektive.stdlib.util.coerceIn
 import kotlin.contracts.ExperimentalContracts
@@ -109,12 +112,12 @@ inline fun <reified Distance : Comparable<Distance>, reified ID : Any, reified V
     crossinline accumulateData: (Distance, Distance, Value) -> Value,
     crossinline accumulateDistance: Reducer<Distance>,
 ): Sequence<GradientPath<ID, Value, Distance>> {
-    val neighbors = neighborData.neighbors
+    val neighbors = neighborData.neighbors.ids.set
     val accDistances =
         neighborData.alignedMapValues(coercedMetric) { path, distance ->
             path?.distance?.let { accumulateDistance(it, distance) }
         }
-    val neighborAccumulatedDistances = accDistances.excludeSelf()
+    val neighborAccumulatedDistances = accDistances.neighbors.toMap()
     return neighborData
         .alignedMap(accDistances, coercedMetric) { id, path, accDist, distance ->
             path
@@ -123,7 +126,7 @@ inline fun <reified Distance : Comparable<Distance>, reified ID : Any, reified V
                 ?.takeUnless { localId in path.hops }
                 ?.takeUnless { path.isInvalidViaShortcut(accDist, neighbors, neighborAccumulatedDistances) }
                 ?.run { accDist to lazy { update(id, distance, bottom, top, accumulateDistance, accumulateData) } }
-        }.excludeSelf().values.asSequence().filterNotNull().sortedBy { it.first }.map { it.second.value }
+        }.neighbors.values.sequence.filterNotNull().sortedBy { it.first }.map { it.second.value }
 }
 
 data class GradientPath<ID : Any, Value, Distance : Comparable<Distance>>(

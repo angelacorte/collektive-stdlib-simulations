@@ -2,7 +2,8 @@ package it.unibo.collektive.examples.gossip
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
-import it.unibo.collektive.stdlib.fields.fold
+import it.unibo.collektive.aggregate.ids
+import it.unibo.collektive.stdlib.collapse.fold
 
 /**
  * A collection of self-stabilizing gossip algorithms.
@@ -38,9 +39,9 @@ object SelfStabilizingGossip {
     ): Value {
         val localGossip = GossipValue<ID, Value>(best = local)
         return share(localGossip) { gossip ->
-            val neighbors = gossip.neighbors.toSet()
+            val neighbors = gossip.neighbors.ids.set
             val result =
-                gossip.fold(localGossip) { current, (id, next) ->
+                gossip.all.fold(localGossip) { current, (id, next) ->
                     val valid =
                         next.path
                             .asReversed()
@@ -65,9 +66,9 @@ object SelfStabilizingGossip {
     ): Value {
         val localGossip = GossipValue<ID, Value>(best = local)
         return share(localGossip) { gossip ->
-            val neighbors = gossip.neighbors.toSet()
+            val neighbors = gossip.neighbors.ids.set
             val result =
-                gossip.fold(localGossip) { current, (id, next) ->
+                gossip.all.fold(localGossip) { current, (id, next) ->
                     val valid =
                         next.path
                             .asReversed()

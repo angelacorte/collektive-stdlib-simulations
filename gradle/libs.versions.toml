@@ -24,4 +24,4 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-qa = "org.danilopianini.gradle-kotlin-qa:0.98.2"
 taskTree = "com.dorongold.task-tree:4.0.1"
 collektive = { id = "it.unibo.collektive.collektive-plugin", version.ref = "collektive" }
-gitSemVer = { id = "org.danilopianini.git-sensitive-semantic-versioning", version = "4.0.2" }
+gitSemVer = { id = "org.danilopianini.git-sensitive-semantic-versioning", version = "5.1.8" }

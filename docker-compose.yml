@@ -1,6 +1,6 @@
 services:
   prepare:
-    image: alpine:3.21.2
+    image: alpine:3.21.5
     volumes:
       - .:/experiment:rw
     entrypoint: /bin/sh -c
@@ -77,7 +77,7 @@ services:
         condition: service_completed_successfully
       prepare:
         condition: service_completed_successfully
-    image: alpine:3.21.2
+    image: alpine:3.21.5
     volumes:
       - .:/experiment:rw
     entrypoint: /bin/sh -c

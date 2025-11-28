@@ -26,7 +26,7 @@ _pool: &program
     actions:
       - type: RunCollektiveProgram
         parameters: [it.unibo.collektive.examples.EntrypointsKt.secondGossipEntrypoint]
-  - { type: Event, time-distribution: 10, actions: { type: LevyWalk, parameters: [ *walk-speed ] } }
+#  - { type: Event, time-distribution: 10, actions: { type: LevyWalk, parameters: [ *walk-speed ] } }
 
 deployments:
   - type: Rectangle
@@ -41,27 +41,27 @@ terminate:
   type: AfterTime
   parameters: 250
 
-export:
-  - type: CSVExporter
-    parameters:
-      fileNameRoot: "second-gossip"
-      interval: 1.0
-      exportPath: "data"
-    data:
-      - time
-      - molecule: best-value
-        aggregators: [min, max, mean, stdev]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: local-value
-        aggregators: [ min, max, mean, stdev ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: path-length
-        aggregators: [ min, max, mean, stdev ]
-        value-filter: onlyfinite
-        precision: 3
-      - molecule: neighbors-size
-        aggregators: [ min, max, mean, stdev ]
-        value-filter: onlyfinite
-        precision: 3
+#export:
+#  - type: CSVExporter
+#    parameters:
+#      fileNameRoot: "second-gossip"
+#      interval: 1.0
+#      exportPath: "data"
+#    data:
+#      - time
+#      - molecule: best-value
+#        aggregators: [min, max, mean, stdev]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: local-value
+#        aggregators: [ min, max, mean, stdev ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: path-length
+#        aggregators: [ min, max, mean, stdev ]
+#        value-filter: onlyfinite
+#        precision: 3
+#      - molecule: neighbors-size
+#        aggregators: [ min, max, mean, stdev ]
+#        value-filter: onlyfinite
+#        precision: 3

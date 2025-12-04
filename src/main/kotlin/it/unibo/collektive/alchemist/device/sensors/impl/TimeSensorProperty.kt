@@ -5,6 +5,9 @@ import it.unibo.alchemist.model.Node
 import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
 class TimeSensorProperty<T : Any, P : Position<P>>(
     private val environment: Environment<T, P>,
@@ -14,4 +17,10 @@ class TimeSensorProperty<T : Any, P : Position<P>>(
     override fun cloneOnNewNode(node: Node<T>): NodeProperty<T> = TimeSensorProperty(environment, node)
 
     override fun getTimeAsDouble(): Double = environment.simulation.time.toDouble()
+
+    @OptIn(ExperimentalTime::class)
+    override fun getTimeAsInstant(): Instant {
+        val time: Double = environment.simulation.time.toDouble()
+        return Instant.DISTANT_PAST + time.seconds
+    }
 }

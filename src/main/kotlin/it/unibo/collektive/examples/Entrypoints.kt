@@ -1,19 +1,30 @@
 package it.unibo.collektive.examples
 
+import it.unibo.alchemist.collektive.device.CollektiveDevice
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 import it.unibo.collektive.examples.gossip.FirstImplementationGossip.firstGossip
 import it.unibo.collektive.examples.gossip.SecondImplementationGossip.secondGossip
-import it.unibo.collektive.examples.gossip.SelfStabilizingGossip.selfStabGossip
+import it.unibo.collektive.examples.gossip.ThirdGossip.thirdGossip
 import it.unibo.collektive.examples.gossip.gossipCast
 import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
+import it.unibo.collektive.stdlib.processes.timeReplicated
 import it.unibo.collektive.stdlib.spreading.gossipMax
 import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
+import it.unibo.collektive.stdlib.spreading.nonStabilizingGossip
 import it.unibo.collektive.stdlib.util.hops
-import kotlin.math.max
-import kotlin.math.min
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
+
+/**
+ * Uses Gossip in the standard library.
+ */
+fun Aggregate<Int>.gossipStdlibEntrypoint(env: EnvironmentVariables) = gossipMax(localId).also {
+    env["best-value"] = it
+}
 
 /**
  * Gossip that uses common path evaluation logic with gradient.
@@ -24,51 +35,27 @@ fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int =
         bottom = 0.0,
         top = Double.POSITIVE_INFINITY,
         metric = hops().toDouble(),
-        maxDiameter = Int.MAX_VALUE,
-        selector = { first, second ->
-            min(first, second).also { env["best-value"] = it }
-        },
+        selector = ::maxOf,
         accumulateDistance = Double::plus,
-    )
-
-/**
- * Uses Gossip in the standard library.
- */
-fun Aggregate<Int>.gossipStdlibEntrypoint(env: EnvironmentVariables) = gossipMax(localId).also {
-    env["best-value"] = it
-}
+    ).also {
+        env["best-value"] = it
+    }
 
 /**
  * Uses last version of self-stabilizing gossip before path-gradient optimization.
  */
-fun Aggregate<Int>.gossipEntrypoint(
+fun Aggregate<Int>.thirdGossipEntrypoint(
     env: EnvironmentVariables,
-    randomGenerator: RandomGenerator,
     timeSensor: TimeSensor,
-) = selfStabGossip(
-    localId,
-//    randomFromTimeElapsed(timeSensor, randomGenerator)
-//        .also { env["local-value"] = it },
-    selector = { first, second ->
-        max(first, second)
-    },
+    randomGenerator: RandomGenerator,
+) = thirdGossip(
+//    localId,
+    randomFromTimeElapsed(timeSensor, randomGenerator)
+        .also { env["local-value"] = it },
+    selector = ::maxOf,
 ) .also {
     env["best-value"] = it
 }
-
-/**
- * Entrypoint for the simulation of the first implementation of the gossip algorithm with Collektive.
- */
-fun Aggregate<Int>.firstGossipEntrypoint(
-    env: EnvironmentVariables,
-    randomGenerator: RandomGenerator,
-    timeSensor: TimeSensor,
-) = firstGossip(
-    env,
-    randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it },
-) { first, second ->
-    first <= second
-}.also { env["best-value"] = it }
 
 /**
  * Entrypoint for the simulation of the second implementation of the gossip algorithm with Collektive.
@@ -83,6 +70,20 @@ fun Aggregate<Int>.secondGossipEntrypoint(
         .also { env["local-value"] = it },
 ) { first, second ->
     second.compareTo(first)
+}.also { env["best-value"] = it }
+
+/**
+ * Entrypoint for the simulation of the first implementation of the gossip algorithm with Collektive.
+ */
+fun Aggregate<Int>.firstGossipEntrypoint(
+    env: EnvironmentVariables,
+    randomGenerator: RandomGenerator,
+    timeSensor: TimeSensor,
+) = firstGossip(
+    env,
+    randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it },
+) { first, second ->
+    first <= second
 }.also { env["best-value"] = it }
 
 /**

@@ -8,7 +8,7 @@ import it.unibo.collektive.stdlib.collapse.fold
 /**
  * A collection of self-stabilizing gossip algorithms.
  */
-object SelfStabilizingGossip {
+object ThirdGossip {
     /*
      * The best value exchanged in the gossip algorithm.
      * It contains the [best] value evaluated yet
@@ -28,7 +28,7 @@ object SelfStabilizingGossip {
         fun addHop(id: ID) = GossipValue(best, path + id)
     }
 
-    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.selfStabGossip(
+    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.thirdGossip(
         local: Value,
         crossinline selector: (Value, Value) -> Value = { first, _ -> first }, // Default to identity function
     ): Value {

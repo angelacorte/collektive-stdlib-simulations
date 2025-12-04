@@ -25,7 +25,7 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [it.unibo.collektive.examples.EntrypointsKt.gossipEntrypoint]
+        parameters: [it.unibo.collektive.examples.EntrypointsKt.thirdGossipEntrypoint]
   - time-distribution: 10
     type: Event
 #    actions:

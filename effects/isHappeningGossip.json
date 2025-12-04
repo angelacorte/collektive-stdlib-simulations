@@ -36,7 +36,7 @@
     "molFilter": false,
     "molString": "it.unibo.collektive.examples.EntrypointsKt.isHappeningGossipEntrypoint",
     "molPropertyFilter": true,
-    "property": "if (it \u003d\u003d true) 1 else 0",
+    "property": "",
     "writingPropertyValue": true,
     "c": "HUE",
     "reverse": false,

@@ -95,10 +95,22 @@ fun Aggregate<Int>.isHappeningGossipEntrypoint(timeSensor: TimeSensor) =
     }
 
 /**
- * Entrypoint for the simulation of the `sharingTime` function defined into Collektive's DSl.
+ * Entrypoint for the non stabilizing gossip replicated with timeReplicated.
  */
-// fun Aggregate<Int>.sharedTimerEntrypoint(absoluteTime: AbsoluteTime) =
-//    sharedTimer(5.toDuration(DurationUnit.SECONDS), absoluteTime.getDeltaTime())
+@OptIn(ExperimentalTime::class)
+fun Aggregate<Int>.timeReplicatedGossipEntrypoint(
+    env: EnvironmentVariables,
+    device: CollektiveDevice<*>,
+): Int {
+    val currentTime: Instant = Instant.fromEpochSeconds(device.currentTime.toDouble().toLong())
+    env["time"] = currentTime
+    return timeReplicated(
+        currentTime = currentTime,
+        maxReplicas = 4,
+        timeToSpawn = 3.seconds,
+        process = { nonStabilizingGossip(localId, reducer = ::maxOf).also { env["process"] = it } }
+    ).also { env["best-value"] = it }
+}
 
 /**
  * Entrypoint for the simulation of the `timeReplicated` function defined into Collektive's DSl,

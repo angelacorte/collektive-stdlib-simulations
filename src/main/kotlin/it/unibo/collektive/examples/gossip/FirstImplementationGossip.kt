@@ -21,7 +21,8 @@ object FirstImplementationGossip {
                     }
                 }
             env["neighbors-size"] = gossip.neighbors.size
-            env["path-length"] = (result.path + localId).size
+            env["path"] = result.path.joinToString("->")
+            env["path-length"] = result.path.size
             result
         }.value
     }

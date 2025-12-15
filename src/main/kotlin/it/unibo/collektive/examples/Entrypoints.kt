@@ -49,11 +49,12 @@ fun Aggregate<Int>.thirdGossipEntrypoint(
     timeSensor: TimeSensor,
     randomGenerator: RandomGenerator,
 ) = thirdGossip(
-//    localId,
-    randomFromTimeElapsed(timeSensor, randomGenerator)
-        .also { env["local-value"] = it },
+    env = env,
+    local = localId,
+//    randomFromTimeElapsed(timeSensor, randomGenerator)
+//        .also { env["local-value"] = it },
     selector = ::maxOf,
-) .also {
+).also {
     env["best-value"] = it
 }
 
@@ -66,10 +67,11 @@ fun Aggregate<Int>.secondGossipEntrypoint(
     timeSensor: TimeSensor,
 ) = secondGossip(
     env,
-    randomFromTimeElapsed(timeSensor, randomGenerator)
-        .also { env["local-value"] = it },
+    initial = localId,
+//    randomFromTimeElapsed(timeSensor, randomGenerator)
+//        .also { env["local-value"] = it },
 ) { first, second ->
-    second.compareTo(first)
+    first.compareTo(second)
 }.also { env["best-value"] = it }
 
 /**
@@ -81,9 +83,10 @@ fun Aggregate<Int>.firstGossipEntrypoint(
     timeSensor: TimeSensor,
 ) = firstGossip(
     env,
-    randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it },
+    initial = localId,
+//    randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it },
 ) { first, second ->
-    first <= second
+    first >= second
 }.also { env["best-value"] = it }
 
 /**
@@ -111,31 +114,3 @@ fun Aggregate<Int>.timeReplicatedGossipEntrypoint(
         process = { nonStabilizingGossip(localId, reducer = ::maxOf).also { env["process"] = it } }
     ).also { env["best-value"] = it }
 }
-
-/**
- * Entrypoint for the simulation of the `timeReplicated` function defined into Collektive's DSl,
- * it replicates the non-self-stabilizing gossip algorithm defined into Collektive's DSl.
- */
-// fun Aggregate<Int>.timeReplicationEntrypoint(
-//    absoluteTime: AbsoluteTime,
-//    env: EnvironmentVariables,
-//    randomGenerator: RandomGenerator,
-//    timeSensor: TimeSensor,
-// ) {
-//    val rand = randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it }
-//    timeReplicated(
-//        absoluteTime = absoluteTime,
-//        process = {
-//                  nssg(rand) { first, second -> if (first >= second) first else second }
-//                      .also { env["best-value"] = it }
-// //        nonSelfStabilizingGossip(
-// //            randomFromTimeElapsed(timeSensor, randomGenerator)
-// //                .also { env["local-value"] = it },
-// //        ) { first, second -> if (first <= second) first else second }
-// //            .also { env["best-value"] = it }
-//        },
-//        default = 42,
-//        timeToLive = 5.toDuration(DurationUnit.SECONDS),
-//        maxReplicas = 7,
-//    )
-// }

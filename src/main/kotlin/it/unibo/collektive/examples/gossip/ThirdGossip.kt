@@ -3,6 +3,7 @@ package it.unibo.collektive.examples.gossip
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.aggregate.ids
+import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.stdlib.collapse.fold
 
 /**
@@ -29,6 +30,7 @@ object ThirdGossip {
     }
 
     inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.thirdGossip(
+        env: EnvironmentVariables,
         local: Value,
         crossinline selector: (Value, Value) -> Value = { first, _ -> first }, // Default to identity function
     ): Value {
@@ -50,8 +52,14 @@ object ThirdGossip {
                         candidateValue == current.best -> current
                         else -> actualNext
                     }
+                }.addHop(localId).also { bestValue ->
+                    env["neighbors-size"] = gossip.neighbors.size
+                    env["path"] = bestValue.path.joinToString("->")
+                    env["path-length"] = bestValue.path.size
                 }
-            result.addHop(localId)
+            result
         }.best
     }
 }
+
+

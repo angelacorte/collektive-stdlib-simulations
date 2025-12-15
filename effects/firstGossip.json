@@ -11,12 +11,12 @@
     "blue": {
       "max": 255,
       "min": 0,
-      "val": 0
+      "val": 255
     },
     "green": {
       "max": 255,
       "min": 0,
-      "val": 255
+      "val": 0
     },
     "alpha": {
       "max": 255,
@@ -31,7 +31,7 @@
     "size": {
       "max": 100,
       "min": 0,
-      "val": 13
+      "val": 26
     },
     "molFilter": false,
     "molString": "it.unibo.collektive.examples.EntrypointsKt.firstGossipEntrypoint",
@@ -43,12 +43,12 @@
     "propoom": {
       "max": 10,
       "min": -10,
-      "val": 0
+      "val": 1
     },
     "minprop": {
       "max": 10,
       "min": -10,
-      "val": 0
+      "val": -1
     },
     "maxprop": {
       "max": 10,
@@ -56,7 +56,7 @@
       "val": 10
     },
     "colorCache": {
-      "value": -16711936
+      "value": -16776961
     }
   }
 ]

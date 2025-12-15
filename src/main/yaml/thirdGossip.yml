@@ -26,8 +26,8 @@ _pool: &program
     actions:
       - type: RunCollektiveProgram
         parameters: [it.unibo.collektive.examples.EntrypointsKt.thirdGossipEntrypoint]
-  - time-distribution: 10
-    type: Event
+#  - time-distribution: 10
+#    type: Event
 #    actions:
 #      - type: LevyWalk
 #        parameters: [ 1.4, 1, 2, 0.1 ]
@@ -35,7 +35,7 @@ _pool: &program
 
 deployments:
   - type: Rectangle
-    parameters: [50, 2, 2, 50, 50]
+    parameters: [ 50, 2, 2, 50, 50 ]
     programs:
       - *program
     properties:

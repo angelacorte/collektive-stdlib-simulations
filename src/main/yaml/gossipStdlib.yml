@@ -1,6 +1,10 @@
 incarnation: collektive
 
 variables:
+  fileName: &fileName
+    "gossip-stdlib"
+  path: &path
+    "data/gossip-stdlib"
   seed: &seed
     min: 0
     max: 1
@@ -16,9 +20,9 @@ network-model:
   type: ConnectWithinDistance
   parameters: [8]
 
-#environment:
-#  type: ImageEnvironment
-#  parameters: [rectangle.png]
+environment:
+  type: ImageEnvironment
+  parameters: [rectangle.png]
 
 _pool: &program
   - time-distribution: 1
@@ -26,8 +30,8 @@ _pool: &program
     actions:
       - type: RunCollektiveProgram
         parameters: [it.unibo.collektive.examples.EntrypointsKt.gossipStdlibEntrypoint]
-  - time-distribution: 10
-    type: Event
+#  - time-distribution: 10
+#    type: Event
 #    actions:
 #      - type: LevyWalk
 #        parameters: [ 1.4, 1, 2, 0.1 ]
@@ -49,9 +53,9 @@ deployments:
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: "perf-gossip"
+      fileNameRoot: *fileName
       interval: 1.0
-      exportPath: "data"
+      exportPath: *path
     data:
       - time
       - molecule: best-value

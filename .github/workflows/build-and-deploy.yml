@@ -69,6 +69,8 @@ jobs:
       # - check-simulations-docker
       # - create-charts
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     concurrency:
       # Only one release job at a time per branch, as only master releases.
       group: release-${{ github.event.number || github.ref }}

@@ -14,11 +14,11 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
-      - uses: DanySK/build-check-deploy-gradle-action@4.0.17
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+      - uses: DanySK/build-check-deploy-gradle-action@4.0.12
         with:
           build-command: true
-          check-command:  MIN=1.0 MAX=5.0 DEFAULT=2.0 ./gradlew runAllGraphic
+          check-command: ./gradlew check runAllGraphic
           deploy-command: true
           should-run-codecov: false
           should-validate-wrapper: ${{ contains('Linux', runner.os) }}
@@ -29,7 +29,7 @@ jobs:
 #      cancel-in-progress: true
 #    steps:
 #      - name: Checkout
-#        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+#        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
 #      - uses: actions/cache@v4
 #        with:
 #          path: ~/.cache/pip
@@ -37,7 +37,7 @@ jobs:
 #          restore-keys: |
 #            ${{ runner.os }}-pip-
 #      - name: Install python
-#        uses: actions/setup-python@v5.3.0
+#        uses: actions/setup-python@v6.1.0
 #      - name: Upgrade pip
 #        run: pip install --upgrade pip --user
 #      - name: Install requirements
@@ -49,27 +49,25 @@ jobs:
 #      - name: Generate archive
 #        run: tar --use-compress-program zstd -cf charts.tar.zst charts/
 #      - name: Upload charts
-#        uses: actions/upload-artifact@v4.6.0
+#        uses: actions/upload-artifact@v5.0.0
 #        with:
 #          name: charts
 #          path: charts.tar.zst
-#  check-simulations-docker:
-#    runs-on: ubuntu-24.04
-#    concurrency:
-#      group: container-check${{ github.workflow }}${{ matrix.os }}${{ github.event.number || github.ref }}
-#      cancel-in-progress: true
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-#      - name: Prepare docker-compose to be tested in CI
-#        run: sed 's/CI:\s.*/CI:\ \"true\"/g' -i docker-compose.yml
-#      - name: Run compose
-#        run: docker compose up --build
+  #  check-simulations-docker:
+  #    runs-on: ubuntu-24.04
+  #    concurrency:
+  #      group: container-check${{ github.workflow }}${{ matrix.os }}${{ github.event.number || github.ref }}
+  #      cancel-in-progress: true
+  #    steps:
+  #    - name: Checkout
+  #      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4.1.2
+  #    - name: Run compose
+  #      run: docker-compose up --build
   release:
     needs:
       - check-simulations-native
-#      - check-simulations-docker
-#      - create-charts
+      # - check-simulations-docker
+      # - create-charts
     runs-on: ubuntu-24.04
     concurrency:
       # Only one release job at a time per branch, as only master releases.
@@ -82,26 +80,26 @@ jobs:
       )
     steps:
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Download charts artifact
-#        uses: actions/download-artifact@v4.1.8
-#        with:
-#          name: charts
+      - name: Download charts artifact
+        uses: actions/download-artifact@v6.0.0
+        with:
+          name: charts
       - name: Find the version of Node from package.json
         id: node-version
         run: echo "version=$(jq -r .engines.node package.json)" >> $GITHUB_OUTPUT
       - name: Install Node
-        uses: actions/setup-node@v6.1.0
+        uses: actions/setup-node@v6.0.0
         with:
           node-version: ${{ steps.node-version.outputs.version }}
-      - name: Login to dockerhub
-        env:
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKER_USERNAME: angelacortecchia
-        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
+      #      - name: Login to dockerhub
+      #        env:
+      #          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      #          DOCKER_USERNAME: ${{ github.repository_owner }}
+      #        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin docker.io
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -111,9 +109,9 @@ jobs:
   success:
     runs-on: ubuntu-24.04
     needs:
-#      - create-charts
+      # - create-charts
       - check-simulations-native
-#      - check-simulations-docker
+      #      - check-simulations-docker
       - release
     if: >-
       always() && (

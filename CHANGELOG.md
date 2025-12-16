@@ -1,3 +1,13 @@
+## [1.5.1](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.5.0...1.5.1) (2025-12-16)
+
+### Bug Fixes
+
+* **ci:** update workflow permissions ([244410b](https://github.com/angelacorte/collektive-stdlib-simulations/commit/244410bb7ce72b5b877f815e10c66f65370806dd))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.5.0 [skip ci] ([4108e0a](https://github.com/angelacorte/collektive-stdlib-simulations/commit/4108e0a228c16d2849aea8000ed17fa344ab5fd2))
+
 ## [1.5.0](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.4.0...1.5.0) (2025-12-15)
 
 ### Features

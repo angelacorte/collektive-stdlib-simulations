@@ -95,7 +95,7 @@ please refer to the [Alchemist documentation](https://alchemistsimulator.github.
 - run:
 ```bash
 # gradient example
-curl https://raw.githubusercontent.com/angelacorte/collektive-stdlib-experiments/master/run-gossip.sh | bash 
+curl https://raw.githubusercontent.com/angelacorte/experiments-2025-self-stabilizing-gossip/master/run-gossip.sh | bash 
 ```
 - the repository is in your `Downloads` folder for further inspection.
 
@@ -105,7 +105,7 @@ curl https://raw.githubusercontent.com/angelacorte/collektive-stdlib-experiments
    Use the [Gradle/Java compatibility matrix](https://docs.gradle.org/current/userguide/compatibility.html) to learn which is the compatible version range.
    The Version of Gradle used in this experiment can be found in the gradle-wrapper.properties file located in the gradle/wrapper folder.
 2. Open a terminal
-3. Clone this repository on your pc with `git clone https://github.com/angelacorte/collektive-stdlib-experiments`.
+3. Clone this repository on your pc with `git clone https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip`.
 4. Move into the root folder with `cd collektive-examples`
 5. Depending on the platform, run the following command:
     - Bash compatible (Linux, Mac OS X, Git Bash, Cygwin): ``` ./gradlew run<ExperimentName>Graphic ```

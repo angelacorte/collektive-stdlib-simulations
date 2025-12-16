@@ -11,4 +11,4 @@ develocity {
     }
 }
 
-rootProject.name = "collektive-stdlib-experiments"
+rootProject.name = "experiments-2025-self-stabilizing-gossip"

@@ -49,7 +49,6 @@ fun Aggregate<Int>.thirdGossipEntrypoint(
     timeSensor: TimeSensor,
     randomGenerator: RandomGenerator,
 ) = noLoopGossip(
-    env = env,
     local = localId,
 //    randomFromTimeElapsed(timeSensor, randomGenerator)
 //        .also { env["local-value"] = it },

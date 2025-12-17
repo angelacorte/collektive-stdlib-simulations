@@ -7,7 +7,7 @@ import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 import it.unibo.collektive.examples.gossip.FirstImplementationGossip.firstGossip
 import it.unibo.collektive.examples.gossip.SecondImplementationGossip.secondGossip
-import it.unibo.collektive.examples.gossip.ThirdGossip.thirdGossip
+import it.unibo.collektive.examples.gossip.NoLoopGossip.noLoopGossip
 import it.unibo.collektive.examples.gossip.gossipCast
 import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
 import it.unibo.collektive.stdlib.processes.timeReplicated
@@ -48,7 +48,7 @@ fun Aggregate<Int>.thirdGossipEntrypoint(
     env: EnvironmentVariables,
     timeSensor: TimeSensor,
     randomGenerator: RandomGenerator,
-) = thirdGossip(
+) = noLoopGossip(
     env = env,
     local = localId,
 //    randomFromTimeElapsed(timeSensor, randomGenerator)

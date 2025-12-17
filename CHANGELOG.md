@@ -1,3 +1,24 @@
+## [1.5.2](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.5.1...1.5.2) (2025-12-17)
+
+### Dependency updates
+
+* **deps:** update alchemist to v42.3.21 ([6c274ce](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/6c274ce7eda01c6c62abe2e31fe7543a738bf9bf))
+* **deps:** update alchemist to v42.3.22 ([#179](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/issues/179)) ([4d1bba0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/4d1bba04112a3bac853d2988a9613eec0d255e93))
+* **deps:** update plugin gitsemver to v7.0.8 ([99a321e](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/99a321e40618f69ca9e03d790aef6673c359281d))
+
+### Bug Fixes
+
+* remove useless parameter ([d745da7](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/d745da782ad886089aa578ae05672e0aa3f88cac))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.5.1 [skip ci] ([fdbdc29](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/fdbdc29882d644459a992da6f5010539a31fa4f0))
+
+### Refactoring
+
+* rename last gossip into no loop gossip ([94ded01](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/94ded0126d4e44ff02cd66b8aa25c5023535871c))
+* rename project ([66028cb](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/66028cb6fa93e86ee0ad255aa9137f2ff7e26e52))
+
 ## [1.5.1](https://github.com/angelacorte/collektive-stdlib-simulations/compare/1.5.0...1.5.1) (2025-12-16)
 
 ### Bug Fixes

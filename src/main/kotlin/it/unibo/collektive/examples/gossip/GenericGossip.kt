@@ -17,7 +17,7 @@ import kotlin.sequences.map
 
 @OptIn(DelicateCollektiveApi::class)
 @JvmOverloads
-inline fun <reified ID : Any, reified Value, reified Distance : Comparable<Distance>> Aggregate<ID>.gossipCast(
+inline fun <reified ID : Any, reified Value, reified Distance : Comparable<Distance>> Aggregate<ID>.genericGossip(
     local: Value,
     bottom: Distance,
     top: Distance,

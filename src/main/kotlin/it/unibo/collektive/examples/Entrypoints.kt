@@ -5,10 +5,10 @@ import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
-import it.unibo.collektive.examples.gossip.FirstImplementationGossip.firstGossip
-import it.unibo.collektive.examples.gossip.SecondImplementationGossip.secondGossip
-import it.unibo.collektive.examples.gossip.NoLoopGossip.noLoopGossip
-import it.unibo.collektive.examples.gossip.gossipCast
+import it.unibo.collektive.examples.gossip.SlowSelfStabGossip.slowSelfStabGossip
+import it.unibo.collektive.examples.gossip.CheckOnSelfInPathGossip.checkOnSelfInPathGossip
+import it.unibo.collektive.examples.gossip.NoLoopAgainstNeighborsGossip.noLoopAgainstNeighborsGossip
+import it.unibo.collektive.examples.gossip.genericGossip
 import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
 import it.unibo.collektive.stdlib.processes.timeReplicated
 import it.unibo.collektive.stdlib.spreading.gossipMax
@@ -30,7 +30,7 @@ fun Aggregate<Int>.gossipStdlibEntrypoint(env: EnvironmentVariables) = gossipMax
  * Gossip that uses common path evaluation logic with gradient.
  */
 fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int =
-    gossipCast(
+    genericGossip(
         local = localId,
         bottom = 0.0,
         top = Double.POSITIVE_INFINITY,
@@ -48,7 +48,7 @@ fun Aggregate<Int>.thirdGossipEntrypoint(
     env: EnvironmentVariables,
     timeSensor: TimeSensor,
     randomGenerator: RandomGenerator,
-) = noLoopGossip(
+) = noLoopAgainstNeighborsGossip(
     local = localId,
 //    randomFromTimeElapsed(timeSensor, randomGenerator)
 //        .also { env["local-value"] = it },
@@ -64,7 +64,7 @@ fun Aggregate<Int>.secondGossipEntrypoint(
     env: EnvironmentVariables,
     randomGenerator: RandomGenerator,
     timeSensor: TimeSensor,
-) = secondGossip(
+) = checkOnSelfInPathGossip(
     env,
     initial = localId,
 //    randomFromTimeElapsed(timeSensor, randomGenerator)
@@ -80,7 +80,7 @@ fun Aggregate<Int>.firstGossipEntrypoint(
     env: EnvironmentVariables,
     randomGenerator: RandomGenerator,
     timeSensor: TimeSensor,
-) = firstGossip(
+) = slowSelfStabGossip(
     env,
     initial = localId,
 //    randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it },

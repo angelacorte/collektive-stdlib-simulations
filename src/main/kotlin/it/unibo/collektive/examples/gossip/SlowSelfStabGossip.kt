@@ -5,8 +5,8 @@ import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.stdlib.collapse.fold
 
-object FirstImplementationGossip {
-    inline fun <reified ID : Comparable<ID>, Type> Aggregate<ID>.firstGossip(
+object SlowSelfStabGossip {
+    inline fun <reified ID : Comparable<ID>, Type> Aggregate<ID>.slowSelfStabGossip(
         env: EnvironmentVariables,
         initial: Type,
         crossinline selector: (Type, Type) -> Boolean,

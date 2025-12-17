@@ -4,8 +4,8 @@ import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 
-object SecondImplementationGossip {
-    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.secondGossip(
+object CheckOnSelfInPathGossip {
+    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.checkOnSelfInPathGossip(
         env: EnvironmentVariables,
         initial: Value,
         selector: Comparator<Value>,

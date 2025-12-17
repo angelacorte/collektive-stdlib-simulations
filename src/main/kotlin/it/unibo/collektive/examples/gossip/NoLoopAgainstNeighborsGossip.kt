@@ -3,7 +3,6 @@ package it.unibo.collektive.examples.gossip
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.share
 import it.unibo.collektive.aggregate.ids
-import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.stdlib.collapse.fold
 
 /**
@@ -11,7 +10,7 @@ import it.unibo.collektive.stdlib.collapse.fold
  * This algorithm ensures nodes propagate and compute the "best" value while
  * avoiding looping paths based on their neighbors and the defined evaluation criteria.
  */
-object NoLoopGossip {
+object NoLoopAgainstNeighborsGossip {
     /*
      * The best value exchanged in the gossip algorithm.
      * It contains the [best] value evaluated yet
@@ -39,7 +38,7 @@ object NoLoopGossip {
      * Defaults to an identity function that prefers the first value.
      * @return The "best" value found after executing the gossip algorithm, adhering to the design of the provided selector.
      */
-    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.noLoopGossip(
+    inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.noLoopAgainstNeighborsGossip(
         local: Value,
         crossinline selector: (Value, Value) -> Value = { first, _ -> first }, // Default to identity function
     ): Value {

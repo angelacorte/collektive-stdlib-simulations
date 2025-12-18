@@ -1,6 +1,10 @@
 incarnation: collektive
 
 variables:
+  fileName: &fileName
+    "time-rep-gossip"
+  path: &path
+    "data/time-rep-gossip"
   seed: &seed
     min: 0
     max: 1
@@ -49,9 +53,9 @@ deployments:
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: "perf-gossip"
+      fileNameRoot: *fileName
       interval: 1.0
-      exportPath: "data"
+      exportPath: *path
     data:
       - time
       - molecule: best-value

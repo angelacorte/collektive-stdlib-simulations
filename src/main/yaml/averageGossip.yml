@@ -1,10 +1,6 @@
 incarnation: collektive
 
 variables:
-  fileName: &fileName
-    "self-stab-gossip-3"
-  path: &path
-    "data/self-stab-gossip-3"
   seed: &seed
     min: 0
     max: 1
@@ -29,7 +25,7 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [it.unibo.collektive.examples.EntrypointsKt.thirdGossipEntrypoint]
+        parameters: [it.unibo.collektive.examples.EntrypointsKt.averageGossipEntrypoint]
 #  - time-distribution: 10
 #    type: Event
 #    actions:
@@ -53,9 +49,9 @@ deployments:
 export:
   - type: CSVExporter
     parameters:
-      fileNameRoot: *fileName
+      fileNameRoot: "perf-gossip"
       interval: 1.0
-      exportPath: *path
+      exportPath: "data"
     data:
       - time
       - molecule: best-value

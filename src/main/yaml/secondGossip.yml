@@ -1,6 +1,10 @@
 incarnation: collektive
 
 variables:
+  fileName: &fileName
+    "self-stab-gossip-2"
+  path: &path
+    "data/self-stab-gossip-2"
   seed: &seed
     min: 0
     max: 8
@@ -44,9 +48,9 @@ terminate:
 #export:
 #  - type: CSVExporter
 #    parameters:
-#      fileNameRoot: "second-gossip"
+#      fileNameRoot: *fileName
 #      interval: 1.0
-#      exportPath: "data"
+#      exportPath: *path
 #    data:
 #      - time
 #      - molecule: best-value

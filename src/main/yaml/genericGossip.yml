@@ -1,6 +1,10 @@
 incarnation: collektive
 
 variables:
+  fileName: &fileName
+    "self-stab-gossip-generic"
+  path: &path
+    "data/self-stab-gossip-generic"
   seed: &seed
     min: 0
     max: 1

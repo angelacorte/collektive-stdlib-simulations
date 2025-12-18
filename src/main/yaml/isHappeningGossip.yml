@@ -1,6 +1,10 @@
 incarnation: collektive
 
 variables:
+  fileName: &fileName
+    "is-happening-gossip"
+  path: &path
+    "data/is-happening-gossip"
   seed: &seed
     min: 0
     max: 8

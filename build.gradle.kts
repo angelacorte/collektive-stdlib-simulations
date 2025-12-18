@@ -23,6 +23,7 @@ sourceSets {
             implementation(libs.bundles.alchemist)
             implementation(libs.bundles.collektive)
             implementation(libs.kotlin.time)
+            implementation(libs.kryo)
         }
         resources {
             srcDir("src/main/yaml")

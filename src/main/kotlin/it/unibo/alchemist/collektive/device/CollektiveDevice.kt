@@ -8,7 +8,6 @@ import it.unibo.alchemist.model.NodeProperty
 import it.unibo.alchemist.model.Position
 import it.unibo.alchemist.model.Time
 import it.unibo.alchemist.model.molecules.SimpleMolecule
-import it.unibo.alchemist.model.positions.Euclidean2DPosition
 import it.unibo.collektive.aggregate.Field
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.aggregate.api.DataSharingMethod
@@ -22,14 +21,12 @@ import it.unibo.collektive.networking.Message
 import it.unibo.collektive.networking.NeighborsData
 import it.unibo.collektive.networking.NoNeighborsData
 import it.unibo.collektive.networking.OutboundEnvelope
-import it.unibo.collektive.path.FullPath
 import it.unibo.collektive.path.Path
-import it.unibo.collektive.path.SerializablePath
 import it.unibo.collektive.stdlib.processes.TimedReplica
 import java.io.ByteArrayOutputStream
 import org.apache.commons.math3.random.RandomGenerator
-import kotlin.math.sign
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -46,15 +43,24 @@ class CollektiveDevice<P>(
 ) : NodeProperty<Any?>,
     Mailbox<Int>,
     EnvironmentVariables where P : Position<P> {
+    private data class TimedMessage(
+        val receivedAt: Time,
+        val payload: Message<Int, *>,
+    )
 
-    private data class TimedMessage(val receivedAt: Time, val payload: Message<Int, *>)
     override val inMemory: Boolean = true
 
     /**
      * The current time.
      */
     val currentTime: Time
-        get() = environment.simulationOrNull?.time ?: Time.Companion.ZERO
+        get() = environment.simulationOrNull?.time ?: Time.ZERO
+
+    @OptIn(ExperimentalTime::class)
+    fun getTimeAsInstant(): Instant {
+        val time: Double = environment.simulation.time.toDouble()
+        return Instant.DISTANT_PAST + time.seconds
+    }
 
     /**
      * The ID of the node (alias of [localId]).
@@ -68,25 +74,29 @@ class CollektiveDevice<P>(
 
     private val validMessages: MutableMap<Int, TimedMessage> = mutableMapOf()
 
-    private fun receiveMessage(time: Time, message: Message<Int, *>) {
-         validMessages += message.senderId to TimedMessage(time, message)
+    private fun receiveMessage(
+        time: Time,
+        message: Message<Int, *>,
+    ) {
+        validMessages += message.senderId to TimedMessage(time, message)
     }
 
     /**
      * Returns the distances to the neighboring nodes.
      */
-    fun <ID : Any> Aggregate<ID>.distances(): Field<ID, Double> = environment.getPosition(node).let { nodePosition ->
-        neighboring(nodePosition.coordinates).mapValues { position ->
-            nodePosition.distanceTo(environment.makePosition(position))
+    fun <ID : Any> Aggregate<ID>.distances(): Field<ID, Double> =
+        environment.getPosition(node).let { nodePosition ->
+            neighboring(nodePosition.coordinates).mapValues { position ->
+                nodePosition.distanceTo(environment.makePosition(position))
+            }
         }
-    }
 
     override fun cloneOnNewNode(node: Node<Any?>): NodeProperty<Any?> =
         CollektiveDevice(randomGenerator, environment, node, retainMessagesFor)
 
     @OptIn(ExperimentalTime::class)
     override fun deliverableFor(outboundMessage: OutboundEnvelope<Int>) {
-        val defaultHashedPathSize: Int = 32
+        val defaultHashedPathSize = 32
         val kryo = Kryo()
         kryo.register(Int::class.java)
         kryo.register(Double::class.java)
@@ -108,11 +118,11 @@ class CollektiveDevice<P>(
                     }
                 var messageSizeAccumulator = 0
                 neighborhood.forEach { neighbor ->
-                    val message: Message<Int,*> = outboundMessage.prepareMessageFor(neighbor.id)
+                    val message: Message<Int, *> = outboundMessage.prepareMessageFor(neighbor.id)
                     val messageValues = message.sharedData
                     val buff = ByteArrayOutputStream()
                     Output(buff).use { buffer ->
-                        messageValues.forEach { (path, value) ->
+                        messageValues.forEach { (_: Path, value) ->
                             kryo.writeClassAndObject(buffer, value)
                         }
                     }
@@ -134,7 +144,10 @@ class CollektiveDevice<P>(
         }
         val messages: Map<Int, Message<Int, *>> =
             when {
-                retainMessagesFor == null -> validMessages.mapValues { it.value.payload }.also { validMessages.clear() }
+                retainMessagesFor == null -> {
+                    validMessages.mapValues { it.value.payload }.also { validMessages.clear() }
+                }
+
                 else -> {
                     validMessages.values.retainAll { it.receivedAt + retainMessagesFor >= currentTime }
                     validMessages.mapValues { it.value.payload }
@@ -144,9 +157,13 @@ class CollektiveDevice<P>(
             override val neighbors: Set<Int> get() = messages.keys
 
             @Suppress("UNCHECKED_CAST")
-            override fun <Value> dataAt(path: Path, dataSharingMethod: DataSharingMethod<Value>): Map<Int, Value> =
+            override fun <Value> dataAt(
+                path: Path,
+                dataSharingMethod: DataSharingMethod<Value>,
+            ): Map<Int, Value> =
                 // Messages need to be filtered by the path to allow for null values
-                messages.filterValues { message -> message.sharedData.containsKey(path) }
+                messages
+                    .filterValues { message -> message.sharedData.containsKey(path) }
                     .mapValues { (_, message) -> message.sharedData[path] as Value }
         }
     }
@@ -154,14 +171,21 @@ class CollektiveDevice<P>(
     @Suppress("UNCHECKED_CAST")
     override fun <T> get(name: String): T = node.getConcentration(SimpleMolecule(name)) as T
 
-    override fun <T> getOrNull(name: String): T? = when {
-        isDefined(name) -> get(name)
-        else -> null
-    }
+    override fun <T> getOrNull(name: String): T? =
+        when {
+            isDefined(name) -> get(name)
+            else -> null
+        }
 
-    override fun <T> getOrDefault(name: String, default: T): T = getOrNull(name) ?: default
+    override fun <T> getOrDefault(
+        name: String,
+        default: T,
+    ): T = getOrNull(name) ?: default
 
     override fun isDefined(name: String): Boolean = node.contains(SimpleMolecule(name))
 
-    override fun <T> set(name: String, value: T): T = value.also { node.setConcentration(SimpleMolecule(name), it) }
+    override fun <T> set(
+        name: String,
+        value: T,
+    ): T = value.also { node.setConcentration(SimpleMolecule(name), it) }
 }

@@ -3,11 +3,10 @@ package it.unibo.collektive.examples
 import it.unibo.alchemist.collektive.device.CollektiveDevice
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
-import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
-import it.unibo.collektive.examples.gossip.SlowSelfStabGossip.slowSelfStabGossip
 import it.unibo.collektive.examples.gossip.CheckOnSelfInPathGossip.checkOnSelfInPathGossip
 import it.unibo.collektive.examples.gossip.NoLoopAgainstNeighborsGossip.noLoopAgainstNeighborsGossip
+import it.unibo.collektive.examples.gossip.SlowSelfStabGossip.slowSelfStabGossip
 import it.unibo.collektive.examples.gossip.genericGossip
 import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
 import it.unibo.collektive.stdlib.processes.timeReplicated
@@ -15,6 +14,7 @@ import it.unibo.collektive.stdlib.spreading.gossipMax
 import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
 import it.unibo.collektive.stdlib.spreading.nonStabilizingGossip
 import it.unibo.collektive.stdlib.util.hops
+import org.apache.commons.math3.random.RandomGenerator
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
@@ -22,9 +22,10 @@ import kotlin.time.Instant
 /**
  * Uses Gossip in the standard library.
  */
-fun Aggregate<Int>.gossipStdlibEntrypoint(env: EnvironmentVariables) = gossipMax(localId).also {
-    env["best-value"] = it
-}
+fun Aggregate<Int>.gossipStdlibEntrypoint(env: EnvironmentVariables) =
+    gossipMax(localId).also {
+        env["best-value"] = it
+    }
 
 /**
  * Gossip that uses common path evaluation logic with gradient.
@@ -110,6 +111,6 @@ fun Aggregate<Int>.timeReplicatedGossipEntrypoint(
         currentTime = currentTime,
         maxReplicas = 4,
         timeToSpawn = 3.seconds,
-        process = { nonStabilizingGossip(localId, reducer = ::maxOf).also { env["process"] = it } }
+        process = { nonStabilizingGossip(localId, reducer = ::maxOf).also { env["process"] = it } },
     ).also { env["best-value"] = it }
 }

@@ -36,7 +36,7 @@ object NoLoopAgainstNeighborsGossip {
      * @param local The local value of the node to be compared with propagated values during gossip.
      * @param selector A selection strategy between two values.
      * Defaults to an identity function that prefers the first value.
-     * @return The "best" value found after executing the gossip algorithm, adhering to the design of the provided selector.
+     * @return The "best" value found after executing the gossip algorithm given the selector.
      */
     inline fun <reified ID : Comparable<ID>, Value> Aggregate<ID>.noLoopAgainstNeighborsGossip(
         local: Value,
@@ -46,24 +46,23 @@ object NoLoopAgainstNeighborsGossip {
         return share(localGossip) { gossip ->
             val neighbors = gossip.neighbors.ids.set
             val result =
-                gossip.all.fold(localGossip) { current, (id, next) ->
-                    val nextIsValidPath =
-                        next.path
-                            .asReversed()
-                            .asSequence()
-                            .drop(1) // remove the entry of my neighbor
-                            .none { it == localId || it in neighbors }
-                    val actualNext = if (nextIsValidPath) next else GossipValue(local, listOf(id))
-                    val candidateValue = selector(current.best, actualNext.best)
-                    when {
-                        current.best == actualNext.best -> listOf(current, actualNext).minBy { it.path.size }
-                        candidateValue == current.best -> current
-                        else -> actualNext
-                    }
-                }.addHop(localId)
+                gossip.all
+                    .fold(localGossip) { current, (id, next) ->
+                        val nextIsValidPath =
+                            next.path
+                                .asReversed()
+                                .asSequence()
+                                .drop(1) // remove the entry of my neighbor
+                                .none { it == localId || it in neighbors }
+                        val actualNext = if (nextIsValidPath) next else GossipValue(local, listOf(id))
+                        val candidateValue = selector(current.best, actualNext.best)
+                        when {
+                            current.best == actualNext.best -> listOf(current, actualNext).minBy { it.path.size }
+                            candidateValue == current.best -> current
+                            else -> actualNext
+                        }
+                    }.addHop(localId)
             result
         }.best
     }
 }
-
-

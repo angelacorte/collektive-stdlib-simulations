@@ -30,7 +30,16 @@ inline fun <reified ID : Any, reified Value, reified Distance : Comparable<Dista
     val localCandidate = GradientPath<ID, Value, Distance>(bottom, local, emptyList())
     return share(localCandidate) { candidate ->
         val nonLoopingPaths =
-            nonLoopingPaths(candidate, coercedMetric, maxDiameter, bottom, top, { _, _, data -> selector(local, data) }, accumulateDistance)
+            nonLoopingPaths(
+                neighborData = candidate,
+                coercedMetric = coercedMetric,
+                maxDiameter = maxDiameter,
+                bottom = bottom,
+                top = top,
+                accumulateDistance = accumulateDistance,
+            ) { _, _, data ->
+                selector(local, data)
+            }
         pathCoherence(nonLoopingPaths).fold(localCandidate) { current, next ->
             val candidateValue = selector(current.data, next.data)
             when {
@@ -51,9 +60,9 @@ inline fun <reified ID : Any, reified Value, reified Distance : Comparable<Dista
     top: Distance,
     metric: Field<ID, Distance>,
     maxDiameter: Int = Int.MAX_VALUE,
+    crossinline accumulateDistance: Reducer<Distance>,
     noinline accumulateData: (fromSource: Distance, toNeighbor: Distance, neighborData: Value) -> Value =
         { _, _, data -> data },
-    crossinline accumulateDistance: Reducer<Distance>,
 ): Value {
     val coercedMetric = metric.coerceIn(bottom, top)
     val localCandidate = if (source) GradientPath<ID, Value, Distance>(bottom, local, emptyList()) else null
@@ -66,8 +75,8 @@ inline fun <reified ID : Any, reified Value, reified Distance : Comparable<Dista
                 maxDiameter,
                 bottom,
                 top,
-                accumulateData,
                 accumulateDistance,
+                accumulateData,
             )
         val best =
             when {
@@ -109,8 +118,8 @@ inline fun <reified Distance : Comparable<Distance>, reified ID : Any, reified V
     maxDiameter: Int,
     bottom: Distance,
     top: Distance,
-    crossinline accumulateData: (Distance, Distance, Value) -> Value,
     crossinline accumulateDistance: Reducer<Distance>,
+    crossinline accumulateData: (Distance, Distance, Value) -> Value,
 ): Sequence<GradientPath<ID, Value, Distance>> {
     val neighbors = neighborData.neighbors.ids.set
     val accDistances =
@@ -126,7 +135,10 @@ inline fun <reified Distance : Comparable<Distance>, reified ID : Any, reified V
                 ?.takeUnless { localId in path.hops }
                 ?.takeUnless { path.isInvalidViaShortcut(accDist, neighbors, neighborAccumulatedDistances) }
                 ?.run { accDist to lazy { update(id, distance, bottom, top, accumulateDistance, accumulateData) } }
-        }.neighbors.values.sequence.filterNotNull().sortedBy { it.first }.map { it.second.value }
+        }.neighbors.values.sequence
+        .filterNotNull()
+        .sortedBy { it.first }
+        .map { it.second.value }
 }
 
 data class GradientPath<ID : Any, Value, Distance : Comparable<Distance>>(
@@ -211,7 +223,10 @@ data class GradientPath<ID : Any, Value, Distance : Comparable<Distance>>(
         val otherHops = pathsHopSets[other.nextHop].orEmpty()
         val commonHops = hops.filter { it in otherHops }
         return when (commonHops.size) {
-            0, 1 -> true
+            0, 1 -> {
+                true
+            }
+
             else -> {
                 // otherHops and commonHops must have the same order for all elements
                 val commonIterator = commonHops.iterator()

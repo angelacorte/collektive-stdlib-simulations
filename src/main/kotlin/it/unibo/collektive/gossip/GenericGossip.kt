@@ -1,4 +1,4 @@
-package it.unibo.collektive.examples.gossip
+package it.unibo.collektive.gossip
 
 import it.unibo.collektive.aggregate.Field
 import it.unibo.collektive.aggregate.api.Aggregate

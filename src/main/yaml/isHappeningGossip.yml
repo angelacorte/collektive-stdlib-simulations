@@ -29,7 +29,7 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [it.unibo.collektive.examples.EntrypointsKt.isHappeningGossipEntrypoint]
+        parameters: [it.unibo.collektive.EntrypointsKt.isHappeningGossipEntrypoint]
   - { type: Event, time-distribution: 10, actions: { type: LevyWalk, parameters: [ *walk-speed ] } }
 
 deployments:

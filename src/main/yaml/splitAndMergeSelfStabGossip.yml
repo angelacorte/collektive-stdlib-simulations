@@ -37,7 +37,7 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [ it.unibo.collektive.experiments.SplitAndMergeKt.splitAndMergeSelfStabGossip ]
+        parameters: [ it.unibo.collektive.experiments.SelfStabGossipKt.setUnionSelfStabGossipEntrypoint ]
 
 _divide: &divide
   - time-distribution:
@@ -65,7 +65,7 @@ deployments:
       - *program
     properties:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.TimeSensorProperty
-      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
+
   - type: Rectangle
     parameters: [*initialNodes, *width, 0, *width, *height]
     programs:

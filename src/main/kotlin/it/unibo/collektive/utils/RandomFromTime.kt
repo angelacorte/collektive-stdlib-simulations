@@ -1,15 +1,15 @@
-package it.unibo.collektive.examples
+package it.unibo.collektive.utils
 
 import it.unibo.alchemist.util.RandomGenerators.nextDouble
 import it.unibo.collektive.aggregate.api.Aggregate
+import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
-import org.apache.commons.math3.random.RandomGenerator
 
 fun Aggregate<Int>.keepRandom(
     randomGenerator: RandomGenerator,
     startInclusive: Double,
     endInclusive: Double,
-) = evolve(randomGenerator.nextDouble(startInclusive, endInclusive)) { it }
+) = evolve(randomGenerator.nextRandomDouble(startInclusive.. endInclusive)) { it }
 
 fun Aggregate<Int>.randomFromTimeElapsed(
     timeSensor: TimeSensor,

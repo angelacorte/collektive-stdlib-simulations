@@ -1,20 +1,21 @@
-package it.unibo.collektive.examples
+package it.unibo.collektive
 
 import it.unibo.alchemist.collektive.device.CollektiveDevice
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
+import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
-import it.unibo.collektive.examples.gossip.CheckOnSelfInPathGossip.checkOnSelfInPathGossip
-import it.unibo.collektive.examples.gossip.NoLoopAgainstNeighborsGossip.noLoopAgainstNeighborsGossip
-import it.unibo.collektive.examples.gossip.SlowSelfStabGossip.slowSelfStabGossip
-import it.unibo.collektive.examples.gossip.genericGossip
+import it.unibo.collektive.gossip.CheckOnSelfInPathGossip.checkOnSelfInPathGossip
+import it.unibo.collektive.gossip.NoLoopAgainstNeighborsGossip.noLoopAgainstNeighborsGossip
+import it.unibo.collektive.gossip.SlowSelfStabGossip.slowSelfStabGossip
+import it.unibo.collektive.gossip.genericGossip
 import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
 import it.unibo.collektive.stdlib.processes.timeReplicated
 import it.unibo.collektive.stdlib.spreading.gossipMax
 import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
 import it.unibo.collektive.stdlib.spreading.nonStabilizingGossip
 import it.unibo.collektive.stdlib.util.hops
-import org.apache.commons.math3.random.RandomGenerator
+import it.unibo.collektive.utils.randomFromTimeElapsed
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
@@ -24,7 +25,7 @@ import kotlin.time.Instant
  */
 fun Aggregate<Int>.gossipStdlibEntrypoint(env: EnvironmentVariables) =
     gossipMax(localId).also {
-        env["best-value"] = it
+        env["gossiping"] = it
     }
 
 /**
@@ -39,7 +40,7 @@ fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int =
         selector = ::maxOf,
         accumulateDistance = Double::plus,
     ).also {
-        env["best-value"] = it
+        env["gossiping"] = it
     }
 
 /**
@@ -50,12 +51,11 @@ fun Aggregate<Int>.thirdGossipEntrypoint(
     timeSensor: TimeSensor,
     randomGenerator: RandomGenerator,
 ) = noLoopAgainstNeighborsGossip(
-    local = localId,
-//    randomFromTimeElapsed(timeSensor, randomGenerator)
+    local = randomFromTimeElapsed(timeSensor, randomGenerator),
 //        .also { env["local-value"] = it },
     selector = ::maxOf,
 ).also {
-    env["best-value"] = it
+    env["gossiping"] = it
 }
 
 /**
@@ -72,7 +72,7 @@ fun Aggregate<Int>.secondGossipEntrypoint(
 //        .also { env["local-value"] = it },
 ) { first, second ->
     first.compareTo(second)
-}.also { env["best-value"] = it }
+}.also { env["gossiping"] = it }
 
 /**
  * Entrypoint for the simulation of the first implementation of the gossip algorithm with Collektive.
@@ -87,7 +87,7 @@ fun Aggregate<Int>.firstGossipEntrypoint(
 //    randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it },
 ) { first, second ->
     first >= second
-}.also { env["best-value"] = it }
+}.also { env["gossiping"] = it }
 
 /**
  * Entrypoint for the simulation of the `isHappening` gossip function defined into Collektive's DSl.
@@ -112,5 +112,5 @@ fun Aggregate<Int>.timeReplicatedGossipEntrypoint(
         maxReplicas = 4,
         timeToSpawn = 3.seconds,
         process = { nonStabilizingGossip(localId, reducer = ::maxOf).also { env["process"] = it } },
-    ).also { env["best-value"] = it }
+    ).also { env["gossiping"] = it }
 }

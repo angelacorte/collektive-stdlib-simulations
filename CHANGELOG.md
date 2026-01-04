@@ -1,3 +1,28 @@
+## [1.7.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.6.0...1.7.0) (2026-01-04)
+
+### Features
+
+* add charts plotter ([c29d279](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/c29d279f047cb7b176450c18e7e3d1cd3e73796f))
+
+### Dependency updates
+
+* **deps:** update alchemist to v42.3.28 ([ff087c3](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/ff087c32a4d246659f5daf157d837ded2741699d))
+* **deps:** update eclipse-temurin docker tag to v25 ([487ef86](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/487ef865e1c458af3d513d381f877751b01e3d04))
+* **deps:** update plugin kotlin-qa to v0.100.0 ([22b965e](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/22b965e679344835c03581e2c4a04ca72dd09b17))
+
+### Bug Fixes
+
+* shorter event times ([5b1742a](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/5b1742ae7bd5190db4e5b2f5ba0befbd0f5d01ea))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.6.0 [skip ci] ([eaa1481](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/eaa1481faf97838f0befa2a30274a6def89f3472))
+* update gitignore ([036c1fd](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/036c1fd3280622cc894b06eff7b4cc9cd1365444))
+
+### Style improvements
+
+* adapt to ktlint ([637c0e6](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/637c0e615bde841ab7bdaa0c2adf9999cce71c54))
+
 ## [1.6.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.5.2...1.6.0) (2026-01-04)
 
 ### Features

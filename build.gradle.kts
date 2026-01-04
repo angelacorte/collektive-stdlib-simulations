@@ -135,7 +135,7 @@ File(rootProject.rootDir.path + "/src/main/yaml")
             File("data").mkdirs()
             args(
                 "--override",
-                "launcher: { parameters: { batch: [seed], autoStart: true } }",
+                "launcher: { parameters: { batch: [seed, initialNodes, findMax], autoStart: true } }",
                 "--verbosity",
                 "error",
             )

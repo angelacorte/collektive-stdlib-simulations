@@ -1,3 +1,52 @@
+## [1.6.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.5.2...1.6.0) (2026-01-04)
+
+### Features
+
+* add collektive device with message size evaluation ([b6294fc](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/b6294fcb2d6f195919332bb9ca1f9e94e4db7708))
+* add docker services ([6219b65](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/6219b65a62188a6dc73fc85136a70aeaff455af3))
+* add move cluster action ([904c0b1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/904c0b1762430caaa49eef0ae9fbe7c31e5351d2))
+* add random generator node property ([823fa15](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/823fa157ace45176d1321a65d86ea245ab878430))
+* add split and merge base simulations ([a0fb771](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/a0fb7715391a54a576feaacec6f13bad83f7fa69))
+* add split and merge experiments entrypoints ([c7925fa](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/c7925faeca6139509a5ccf077b3abc3ed1c77ef9))
+* add time as instant function ([980d644](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/980d64447627502b314d7147190d117f9266edae))
+* create different entrypoints for different simulations ([449ecbd](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/449ecbdc724adcbc88222c9dc06534b1274bbf26))
+* create extractor for error evaluation ([e861a00](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e861a00a87061f5974e86574b260de83b8fe9a95))
+* create oracle global reaction ([9abf26f](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/9abf26ff82e673e0733bf1646221469338e186b5))
+
+### Dependency updates
+
+* **deps:** add kryo dependency ([583dc36](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/583dc36918acd6b70d7438238ac1efd2dd8f06d4))
+
+### Bug Fixes
+
+* batch parameters ([a6ae7f2](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/a6ae7f235482a9b76276b542ef608717876c1db4))
+* change nodes quantity ([5d30c0d](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/5d30c0dcb9d45ee374e82234aca1a8873ad662ea))
+* remove useless reaction ([86c0a64](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/86c0a649da03f4576b82ff7d386d61c4be5a32b4))
+* remove useless simulation ([c8c62c9](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/c8c62c99f7882d9dee1d3a8c5617ada044a14533))
+* update entrypoints ([e9c3cb4](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e9c3cb483417e07ffb20d1f1a0a94671adba6ad5))
+
+### Documentation
+
+* add doc ([e6da65d](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e6da65d6cd49d27fd94777a754edd380ccf009b4))
+
+### General maintenance
+
+* add and update effects ([ed999fe](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/ed999feb43a6836a1429b331f1b5247139046690))
+* **release:** update gradle.properties .env versions to 1.5.2 [skip ci] ([a467074](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/a4670740acd8845a0aedb353ab21ea1abc14f8b5))
+
+### Style improvements
+
+* adapt to ktlint ([53c32d8](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/53c32d8e6b26ce52a9f297ea1d9b89c0aa9f5291))
+* adapt to ktlint ([b5d8f70](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/b5d8f70742bd6baccce9d81075e397d5da7bef09))
+* adapt to ktlint ([b825843](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/b825843a4818312fa6db2ba7a09aca96b6b2bd98))
+
+### Refactoring
+
+* change function name and take random range as parameter ([31333df](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/31333df700450896f8644030913c5474b8304125))
+* remove unsed classes ([d7560de](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/d7560dec25682e7c5773d46cc2d0c699537d53bf))
+* rename gossip implementations for clarity ([236593a](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/236593a68a5b522eab6a06b2163ab5c6cb6f9f65))
+* reorganize package structure and update entrypoint references ([51f8bdf](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/51f8bdfc9c401c2280ec04f5b029a430fc0aec2f))
+
 ## [1.5.2](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.5.1...1.5.2) (2025-12-17)
 
 ### Dependency updates

@@ -25,7 +25,7 @@ import kotlin.time.Instant
  */
 fun Aggregate<Int>.gossipStdlibEntrypoint(env: EnvironmentVariables) =
     gossipMax(localId).also {
-        env["gossiping"] = it
+        env["gossip-value"] = it
     }
 
 /**
@@ -40,7 +40,7 @@ fun Aggregate<Int>.genericGossipEntrypoint(env: EnvironmentVariables): Int =
         selector = ::maxOf,
         accumulateDistance = Double::plus,
     ).also {
-        env["gossiping"] = it
+        env["gossip-value"] = it
     }
 
 /**
@@ -55,7 +55,7 @@ fun Aggregate<Int>.thirdGossipEntrypoint(
 //        .also { env["local-value"] = it },
     selector = ::maxOf,
 ).also {
-    env["gossiping"] = it
+    env["gossip-value"] = it
 }
 
 /**
@@ -72,7 +72,7 @@ fun Aggregate<Int>.secondGossipEntrypoint(
 //        .also { env["local-value"] = it },
 ) { first, second ->
     first.compareTo(second)
-}.also { env["gossiping"] = it }
+}.also { env["gossip-value"] = it }
 
 /**
  * Entrypoint for the simulation of the first implementation of the gossip algorithm with Collektive.
@@ -87,7 +87,7 @@ fun Aggregate<Int>.firstGossipEntrypoint(
 //    randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it },
 ) { first, second ->
     first >= second
-}.also { env["gossiping"] = it }
+}.also { env["gossip-value"] = it }
 
 /**
  * Entrypoint for the simulation of the `isHappening` gossip function defined into Collektive's DSl.
@@ -112,5 +112,5 @@ fun Aggregate<Int>.timeReplicatedGossipEntrypoint(
         maxReplicas = 4,
         timeToSpawn = 3.seconds,
         process = { nonStabilizingGossip(localId, reducer = ::maxOf).also { env["process"] = it } },
-    ).also { env["gossiping"] = it }
+    ).also { env["gossip-value"] = it }
 }

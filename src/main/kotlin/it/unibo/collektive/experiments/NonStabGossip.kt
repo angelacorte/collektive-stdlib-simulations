@@ -2,48 +2,19 @@ package it.unibo.collektive.experiments
 
 import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
+import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
-import it.unibo.collektive.examples.randomFromTimeElapsed
 import it.unibo.collektive.stdlib.spreading.nonStabilizingGossip
-import org.apache.commons.math3.random.RandomGenerator
+import it.unibo.collektive.utils.randomFromTimeElapsed
 
-/**
- * Split and merge experiments by using non stabilizing gossip.
- */
-fun Aggregate<Int>.nonStabGossip(
-    randomGenerator: RandomGenerator,
-    timeSensor: TimeSensor,
-    selector: (Double, Double) -> Double,
-): Double = nonStabilizingGossip(
-    value = randomFromTimeElapsed(timeSensor, randomGenerator),
-    reducer = selector,
-)
-
-fun Aggregate<Int>.minNonStabGossipEntrypoint(
+fun Aggregate<Int>.nonStabGossipEntrypoint(
     env: EnvironmentVariables,
     randomGenerator: RandomGenerator,
     timeSensor: TimeSensor,
-): Double =
-    nonStabGossip(randomGenerator, timeSensor, ::minOf).also { env["best-value"] = it }
-
-fun Aggregate<Int>.maxNonStabGossipEntrypoint(
-    env: EnvironmentVariables,
-    randomGenerator: RandomGenerator,
-    timeSensor: TimeSensor,
-): Double =
-    nonStabGossip(randomGenerator, timeSensor, ::maxOf).also { env["best-value"] = it }
-
-fun Aggregate<Int>.avgNonStabGossipEntrypoint(
-    env: EnvironmentVariables,
-    randomGenerator: RandomGenerator,
-    timeSensor: TimeSensor,
-): Double =
-    nonStabGossip(randomGenerator, timeSensor, TODO("Not yet implemented")).also { env["best-value"] = it }
-
-fun Aggregate<Int>.setUnionNonStabGossipEntrypoint(
-    env: EnvironmentVariables,
-    randomGenerator: RandomGenerator,
-    timeSensor: TimeSensor,
-): Double =
-    nonStabGossip(randomGenerator, timeSensor, TODO("Not yet implemented")).also { env["best-value"] = it }
-
+): Double {
+    val selector: (Double, Double) -> Double = if (env["findMax"]) ::maxOf else ::minOf
+    return nonStabilizingGossip(
+        value = randomFromTimeElapsed(timeSensor, randomGenerator).also { env["local-value"] = it },
+        reducer = selector,
+    ).also { env["gossip-value"] = it }
+}

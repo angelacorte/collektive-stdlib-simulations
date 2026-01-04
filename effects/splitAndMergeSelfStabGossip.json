@@ -34,7 +34,7 @@
       "val": 26
     },
     "molFilter": false,
-    "molString": "it.unibo.collektive.experiments.SplitAndMergeKt.splitAndMergeSelfStabGossip",
+    "molString": "it.unibo.collektive.experiments.SelfStabGossipKt.selfStabGossipEntrypoint",
     "molPropertyFilter": true,
     "property": "",
     "writingPropertyValue": true,

@@ -5,16 +5,25 @@ variables:
     "self-stab-gossip-sm"
   path: &path
     "data/self-stab-gossip-sm"
+  maxSeed: &maxSeed
+    type: SystemEnvVariable
+    parameters: [ "MAX_SEED", 4 ]
   seed: &seed
     min: 0
-    max: 1
-#      formula: System.getenv("MAX_SEED").toDouble()
-#      language: kotlin
+    max: *maxSeed
     step: 1
     default: 42
   initialNodes: &initialNodes
     type: ArbitraryVariable
-    parameters: [ 50, [ 1, 2, 10, 100, 300, 500 ] ]
+    parameters: [ 50, [ 1, 2, 10, 100, 250 ] ]
+  shouldFindMax: &shouldFindMax
+    type: SystemEnvVariable
+    parameters: [ "FIND_MAX", true ]
+  findMax: &findMax
+    type: ArbitraryVariable
+    parameters: [ *shouldFindMax, [true, false] ]
+  #    type: SystemEnvVariable
+  #    parameters: [ "FIND_MAX", true ]
   movingRange: &movingRange
     5.0
   width: &width
@@ -23,6 +32,7 @@ variables:
     0
   height: &height
     20
+#  walking_speed: &walk-speed { default: 1.4, min: 1, max: 2, step: 0.1 }
 
 seeds:
   scenario: *seed
@@ -37,7 +47,12 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [ it.unibo.collektive.experiments.SelfStabGossipKt.setUnionSelfStabGossipEntrypoint ]
+        parameters: [ it.unibo.collektive.experiments.SelfStabGossipKt.selfStabGossipEntrypoint ]
+#  - time-distribution: 10
+#    type: Event
+#    actions:
+#      - type: LevyWalk
+#        parameters: [ 1.4, 1, 2, 0.1 ]
 
 _divide: &divide
   - time-distribution:
@@ -57,14 +72,17 @@ _merging: &merging
       - type: MoveCluster
         parameters: [ -5 ]
 
-
 deployments:
   - type: Rectangle
     parameters: [*initialNodes, *leftStart, 0, *width, *height]
     programs:
       - *program
+    contents:
+      - molecule: findMax
+        concentration: *findMax
     properties:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.TimeSensorProperty
+      - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
 
   - type: Rectangle
     parameters: [*initialNodes, *width, 0, *width, *height]
@@ -72,6 +90,9 @@ deployments:
       - *program
       - *divide
       - *merging
+    contents:
+      - molecule: findMax
+        concentration: *findMax
     properties:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.TimeSensorProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
@@ -88,12 +109,8 @@ export:
       exportPath: *path
     data:
       - time
-      - molecule: best-value
-        aggregators: [ min, max, mean, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - type: NumberOfNodes
-      - type: NetworkDensity
+      - type: ErrorExtractor
+        parameters: [*findMax]
       - molecule: MessageSize
         aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite

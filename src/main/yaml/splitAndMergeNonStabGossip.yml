@@ -5,16 +5,23 @@ variables:
     "non-stab-gossip-sm"
   path: &path
     "data/non-stab-gossip-sm"
+  maxSeed: &maxSeed
+    type: SystemEnvVariable
+    parameters: [ "MAX_SEED", 4 ]
   seed: &seed
     min: 0
-    max: 1
-#      formula: System.getenv("MAX_SEED").toDouble()
-#      language: kotlin
+    max: *maxSeed
     step: 1
     default: 42
   initialNodes: &initialNodes
     type: ArbitraryVariable
-    parameters: [ 50, [ 1, 2, 10, 100, 300, 500 ] ]
+    parameters: [ 50, [ 1, 2, 10, 100, 250 ] ]
+  shouldFindMax: &shouldFindMax
+    type: SystemEnvVariable
+    parameters: [ "FIND_MAX", true ]
+  findMax: &findMax
+    type: ArbitraryVariable
+    parameters: [ *shouldFindMax, [true, false] ]
   movingRange: &movingRange
     5.0
   width: &width
@@ -42,7 +49,7 @@ _pool: &program
     type: Event
     actions:
       - type: RunCollektiveProgram
-        parameters: [it.unibo.collektive.experiments.SplitAndMergeKt.splitAndMergeNonStabGossip]
+        parameters: [ it.unibo.collektive.experiments.NonStabGossipKt.nonStabGossipEntrypoint]
 #  - time-distribution: 10
 #    type: Event
 #    actions:
@@ -73,6 +80,9 @@ deployments:
     parameters: [*initialNodes, *leftStart, 0, *width, *height]
     programs:
       - *program
+    contents:
+      - molecule: findMax
+        concentration: *findMax
     properties:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.TimeSensorProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
@@ -82,6 +92,9 @@ deployments:
       - *program
       - *divide
       - *merging
+    contents:
+      - molecule: findMax
+        concentration: *findMax
     properties:
       - type: it.unibo.collektive.alchemist.device.sensors.impl.TimeSensorProperty
       - type: it.unibo.collektive.alchemist.device.sensors.impl.RandomNodeProperty
@@ -98,12 +111,8 @@ export:
       exportPath: *path
     data:
       - time
-      - molecule: best-value
-        aggregators: [ min, max, mean, StandardDeviation ]
-        value-filter: onlyfinite
-        precision: 3
-      - type: NumberOfNodes
-      - type: NetworkDensity
+      - type: ErrorExtractor
+        parameters: [*findMax]
       - molecule: MessageSize
         aggregators: [ max, mean, variance, median, StandardDeviation ]
         value-filter: onlyfinite

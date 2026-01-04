@@ -61,7 +61,7 @@ _pool: &program
 _divide: &divide
   - time-distribution:
       type: Trigger
-      parameters: [ 200 ]
+      parameters: [ 50 ]
     type: Event
     actions:
       - type: MoveCluster
@@ -70,7 +70,7 @@ _divide: &divide
 _merging: &merging
   - time-distribution:
       type: Trigger
-      parameters: [ 600 ]
+      parameters: [ 150 ]
     type: Event
     actions:
       - type: MoveCluster
@@ -102,7 +102,7 @@ deployments:
 
 terminate:
   type: AfterTime
-  parameters: 800
+  parameters: 200
 
 export:
   - type: CSVExporter
@@ -112,6 +112,7 @@ export:
       exportPath: *path
     data:
       - time
+      - type: NumberOfNodes
       - type: ErrorExtractor
         parameters: [*findMax]
       - molecule: MessageSize

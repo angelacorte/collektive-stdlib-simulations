@@ -15,6 +15,6 @@ fun Aggregate<Int>.randomFromTimeElapsed(
     timeSensor: TimeSensor,
     randomGenerator: RandomGenerator,
 ) = when {
-    timeSensor.getTimeAsDouble() <= 400.0 -> keepRandom(randomGenerator, -1.0, 1.0)
+    timeSensor.getTimeAsDouble() <= 100.0 -> keepRandom(randomGenerator, -1.0, 1.0)
     else -> keepRandom(randomGenerator, -0.5, 0.5)
 }

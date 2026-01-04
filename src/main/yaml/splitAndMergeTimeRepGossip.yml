@@ -15,7 +15,7 @@ variables:
     default: 42
   initialNodes: &initialNodes
     type: ArbitraryVariable
-    parameters: [ 50, [ 1, 2, 10, 100, 250 ] ]
+    parameters: [ 50, [ 1, 2, 10, 50, 100 ] ]
   shouldFindMax: &shouldFindMax
     type: SystemEnvVariable
     parameters: [ "FIND_MAX", true ]

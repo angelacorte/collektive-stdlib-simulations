@@ -9,7 +9,7 @@ fun Aggregate<Int>.keepRandom(
     randomGenerator: RandomGenerator,
     startInclusive: Double,
     endInclusive: Double,
-) = evolve(randomGenerator.nextRandomDouble(startInclusive.. endInclusive)) { it }
+) = evolve(randomGenerator.nextRandomDouble(startInclusive..endInclusive)) { it }
 
 fun Aggregate<Int>.randomFromTimeElapsed(
     timeSensor: TimeSensor,

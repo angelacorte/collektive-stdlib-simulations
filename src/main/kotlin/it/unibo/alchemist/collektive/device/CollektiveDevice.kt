@@ -23,8 +23,9 @@ import it.unibo.collektive.networking.NoNeighborsData
 import it.unibo.collektive.networking.OutboundEnvelope
 import it.unibo.collektive.path.Path
 import it.unibo.collektive.stdlib.processes.TimedReplica
-import java.io.ByteArrayOutputStream
+import it.unibo.collektive.stdlib.util.PathValue
 import org.apache.commons.math3.random.RandomGenerator
+import java.io.ByteArrayOutputStream
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
@@ -105,6 +106,7 @@ class CollektiveDevice<P>(
         kryo.register(Boolean::class.java)
         kryo.register(Duration::class.java)
         kryo.register(ArrayList::class.java)
+        kryo.register(PathValue::class.java)
         kryo.register(TimedReplica::class.java)
         kryo.register(SlowSelfStabGossip.GossipValue::class.java)
         kryo.register(CheckOnSelfInPathGossip.GossipValue::class.java)

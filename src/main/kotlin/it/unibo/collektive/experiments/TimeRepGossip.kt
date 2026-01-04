@@ -39,6 +39,6 @@ fun Aggregate<Int>.timeRepGossipEntrypoint(
     val selector: (Double, Double) -> Double = if (env["findMax"]) ::maxOf else ::minOf
     return timeRepGossip(
         device = device,
-        process = { nonStabilizingGossip(value = localValue, reducer = selector,) },
+        process = { nonStabilizingGossip(value = localValue, reducer = selector) },
     ).also { env["gossip-value"] = it }
 }

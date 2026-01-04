@@ -1,10 +1,8 @@
-FROM eclipse-temurin:25
-RUN mkdir -p /experiment /data
-VOLUME "/data"
-ENV MAX=${MAX}
-ENV MIN=${MIN}
-ENV DEFAULT=${DEFAULT}
+FROM eclipse-temurin:23
+RUN mkdir -p /experiment
 WORKDIR /experiment
+ENV GRADLE_TASK=runAllBatch
+ENV MAX_SEED=31
 COPY effects effects
 COPY gradle gradle
 COPY src src
@@ -15,7 +13,11 @@ COPY gradlew* ./
 RUN sed -i '/alias(libs.plugins.gitSemVer)/d' build.gradle.kts
 RUN sed -i '/alias(libs.plugins.multiJvmTesting)/d' build.gradle.kts
 RUN sed -i '/multiJvm {/,/}/d' build.gradle.kts
-ARG MAX
-ARG MIN
-ARG DEFAULT
-CMD ./gradlew runGossipBatch
+# Only runs with FIND_MAX if it's defined in docker-compose
+CMD sh -c 'if [ -n "$FIND_MAX" ]; then \
+             echo "Running with FIND_MAX=$FIND_MAX"; \
+             FIND_MAX=$FIND_MAX MAX_SEED=$MAX_SEED ./gradlew $GRADLE_TASK; \
+           else \
+             echo "Running without FIND_MAX"; \
+             MAX_SEED=$MAX_SEED ./gradlew $GRADLE_TASK; \
+           fi'

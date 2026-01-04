@@ -193,7 +193,7 @@ is properly configured with the desired parameters.
     ```
 4. Run the script to process the data and generate the charts (this process may take some time):
     ```bash
-    python plotter_all.py
+    python plot.py
     ```
 5. The charts will be generated in the `charts` folder.
 6. If you want to regenerate the charts, you can run the script again.

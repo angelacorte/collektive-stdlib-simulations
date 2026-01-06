@@ -390,19 +390,19 @@ if __name__ == '__main__':
 # and the y-axis should represent the stabilization time. The title of the chart should be "Stabilization Time Comparison".
 # the stabilization time is the amount of time elapsed from the start of the experiment to the end of the experiment.
 
-def plot_selfs(data, experiment, metric, y_label='Error'):
+def plot_selfs(data, experiment, metric, y_label=''):
     i = len(data)+2
     plt.rcParams.update({'font.size': 15})
     plt.rcParams.update({'legend.loc': 0})
     colors = sns.color_palette("viridis", n_colors=i)
-    plt.figure(figsize=(9, 5))
+    fig, ax1 = plt.subplots(figsize=(9, 5))
     what = ''
     for j, ((_, initNodes, findM), (mean_df, std_df)) in enumerate(data.items()):
         sns.lineplot(
             data=mean_df,
             x='time',
             y=metric,
-            label=f'$N_0 = {initNodes * 2}$',
+            label=f'$N_0 = {initNodes}$',
             color=colors[j+2],
         )
         upper_bound = mean_df[metric] + std_df[f'{metric}-std']
@@ -412,6 +412,8 @@ def plot_selfs(data, experiment, metric, y_label='Error'):
             what = "MaxOf"
         else:
             what = "MinOf"
+
+    ax1.set_xlim(0, 200)
     cut_event = 50
     change_range = 100
     merge_event = 150
@@ -422,7 +424,7 @@ def plot_selfs(data, experiment, metric, y_label='Error'):
     plt.title(f'{beautify_experiment_name(experiment)} ({what})')
     plt.xlabel('Simulated seconds')
     plt.ylabel(y_label + beautify_metric_name(metric))
-    plt.legend()
+    plt.legend(prop={'size': 8})
     plt.tight_layout()
     filename = beautify_experiment(experiment, metric)
     plt.savefig(f'{output_directory}/{filename}-{what}.pdf', dpi=300)
@@ -524,7 +526,7 @@ def plot_data_rate(data, experiment, metric):
 
 from matplotlib import pyplot as plt
 
-metrics = ['MEAN', 'RMSE', 'MAE']
+metrics = ['RMSE', 'MAE'] #'MEAN',
 initialNodes = [2, 10, 50, 100]
 findMax = [True, False]
 experiments = ['self-stab-gossip-sm', 'non-stab-gossip-sm', 'time-rep-gossip-sm']

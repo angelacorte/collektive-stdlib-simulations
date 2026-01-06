@@ -1,3 +1,19 @@
+## [1.7.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.7.0...1.7.1) (2026-01-06)
+
+### Dependency updates
+
+* **deps:** update dependency xarray to v2025.12.0 ([49e92fc](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/49e92fc27e218b89585cf68f3014f7fbfec60bfd))
+
+### Bug Fixes
+
+* remove MEAN from charts generation ([91885e9](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/91885e9a07775f2123d386b6efc4e2e5511cb701))
+
+### General maintenance
+
+* add first charts generated ([1933e3f](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/1933e3f4ca3fd66f93768b789474f20c915ce35b))
+* **build:** update task size ([07e515c](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/07e515c614159c08e8a3d9a6594bbb51161ffe98))
+* **release:** update gradle.properties .env versions to 1.7.0 [skip ci] ([1bebfc0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/1bebfc004c336c10b1dde5e355f83f2d0529bbf0))
+
 ## [1.7.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.6.0...1.7.0) (2026-01-04)
 
 ### Features

@@ -524,37 +524,75 @@ def plot_data_rate(data, experiment, metric):
     plt.savefig(f'{output_directory}/{filename}-{what}.pdf', dpi=300)
     plt.close()
 
+def plot_experiments_comparison(data, metric, nodes, selector, y_label=''):
+    """
+    Plot different experiments on the same chart for a fixed number of nodes and metric.
+    """
+    plt.rcParams.update({'font.size': 15})
+    plt.rcParams.update({'legend.loc': 0})
+
+    colors = sns.color_palette("viridis", n_colors=len(data) + 2)
+    fig, ax1 = plt.subplots(figsize=(9, 5))
+
+    for j, (experiment, (mean_df, std_df)) in enumerate(data.items()):
+        sns.lineplot(
+            data=mean_df,
+            x='time',
+            y=metric,
+            label=beautify_experiment_name(experiment),
+            ax=ax1,
+            color=colors[j + 2],
+        )
+
+        upper = mean_df[metric] + std_df[f'{metric}-std']
+        lower = mean_df[metric] - std_df[f'{metric}-std']
+        ax1.fill_between(mean_df['time'], lower, upper, color=colors[j + 2], alpha=0.2)
+
+    ax1.set_xlim(0, 200)
+    ax1.set_xlabel('Simulated seconds')
+    ax1.set_ylabel(beautify_metric_name(metric) + y_label)
+
+    # Event markers (same semantics as other plots)
+    plt.axvline(x=50, color=colors[2], linestyle='--', linewidth=1, label='Cut Event')
+    plt.axvline(x=100, color=colors[1], linestyle='dotted', linewidth=1, label='Change Range')
+    plt.axvline(x=150, color=colors[0], linestyle='--', linewidth=1, label='Merge Event')
+
+    what = "MaxOf" if selector else "MinOf"
+    ax1.set_title(f'{beautify_metric_name(metric)} – N₀={nodes * 2} ({what})')
+
+    ax1.legend(prop={'size': 9})
+    plt.tight_layout()
+    plt.savefig(
+        f'{output_directory}/nodes-{nodes * 2}-{metric}-{what}.pdf',
+        dpi=300
+    )
+    plt.close()
+
 from matplotlib import pyplot as plt
 
-metrics = ['RMSE', 'MAE'] #'MEAN',
+metrics = ['RMSE'] #'MEAN',, 'MAE'
 initialNodes = [2, 10, 50, 100]
 findMax = [True, False]
 experiments = ['self-stab-gossip-sm', 'non-stab-gossip-sm', 'time-rep-gossip-sm']
 
-for metric_to_plot in metrics:
-    for experiment in experiments:
+for experiment in experiments:
+    for metric_to_plot in metrics:
         for selector in findMax:
             data_dict = {}
             for nodes in initialNodes:
                 mean = np.where(np.isnan(means[experiment][metric_to_plot].sel(dict(findMax=selector, initialNodes=nodes)).values), 0.0, means[experiment][metric_to_plot].sel(dict(findMax=selector, initialNodes=nodes)).values)
-                # mean_rmse = np.where(np.isnan(means[experiment]['RMSE'].sel(dict(findMax=selector, initialNodes=nodes)).values), 0.0, means[experiment]['RMSE'].sel(dict(findMax=selector, initialNodes=nodes)).values)
-                # mean_mae = np.where(np.isnan(means[experiment]['MAE'].sel(dict(findMax=selector, initialNodes=nodes)).values), 0.0, means[experiment]['RMSE'].sel(dict(findMax=selector, initialNodes=nodes)).values)
                 nodes_series = np.where(np.isnan(means[experiment]['nodes'].sel(dict(findMax=selector, initialNodes=nodes)).values), 0.0, means[experiment]['nodes'].sel(dict(findMax=selector, initialNodes=nodes)).values)
                 time_series = means[experiment]['MEAN'].sel(dict(findMax=selector, initialNodes=nodes))['time'].values
 
                 df_mean = pd.DataFrame({
                     'time': time_series,
                     f'{metric_to_plot}': mean,
-                    # 'RMSE': mean_rmse,
-                    # 'MAE': mean_mae,
                     'nodes': nodes_series,
                 })
 
                 df_std = pd.DataFrame({
                     'time': time_series,
                     f'{metric_to_plot}-std': stdevs[experiment][metric_to_plot].sel(dict(findMax=selector, initialNodes=nodes)).values,
-                    # 'RMSE-std': stdevs[experiment]['RMSE'].sel(dict(findMax=selector, initialNodes=nodes)).values,
-                    # 'MAE-std': stdevs[experiment]['MAE'].sel(dict(findMax=selector, initialNodes=nodes)).values,
                     'nodes-std': stdevs[experiment]['nodes'].sel(dict(findMax=selector, initialNodes=nodes)).values,
                 })
 
@@ -624,3 +662,110 @@ if max_message_size_mean > 0:
     print(f'Log scale: {np.log10(max_message_size_mean)}')
 if max_message_size_sum > 0:
     print(f'Log scale: {np.log10(max_message_size_sum)}')
+
+
+# Compare experiments for fixed number of nodes and metric
+for metric_to_plot in metrics:
+    for selector in findMax:
+        for nodes in initialNodes:
+
+            comparison_data = {}
+
+            for experiment in experiments:
+                mean = np.where(
+                    np.isnan(
+                        means[experiment][metric_to_plot]
+                        .sel(dict(findMax=selector, initialNodes=nodes))
+                        .values
+                    ),
+                    0.0,
+                    means[experiment][metric_to_plot]
+                    .sel(dict(findMax=selector, initialNodes=nodes))
+                    .values
+                )
+
+                time_series = (
+                    means[experiment][metric_to_plot]
+                    .sel(dict(findMax=selector, initialNodes=nodes))
+                    ['time']
+                    .values
+                )
+
+                df_mean = pd.DataFrame({
+                    'time': time_series,
+                    metric_to_plot: mean,
+                })
+
+                df_std = pd.DataFrame({
+                    'time': time_series,
+                    f'{metric_to_plot}-std': (
+                        stdevs[experiment][metric_to_plot]
+                        .sel(dict(findMax=selector, initialNodes=nodes))
+                        .values
+                    ),
+                })
+
+                comparison_data[experiment] = (df_mean, df_std)
+
+            plot_experiments_comparison(
+                comparison_data,
+                metric=metric_to_plot,
+                nodes=nodes,
+                selector=selector
+            )
+
+# Compare experiments for fixed number of nodes – Message size metrics
+message_metrics = ['MessageSize[mean]', 'MessageSize[Sum]']
+
+for metric_to_plot in message_metrics:
+    for selector in findMax:
+        for nodes in initialNodes:
+
+            comparison_data = {}
+
+            for experiment in experiments:
+                raw_mean = means[experiment][metric_to_plot].sel(
+                    dict(findMax=selector, initialNodes=nodes)
+                ).values
+
+                # Unit handling (consistent with existing plots)
+                if metric_to_plot == 'MessageSize[Sum]':
+                    raw_mean = raw_mean / 1024.0  # KB/s
+
+                mean = np.where(np.isnan(raw_mean), 0.0, raw_mean)
+
+                time_series = (
+                    means[experiment][metric_to_plot]
+                    .sel(dict(findMax=selector, initialNodes=nodes))
+                    ['time']
+                    .values
+                )
+
+                df_mean = pd.DataFrame({
+                    'time': time_series,
+                    metric_to_plot: mean,
+                })
+
+                raw_std = stdevs[experiment][metric_to_plot].sel(
+                    dict(findMax=selector, initialNodes=nodes)
+                ).values
+
+                if metric_to_plot == 'MessageSize[Sum]':
+                    raw_std = raw_std / 1024.0  # KB/s
+
+                df_std = pd.DataFrame({
+                    'time': time_series,
+                    f'{metric_to_plot}-std': raw_std,
+                })
+
+                comparison_data[experiment] = (df_mean, df_std)
+
+            ylabel = ' (KB/s)' if metric_to_plot == 'MessageSize[Sum]' else ' (B/s)'
+
+            plot_experiments_comparison(
+                comparison_data,
+                metric=metric_to_plot,
+                nodes=nodes,
+                selector=selector,
+                y_label=ylabel
+            )

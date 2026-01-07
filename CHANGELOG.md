@@ -1,3 +1,17 @@
+## [1.8.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.7.1...1.8.0) (2026-01-07)
+
+### Features
+
+* plot different experiments with same setup ([f674665](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/f674665d30f99f204e054f055bc1b11187a1fda0))
+
+### Dependency updates
+
+* **deps:** update alchemist to v42.3.29 ([9cbe8e5](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/9cbe8e5e2783be138a9aa87a6258caa9f9ac3a10))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.7.1 [skip ci] ([e93f566](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e93f566b1679050ea84eab31d6154a41698c1535))
+
 ## [1.7.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.7.0...1.7.1) (2026-01-06)
 
 ### Dependency updates

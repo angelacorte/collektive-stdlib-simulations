@@ -1,3 +1,13 @@
+## [1.8.2](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.1...1.8.2) (2026-01-07)
+
+### Bug Fixes
+
+* **build:** temporary remove kotlin qa ([750005d](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/750005decb891eb10022f357b457e2495938c785))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.1 [skip ci] ([1c6a6fe](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/1c6a6fea2e7bbc63f8098af5d36b33c8f0a82a0a))
+
 ## [1.8.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.0...1.8.1) (2026-01-07)
 
 ### Bug Fixes

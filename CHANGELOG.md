@@ -1,3 +1,14 @@
+## [1.8.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.0...1.8.1) (2026-01-07)
+
+### Bug Fixes
+
+* **ci:** add release on dockerhub ([3074d33](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/3074d3398fc3630dc5ca0f4b679ef79c6173fddf))
+* **ci:** github token ([d0cecff](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/d0cecff9711c2d9e81cb213ffb5df4245c4dab97))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.0 [skip ci] ([c2b40f0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/c2b40f030adeefec51ef55af37c6edbec0b57808))
+
 ## [1.8.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.7.1...1.8.0) (2026-01-07)
 
 ### Features

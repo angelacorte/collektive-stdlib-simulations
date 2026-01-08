@@ -18,7 +18,7 @@ jobs:
       - uses: DanySK/build-check-deploy-gradle-action@4.0.17
         with:
           build-command: true
-          check-command: ./gradlew runAllGraphic
+          check-command: ./gradlew runSAMNSGG && ./gradlew runSAMSSGG && ./gradlew runSAMTRGG
           deploy-command: true
           should-run-codecov: false
           should-validate-wrapper: ${{ contains('Linux', runner.os) }}

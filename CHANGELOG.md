@@ -1,3 +1,17 @@
+## [1.8.4](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.3...1.8.4) (2026-01-08)
+
+### Dependency updates
+
+* **deps:** update eclipse-temurin docker tag to v25 ([fb29605](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/fb2960598ed719a91c54065c2b850d871a1be84a))
+
+### Bug Fixes
+
+* gradle sim task name ([1e20acb](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/1e20acbbb683501f6d698c0fab138b7d3fb08e9a))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.3 [skip ci] ([496772a](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/496772a489b080a8a303f802c252e4f2c2f99155))
+
 ## [1.8.3](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.2...1.8.3) (2026-01-08)
 
 ### Bug Fixes

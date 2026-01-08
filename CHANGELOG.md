@@ -1,3 +1,13 @@
+## [1.8.5](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.4...1.8.5) (2026-01-08)
+
+### Bug Fixes
+
+* **deps:** change temurin version in dockerfile ([e5e2f6c](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e5e2f6c6e8157b9f2000b7cd6e89bd30e4ea2d3a))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.8.4 [skip ci] ([b176f2a](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/b176f2a160a5156749ac201499ae8fd463a35a94))
+
 ## [1.8.4](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.3...1.8.4) (2026-01-08)
 
 ### Dependency updates

@@ -10,5 +10,8 @@ timeprocessed
 /node_modules/
 /data/
 .DS_Store
+src/main/.DS_Store
 /gossip-sm_mean
 /gossip-sm_std
+/charts/
+/charts0/

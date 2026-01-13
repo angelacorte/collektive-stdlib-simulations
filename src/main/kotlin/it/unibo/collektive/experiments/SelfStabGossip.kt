@@ -5,9 +5,7 @@ import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 import it.unibo.collektive.gossip.NoLoopAgainstNeighborsGossip.noLoopAgainstNeighborsGossip
-import it.unibo.collektive.stdlib.spreading.gossip
 import it.unibo.collektive.utils.randomFromTimeElapsed
-import org.jooq.lambda.Agg
 
 fun Aggregate<Int>.selfStabGossipEntrypoint(
     env: EnvironmentVariables,

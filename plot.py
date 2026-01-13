@@ -194,71 +194,6 @@ def beautifyValue(v):
     except:
         return v
 
-
-    # =============================================================================
-    #     def derivativeOrMeasure(variable_name):
-    #         if variable_name.endswith('dt'):
-    #             return labels.get(variable_name[:-2], Measure(variable_name)).derivative()
-    #         return Measure(variable_name)
-    #
-    #
-    #     def label_for(variable_name):
-    #         return labels.get(variable_name, derivativeOrMeasure(variable_name)).description()
-    #
-    #
-    #     def unit_for(variable_name):
-    #         return str(labels.get(variable_name, derivativeOrMeasure(variable_name)))
-    # =============================================================================
-
-    class Measure:
-        def __init__(self, description, unit=None):
-            self.__description = description
-            self.__unit = unit
-
-        def description(self):
-            return self.__description
-
-        def unit(self):
-            return '' if self.__unit is None else f'({self.__unit})'
-
-        def derivative(self, new_description=None, new_unit=None):
-            def cleanMathMode(s):
-                return s[1:-1] if s[0] == '$' and s[-1] == '$' else s
-
-            def deriveString(s):
-                return r'$d ' + cleanMathMode(s) + r'/{dt}$'
-
-            def deriveUnit(s):
-                return f'${cleanMathMode(s)}' + '/{s}$' if s else None
-
-            result = Measure(
-                new_description if new_description else deriveString(self.__description),
-                new_unit if new_unit else deriveUnit(self.__unit),
-            )
-            return result
-
-        def __str__(self):
-            return f'{self.description()} {self.unit()}'
-
-
-    centrality_label = 'H_a(x)'
-
-
-    def expected(x):
-        return r'\mathbf{E}[' + x + ']'
-
-
-    def stdev_of(x):
-        return r'\sigma{}[' + x + ']'
-
-
-    def mse(x):
-        return 'MSE[' + x + ']'
-
-
-    def cardinality(x):
-        return r'\|' + x + r'\|'
-
 import os
 
 if __name__ == '__main__':
@@ -272,7 +207,7 @@ if __name__ == '__main__':
     # How to name the summary of the processed data
     pickleOutput = f'gossip-sm'
     # Experiment prefixes: one per experiment (root of the file name)
-    experiments = ['self-stab-gossip-sm', 'non-stab-gossip-sm', 'time-rep-gossip-sm'] #'messages-self-construction-fixed-leader',
+    experiments = ['self-stab-gossip-sm', 'non-stab-gossip-sm', 'time-rep-gossip-sm', 'self-stab-gossip-walk', 'non-stab-gossip-walk', 'time-rep-gossip-walk'] #'messages-self-construction-fixed-leader',
     floatPrecision = '{: 0.3f}'
     # Number of time samples
     timeSamples = 200
@@ -667,60 +602,62 @@ if max_message_size_mean > 0:
 if max_message_size_sum > 0:
     print(f'Log scale: {np.log10(max_message_size_sum)}')
 
+simType = ['sm', 'walk']
 
-# Compare experiments for fixed number of nodes and metric
-for metric_to_plot in metrics:
-    for selector in findMax:
-        for nodes in initialNodes:
+for sim in simType:
+    for metric_to_plot in metrics:
+        for selector in findMax:
+            for nodes in initialNodes:
 
-            comparison_data = {}
-            walk=''
-            for experiment in experiments:
-                mean = np.where(
-                    np.isnan(
+                comparison_data = {}
+                walk=''
+                experimentsType = [exp for exp in experiments if sim in exp]
+                for experiment in experimentsType:
+                    mean = np.where(
+                        np.isnan(
+                            means[experiment][metric_to_plot]
+                            .sel(dict(findMax=selector, initialNodes=nodes))
+                            .values
+                        ),
+                        0.0,
                         means[experiment][metric_to_plot]
                         .sel(dict(findMax=selector, initialNodes=nodes))
                         .values
-                    ),
-                    0.0,
-                    means[experiment][metric_to_plot]
-                    .sel(dict(findMax=selector, initialNodes=nodes))
-                    .values
-                )
+                    )
 
-                time_series = (
-                    means[experiment][metric_to_plot]
-                    .sel(dict(findMax=selector, initialNodes=nodes))
-                    ['time']
-                    .values
-                )
-
-                df_mean = pd.DataFrame({
-                    'time': time_series,
-                    metric_to_plot: mean,
-                })
-
-                df_std = pd.DataFrame({
-                    'time': time_series,
-                    f'{metric_to_plot}-std': (
-                        stdevs[experiment][metric_to_plot]
+                    time_series = (
+                        means[experiment][metric_to_plot]
                         .sel(dict(findMax=selector, initialNodes=nodes))
+                        ['time']
                         .values
-                    ),
-                })
+                    )
 
-                comparison_data[experiment] = (df_mean, df_std)
+                    df_mean = pd.DataFrame({
+                        'time': time_series,
+                        metric_to_plot: mean,
+                    })
 
-                if 'walk' in experiment:
-                    walk = 'Brownian Walk'
+                    df_std = pd.DataFrame({
+                        'time': time_series,
+                        f'{metric_to_plot}-std': (
+                            stdevs[experiment][metric_to_plot]
+                            .sel(dict(findMax=selector, initialNodes=nodes))
+                            .values
+                        ),
+                    })
 
-            plot_experiments_comparison(
-                comparison_data,
-                metric=metric_to_plot,
-                nodes=nodes,
-                selector=selector,
-                walk = walk,
-            )
+                    comparison_data[experiment] = (df_mean, df_std)
+
+                    if 'walk' in experiment:
+                        walk = 'Brownian Walk-'
+
+                plot_experiments_comparison(
+                    comparison_data,
+                    metric=metric_to_plot,
+                    nodes=nodes,
+                    selector=selector,
+                    walk = walk,
+                )
 
 # Compare experiments for fixed number of nodes – Message size metrics
 message_metrics = ['MessageSize[mean]', 'MessageSize[Sum]']

@@ -1,3 +1,29 @@
+## [1.9.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.5...1.9.0) (2026-01-13)
+
+### Features
+
+* add global reaction that adds obstacles at runtime ([c9f648a](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/c9f648adefa3b9db3f98e6a248862b82636b561f))
+* add walk simulations ([4e5f9c6](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/4e5f9c6d9c17036bbbf51144b0059c7a6e583394))
+* update plotter ([ce8449d](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/ce8449dc95a078b8f9c6a0acf96064b45a0bac1d))
+
+### Dependency updates
+
+* **deps:** update alchemist to v42.3.30 ([0c94afe](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/0c94afe200f7e2c52f110d9f7979e23c7bdce2fb))
+* **deps:** update alchemist to v42.3.31 ([d4966b4](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/d4966b444dad09db282fdeee106324e1b3dcdd1e))
+
+### Build and continuous integration
+
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.18 ([c481abc](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/c481abc1d2753be1cec160cdc0fbb32180b23000))
+
+### General maintenance
+
+* add image environment ([28960b4](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/28960b46048bb5f06dffed85b1015df18d0a0b3c))
+* **release:** update gradle.properties .env versions to 1.8.5 [skip ci] ([d3f1404](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/d3f1404e341390031c5446e494f97577d2249576))
+
+### Style improvements
+
+* remove unused imports ([67f968b](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/67f968bf6686171e1bb3477d9304fbc1fa78eeb0))
+
 ## [1.8.5](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.4...1.8.5) (2026-01-08)
 
 ### Bug Fixes

@@ -1,3 +1,15 @@
+## [1.10.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.10.0...1.10.1) (2026-01-13)
+
+### Bug Fixes
+
+* file name for plotting ([992be96](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/992be96a51c19d03c717436695830a57e518ce8b))
+* remove wrong python requirement ([dd5ddb3](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/dd5ddb3ea7906c8754868629c298627e0c69f528))
+* type of node movement ([5bfbad0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/5bfbad07a3ec1deb2b16ba013cf88646337b3542))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.10.0 [skip ci] ([13b93f6](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/13b93f64a60576e59697182f47baf0ec781660b3))
+
 ## [1.10.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.9.1...1.10.0) (2026-01-13)
 
 ### Features

@@ -85,8 +85,8 @@ _pool: &program
   - time-distribution: 10
     type: Event
     actions:
-      - type: LevyWalk
-        parameters: 0.9
+      - type: BrownianMove
+        parameters: 0.1
 
 deployments:
   - type: Rectangle

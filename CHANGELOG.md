@@ -1,3 +1,18 @@
+## [1.10.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.9.1...1.10.0) (2026-01-13)
+
+### Features
+
+* add walk simulations to docker compose ([195c27c](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/195c27ce6946da2519dcea17799faa8d79453cb0))
+
+### Bug Fixes
+
+* fixed walking speed ([4cc96d6](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/4cc96d6cafdc4dd8fb0c56b54505182a87aa4017))
+* update plotter to plot different charts for walk or split ([e8fc708](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e8fc70899f8e3414452dfb9f1262995762fdb98b))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.9.1 [skip ci] ([dfd25e8](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/dfd25e8351f978ab9125a34bfbf16f4e22c543fe))
+
 ## [1.9.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.9.0...1.9.1) (2026-01-13)
 
 ### Bug Fixes

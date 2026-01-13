@@ -325,7 +325,7 @@ if __name__ == '__main__':
 # and the y-axis should represent the stabilization time. The title of the chart should be "Stabilization Time Comparison".
 # the stabilization time is the amount of time elapsed from the start of the experiment to the end of the experiment.
 
-def plot_selfs(data, experiment, metric, y_label=''):
+def plot_selfs(data, experiment, metric, y_label='', walk=''):
     i = len(data)+2
     plt.rcParams.update({'font.size': 15})
     plt.rcParams.update({'legend.loc': 0})
@@ -357,14 +357,14 @@ def plot_selfs(data, experiment, metric, y_label=''):
     plt.axvline(x=merge_event, color=colors[0], linestyle='--', linewidth=1, label='Merge Event')
     walk = ''
     if 'walk' in experiment:
-        walk = 'Brownian Walk'
+        walk = 'Brownian Walk '
     plt.title(f'{beautify_experiment_name(experiment, walk)} ({what})')
     plt.xlabel('Simulated seconds')
     plt.ylabel(y_label + beautify_metric_name(metric))
     plt.legend(prop={'size': 8})
     plt.tight_layout()
     filename = beautify_experiment(experiment, metric)
-    plt.savefig(f'{output_directory}/{filename}-{what}.pdf', dpi=300)
+    plt.savefig(f'{output_directory}/{walk}{filename}-{what}.pdf', dpi=300)
     # plt.show()
     plt.close()
 
@@ -422,7 +422,7 @@ def plot_data_rate(data, experiment, metric):
         else:
             what = "MinOf"
     ax1.set_xlim(0, 200)
-    # ax1.set_ylim(0, None)
+    ax1.set_ylim(0, None)
     ylabel = beautify_metric_name(metric)
     if 'Sum' in metric:
         ylabel += ' (KB/s)'
@@ -432,7 +432,7 @@ def plot_data_rate(data, experiment, metric):
         # ax1.set_yticks(ticks)
         #ax1.set_yticklabels([str(int(t)) if i % 2 == 0 else '' for i, t in enumerate(ticks)])
     if 'mean' in metric:
-        ylabel += ' (B/s)'
+        ylabel += ' (B)'
         # ylim = (600, 13000)
         # ax1.set_yscale('log')
         # ticks = np.append(np.linspace(600, 900, num=4), np.linspace(1000, 10000, num=10))
@@ -456,11 +456,11 @@ def plot_data_rate(data, experiment, metric):
         # ax1.legend(handles, labels, title='max resources (solid=KB, dashed=nodes)', loc='best')
     walk = ''
     if 'walk' in experiment:
-        walk = 'Brownian Walk'
+        walk = 'Brownian Walk '
     plt.title(f'{beautify_experiment_name(experiment, walk)} ({what})')
     plt.tight_layout()
     filename = beautify_experiment(experiment, metric)
-    plt.savefig(f'{output_directory}/{filename}-{what}.pdf', dpi=300)
+    plt.savefig(f'{output_directory}/{walk}{filename}-{what}.pdf', dpi=300)
     plt.close()
 
 def plot_experiments_comparison(data, metric, nodes, selector, y_label='', walk=''):
@@ -488,6 +488,7 @@ def plot_experiments_comparison(data, metric, nodes, selector, y_label='', walk=
         ax1.fill_between(mean_df['time'], lower, upper, color=colors[j + 2], alpha=0.2)
 
     ax1.set_xlim(0, 200)
+    ax1.set_ylim(-0.1, None)
     ax1.set_xlabel('Simulated seconds')
     ax1.set_ylabel(beautify_metric_name(metric) + y_label)
 
@@ -502,13 +503,13 @@ def plot_experiments_comparison(data, metric, nodes, selector, y_label='', walk=
     ax1.legend(prop={'size': 9})
     plt.tight_layout()
     plt.savefig(
-        f'{output_directory}/{walk}nodes-{nodes * 2}-{metric}-{what}.pdf',
+        f'{output_directory}/comparison-{walk}{nodes * 2}nodes-{metric}-{what}.pdf',
         dpi=300
     )
     plt.close()
 
 from matplotlib import pyplot as plt
-
+simType = ['sm', 'walk']
 metrics = ['RMSE'] #'MEAN',, 'MAE'
 initialNodes = [2, 10, 50, 100]
 findMax = [True, False]
@@ -537,7 +538,11 @@ for experiment in experiments:
 
                 data_dict[(f"{nodes}", nodes * 2, selector)] = (df_mean, df_std)
                 exp_name = beautify_experiment_name(experiment)
-            plot_selfs(data_dict, experiment=experiment, metric=metric_to_plot)
+
+            walk=''
+            if 'walk' in experiment:
+                walk = 'Brownian Walk '
+            plot_selfs(data_dict, experiment=experiment, metric=metric_to_plot, walk=walk)
 
 data_dict = {}
 metric_to_plot = ['MessageSize[mean]', 'MessageSize[Sum]']
@@ -576,7 +581,7 @@ for experiment in experiments:
         max_message_size_mean = max(max_message_size_mean, np.nanmax(means[experiment]['MessageSize[mean]'].values))
     if 'MessageSize[Sum]' in means[experiment]:
         max_message_size_sum = max(max_message_size_sum, np.nanmax(means[experiment]['MessageSize[Sum]'].values) / 1024)
-print(f'Maximum average message size across all experiments: {max_message_size_mean} B/s')
+print(f'Maximum average message size across all experiments: {max_message_size_mean} B')
 print(f'Maximum total message size across all experiments: {max_message_size_sum} KB/s')
 #find also the minimum non-zero value
 min_nonzero_mean = float('inf')
@@ -591,7 +596,7 @@ for experiment in experiments:
         if len(nonzero_values) > 0:
             min_nonzero_sum = min(min_nonzero_sum, np.nanmin(nonzero_values))
 if min_nonzero_mean != float('inf'):
-    print(f'Minimum non-zero average message size across all experiments: {min_nonzero_mean} B/s')
+    print(f'Minimum non-zero average message size across all experiments: {min_nonzero_mean} B')
 if min_nonzero_sum != float('inf'):
     print(f'Minimum non-zero total message size across all experiments: {min_nonzero_sum} KB/s')
 
@@ -601,8 +606,6 @@ if max_message_size_mean > 0:
     print(f'Log scale: {np.log10(max_message_size_mean)}')
 if max_message_size_sum > 0:
     print(f'Log scale: {np.log10(max_message_size_sum)}')
-
-simType = ['sm', 'walk']
 
 for sim in simType:
     for metric_to_plot in metrics:
@@ -661,56 +664,62 @@ for sim in simType:
 
 # Compare experiments for fixed number of nodes – Message size metrics
 message_metrics = ['MessageSize[mean]', 'MessageSize[Sum]']
+for sim in simType:
+    for metric_to_plot in message_metrics:
+        for selector in findMax:
+            for nodes in initialNodes:
 
-for metric_to_plot in message_metrics:
-    for selector in findMax:
-        for nodes in initialNodes:
+                comparison_data = {}
 
-            comparison_data = {}
+                experimentsType = [exp for exp in experiments if sim in exp]
+                for experiment in experimentsType:
+                    raw_mean = means[experiment][metric_to_plot].sel(
+                        dict(findMax=selector, initialNodes=nodes)
+                    ).values
 
-            for experiment in experiments:
-                raw_mean = means[experiment][metric_to_plot].sel(
-                    dict(findMax=selector, initialNodes=nodes)
-                ).values
+                    # Unit handling (consistent with existing plots)
+                    if metric_to_plot == 'MessageSize[Sum]':
+                        raw_mean = raw_mean / 1024.0  # KB/s
 
-                # Unit handling (consistent with existing plots)
-                if metric_to_plot == 'MessageSize[Sum]':
-                    raw_mean = raw_mean / 1024.0  # KB/s
+                    mean = np.where(np.isnan(raw_mean), 0.0, raw_mean)
 
-                mean = np.where(np.isnan(raw_mean), 0.0, raw_mean)
+                    time_series = (
+                        means[experiment][metric_to_plot]
+                        .sel(dict(findMax=selector, initialNodes=nodes))
+                        ['time']
+                        .values
+                    )
 
-                time_series = (
-                    means[experiment][metric_to_plot]
-                    .sel(dict(findMax=selector, initialNodes=nodes))
-                    ['time']
-                    .values
+                    df_mean = pd.DataFrame({
+                        'time': time_series,
+                        metric_to_plot: mean,
+                    })
+
+                    raw_std = stdevs[experiment][metric_to_plot].sel(
+                        dict(findMax=selector, initialNodes=nodes)
+                    ).values
+
+                    if metric_to_plot == 'MessageSize[Sum]':
+                        raw_std = raw_std / 1024.0  # KB/s
+
+                    df_std = pd.DataFrame({
+                        'time': time_series,
+                        f'{metric_to_plot}-std': raw_std,
+                    })
+
+                    comparison_data[experiment] = (df_mean, df_std)
+
+                ylabel = ' (KB/s)' if metric_to_plot == 'MessageSize[Sum]' else ' (B)'
+
+                walk=''
+                if 'walk' in experiment:
+                    walk = 'Brownian Walk-'
+
+                plot_experiments_comparison(
+                    comparison_data,
+                    metric=metric_to_plot,
+                    nodes=nodes,
+                    selector=selector,
+                    y_label=ylabel,
+                    walk = walk,
                 )
-
-                df_mean = pd.DataFrame({
-                    'time': time_series,
-                    metric_to_plot: mean,
-                })
-
-                raw_std = stdevs[experiment][metric_to_plot].sel(
-                    dict(findMax=selector, initialNodes=nodes)
-                ).values
-
-                if metric_to_plot == 'MessageSize[Sum]':
-                    raw_std = raw_std / 1024.0  # KB/s
-
-                df_std = pd.DataFrame({
-                    'time': time_series,
-                    f'{metric_to_plot}-std': raw_std,
-                })
-
-                comparison_data[experiment] = (df_mean, df_std)
-
-            ylabel = ' (KB/s)' if metric_to_plot == 'MessageSize[Sum]' else ' (B/s)'
-
-            plot_experiments_comparison(
-                comparison_data,
-                metric=metric_to_plot,
-                nodes=nodes,
-                selector=selector,
-                y_label=ylabel
-            )

@@ -420,8 +420,10 @@ def plot_selfs(data, experiment, metric, y_label=''):
     plt.axvline(x=cut_event, color=colors[2], linestyle='--', linewidth=1, label='Cut Event')
     plt.axvline(x=change_range, color=colors[1], linestyle='dotted', linewidth=1, label='Change Range')
     plt.axvline(x=merge_event, color=colors[0], linestyle='--', linewidth=1, label='Merge Event')
-
-    plt.title(f'{beautify_experiment_name(experiment)} ({what})')
+    walk = ''
+    if 'walk' in experiment:
+        walk = 'Brownian Walk'
+    plt.title(f'{beautify_experiment_name(experiment, walk)} ({what})')
     plt.xlabel('Simulated seconds')
     plt.ylabel(y_label + beautify_metric_name(metric))
     plt.legend(prop={'size': 8})
@@ -447,18 +449,18 @@ def beautify_metric_name(name):
     else:
         raise Exception(f'Unknown metric name {name}.')
 
-def beautify_experiment_name(name):
+def beautify_experiment_name(name, walk=''):
     if 'non-stab-gossip' in name:
-        return 'Non Stabilizing Gossip'
+        return f'Non Stabilizing Gossip {walk}'
     elif 'self-stab-gossip' in name:
-        return 'Self Stabilizing Gossip'
+        return f'Self Stabilizing Gossip {walk}'
     elif 'time-rep-gossip' in name:
-        return 'Time Replicated Gossip'
+        return f'Time Replicated Gossip {walk}'
     else:
         raise Exception(f'Unknown experiment name {name}.')
 
-def beautify_experiment(experiment, metric):
-    return beautify_experiment_name(experiment) + f' ({beautify_metric_name(metric)})'
+def beautify_experiment(experiment, metric, walk=''):
+    return beautify_experiment_name(experiment, walk) + f' ({beautify_metric_name(metric)})'
 
 def plot_data_rate(data, experiment, metric):
     plt.rcParams.update({'font.size': 15})
@@ -517,14 +519,16 @@ def plot_data_rate(data, experiment, metric):
     if handles:
         ax1.legend(handles, labels, title=r'$nodes$', loc=4)
         # ax1.legend(handles, labels, title='max resources (solid=KB, dashed=nodes)', loc='best')
-
-    plt.title(f'{beautify_experiment_name(experiment)} ({what})')
+    walk = ''
+    if 'walk' in experiment:
+        walk = 'Brownian Walk'
+    plt.title(f'{beautify_experiment_name(experiment, walk)} ({what})')
     plt.tight_layout()
     filename = beautify_experiment(experiment, metric)
     plt.savefig(f'{output_directory}/{filename}-{what}.pdf', dpi=300)
     plt.close()
 
-def plot_experiments_comparison(data, metric, nodes, selector, y_label=''):
+def plot_experiments_comparison(data, metric, nodes, selector, y_label='', walk=''):
     """
     Plot different experiments on the same chart for a fixed number of nodes and metric.
     """
@@ -563,7 +567,7 @@ def plot_experiments_comparison(data, metric, nodes, selector, y_label=''):
     ax1.legend(prop={'size': 9})
     plt.tight_layout()
     plt.savefig(
-        f'{output_directory}/nodes-{nodes * 2}-{metric}-{what}.pdf',
+        f'{output_directory}/{walk}nodes-{nodes * 2}-{metric}-{what}.pdf',
         dpi=300
     )
     plt.close()
@@ -573,7 +577,7 @@ from matplotlib import pyplot as plt
 metrics = ['RMSE'] #'MEAN',, 'MAE'
 initialNodes = [2, 10, 50, 100]
 findMax = [True, False]
-experiments = ['self-stab-gossip-sm', 'non-stab-gossip-sm', 'time-rep-gossip-sm']
+experiments = ['self-stab-gossip-sm', 'non-stab-gossip-sm', 'time-rep-gossip-sm', 'self-stab-gossip-walk', 'non-stab-gossip-walk', 'time-rep-gossip-walk']
 
 for experiment in experiments:
     for metric_to_plot in metrics:
@@ -670,7 +674,7 @@ for metric_to_plot in metrics:
         for nodes in initialNodes:
 
             comparison_data = {}
-
+            walk=''
             for experiment in experiments:
                 mean = np.where(
                     np.isnan(
@@ -707,11 +711,15 @@ for metric_to_plot in metrics:
 
                 comparison_data[experiment] = (df_mean, df_std)
 
+                if 'walk' in experiment:
+                    walk = 'Brownian Walk'
+
             plot_experiments_comparison(
                 comparison_data,
                 metric=metric_to_plot,
                 nodes=nodes,
-                selector=selector
+                selector=selector,
+                walk = walk,
             )
 
 # Compare experiments for fixed number of nodes – Message size metrics

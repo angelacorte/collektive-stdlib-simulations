@@ -1,3 +1,14 @@
+## [1.9.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.9.0...1.9.1) (2026-01-13)
+
+### Bug Fixes
+
+* update obstacle position ([b6ccc7d](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/b6ccc7d14dd65c2a805d4b131c28cecc2c3c5466))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.9.0 [skip ci] ([eba3bec](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/eba3bec843fe2ac384ab8997f53f4e8e41a9ca49))
+* update charts ([b5482c3](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/b5482c338de1cca6c4b43106b351eb7da69a4f72))
+
 ## [1.9.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.8.5...1.9.0) (2026-01-13)
 
 ### Features

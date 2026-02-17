@@ -1,3 +1,60 @@
+## [1.11.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.10.1...1.11.0) (2026-02-17)
+
+### Features
+
+* update with latest algorithm version ([d1be2d2](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/d1be2d21eea40dd32de74e35ad663146a617ae15))
+
+### Dependency updates
+
+* **deps:** update alchemist to v42.3.32 ([8e35d6f](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/8e35d6f973d4cffc835ea6d759af9b2295002ead))
+* **deps:** update alchemist to v42.3.33 ([7a982a9](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/7a982a99096dad193b0a851ac9901e784fa18016))
+* **deps:** update alchemist to v42.3.34 ([7e78b74](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/7e78b74fa40fa5fa87cd59a44e58d214115e7e76))
+* **deps:** update alchemist to v42.3.35 ([074d4ef](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/074d4efea4fd89b8bf75de11db7c3db6d911ca11))
+* **deps:** update alchemist to v42.4.0 ([42da15b](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/42da15bf70a84f7ee1cdd75bf7fe4f10f0f5aeec))
+* **deps:** update alchemist to v42.4.1 ([ae5db65](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/ae5db65cf40de708c5f0d337c89c5efa48f7c869))
+* **deps:** update alchemist to v42.4.2 ([5dc3ee3](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/5dc3ee37118db1220a59f893942b6e3b4b0980dc))
+* **deps:** update alchemist to v43 ([4f1a1f9](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/4f1a1f9d63913d9521e67bf0959237282006698a))
+* **deps:** update alchemist to v43.0.1 ([2553f05](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/2553f05442e6de8bc0183450d981344ecacd5859))
+* **deps:** update dependency pandas to v3 ([91a0974](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/91a097445a87d2912570992557b7afa5e029e2fe))
+* **deps:** update dependency xarray to v2026 ([e0034fd](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e0034fdb26580f90429e414e511479b9c08fa35a))
+* **deps:** update gradle to v8.14.4 ([e4db589](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e4db58988120f164a10af4d339d9cabcb9e51615))
+* **deps:** update node.js to 24.13 ([b4b6eb6](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/b4b6eb6c26257a784b20dca566e26997bb454b2d))
+* **deps:** update plugin gitsemver to v7.0.10 ([82ff9ea](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/82ff9ea926c669299e801c9dfe08475e24ca1a80))
+* **deps:** update plugin gitsemver to v7.0.11 ([078b46c](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/078b46c96af9f6ea43593e64bcf40e7e264b94f1))
+* **deps:** update plugin gitsemver to v7.0.12 ([fc95e4d](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/fc95e4d2700c33ea392e3ab7d5d43977152371e5))
+* **deps:** update plugin gitsemver to v7.0.9 ([2585d0e](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/2585d0ecfd85545803d2dd5afbf95173e335d7d3))
+* **deps:** update plugin kotlin-qa to v0.100.1 ([02f96a2](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/02f96a2ee63e8575aeb5e36b4e194bbe6b23e951))
+* **deps:** update plugin kotlin-qa to v0.100.2 ([fe46544](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/fe4654478b5000a4c59471a8e0ff6ccf4746a544))
+* **deps:** update plugin kotlin-qa to v0.100.3 ([f158bcd](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/f158bcdaa344bb62a7c3c090bb0c0010657c6769))
+* **deps:** update plugin kotlin-qa to v0.101.0 ([2492805](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/24928059ff8efbfb692ae3020fcf551c97971843))
+* **deps:** update plugin kotlin-qa to v0.101.1 ([f478dc2](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/f478dc2777910211ac1d1b7164ffe17bbd0c834a))
+* **deps:** update plugin kotlin-qa to v1 ([87eab75](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/87eab7593fa0f119c68c554dc65ff5ca3e0745f2))
+* **deps:** update plugin kotlin-qa to v1.0.1 ([414e614](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/414e6140365af44c776887a7ac70c3eb1f00b7be))
+* **deps:** update python docker tag to v3.14.3 ([734cd19](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/734cd19a8be1277e9302d75e683d44cb12f0ed31))
+
+### Bug Fixes
+
+* inverted min/max ([e8b7e25](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e8b7e251e20e4ba69463caa58c1b84e15154fe9a))
+
+### Build and continuous integration
+
+* **deps:** update actions/checkout action to v6.0.2 ([63a7c8b](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/63a7c8b29e8ceefb14c15adca6c54cc952bbea8b))
+* **deps:** update actions/setup-node action to v6.2.0 ([f833d84](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/f833d84dd554b8164a22bf4206aa412db35665e4))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.19 ([6dcb8a4](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/6dcb8a4fedb25075d49d12effc75470370a0b317))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.20 ([6dd9dc5](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/6dd9dc57396d1dd94426369355bd2c68d6edd5af))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.21 ([4322332](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/4322332cf52c00c4214ffc7bbc3cce1a4d4c3968))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.22 ([7b3a560](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/7b3a56072624ac9827b147c9b051f467f01a9556))
+* **deps:** update danysk/build-check-deploy-gradle-action action to v4.0.23 ([7cde43d](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/7cde43d7cec38f241e23f9cede12b0843a8705e4))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.10.1 [skip ci] ([aaeee86](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/aaeee86a1f26bbe8e1730d759ae73d65f2447c37))
+* remove comments ([07a7a8a](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/07a7a8af1c03c556f667e9baf323cf56bbbf2ff5))
+
+### Style improvements
+
+* improve code ([a5596bf](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/a5596bf29cea208430aaef3f9912cffab7ad3de3))
+
 ## [1.10.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.10.0...1.10.1) (2026-01-13)
 
 ### Bug Fixes

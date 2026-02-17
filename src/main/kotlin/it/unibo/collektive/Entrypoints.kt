@@ -6,6 +6,7 @@ import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
 import it.unibo.collektive.experiments.gossipMax
+import it.unibo.collektive.experiments.gossipMin
 import it.unibo.collektive.gossip.CheckOnSelfInPathGossip.checkOnSelfInPathGossip
 import it.unibo.collektive.gossip.SlowSelfStabGossip.slowSelfStabGossip
 import it.unibo.collektive.gossip.genericGossip
@@ -48,7 +49,7 @@ fun Aggregate<Int>.thirdGossipEntrypoint(
     env: EnvironmentVariables,
     timeSensor: TimeSensor,
     randomGenerator: RandomGenerator,
-) = gossipMax(localId).also { env["gossip-value"] = it }
+) = gossipMin(localId).also { env["gossip-value"] = it }
 
 /**
  * Entrypoint for the simulation of the second implementation of the gossip algorithm with Collektive.

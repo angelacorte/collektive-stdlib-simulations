@@ -22,12 +22,12 @@ fun Aggregate<Int>.selfStabGossipEntrypoint(
 
 fun <T: Comparable<T>> compareValuesReversed(a: T, b: T) = compareValues(b, a)
 
-inline fun <reified ID: Comparable<ID>, T : Comparable<T>> Aggregate<ID>.gossipMax(local: T): T = findMaxOf(
+inline fun <reified ID: Comparable<ID>, T : Comparable<T>> Aggregate<ID>.gossipMin(local: T): T = findMaxOf(
     local,
-    comparator = ::compareValues, // returns the max
+    comparator = ::compareValues,
 )
 
-inline fun <reified ID: Comparable<ID>, T : Comparable<T>> Aggregate<ID>.gossipMin(local: T): T = findMaxOf(
+inline fun <reified ID: Comparable<ID>, T : Comparable<T>> Aggregate<ID>.gossipMax(local: T): T = findMaxOf(
     local,
     comparator = ::compareValuesReversed,
 )

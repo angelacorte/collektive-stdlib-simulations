@@ -14,7 +14,7 @@ import it.unibo.collektive.aggregate.api.DataSharingMethod
 import it.unibo.collektive.aggregate.api.neighboring
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.gossip.CheckOnSelfInPathGossip
-import it.unibo.collektive.gossip.NoLoopAgainstNeighborsGossip
+import it.unibo.collektive.gossip.FindMaxOf
 import it.unibo.collektive.gossip.SlowSelfStabGossip
 import it.unibo.collektive.networking.Mailbox
 import it.unibo.collektive.networking.Message
@@ -24,8 +24,8 @@ import it.unibo.collektive.networking.OutboundEnvelope
 import it.unibo.collektive.path.Path
 import it.unibo.collektive.stdlib.processes.TimedReplica
 import it.unibo.collektive.stdlib.util.PathValue
-import org.apache.commons.math3.random.RandomGenerator
 import java.io.ByteArrayOutputStream
+import org.apache.commons.math3.random.RandomGenerator
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
@@ -110,7 +110,7 @@ class CollektiveDevice<P>(
         kryo.register(TimedReplica::class.java)
         kryo.register(SlowSelfStabGossip.GossipValue::class.java)
         kryo.register(CheckOnSelfInPathGossip.GossipValue::class.java)
-        kryo.register(NoLoopAgainstNeighborsGossip.GossipValue::class.java)
+        kryo.register(FindMaxOf.GossipValue::class.java)
         kryo.register(Class.forName($$"java.util.Collections$SingletonSet"))
         if (outboundMessage.isNotEmpty()) {
             val neighborsNodes = environment.getNeighborhood(node)

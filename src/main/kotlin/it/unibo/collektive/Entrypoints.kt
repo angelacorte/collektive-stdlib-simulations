@@ -5,17 +5,15 @@ import it.unibo.collektive.aggregate.api.Aggregate
 import it.unibo.collektive.alchemist.device.sensors.EnvironmentVariables
 import it.unibo.collektive.alchemist.device.sensors.RandomGenerator
 import it.unibo.collektive.alchemist.device.sensors.TimeSensor
+import it.unibo.collektive.experiments.gossipMax
 import it.unibo.collektive.gossip.CheckOnSelfInPathGossip.checkOnSelfInPathGossip
-import it.unibo.collektive.gossip.NoLoopAgainstNeighborsGossip.noLoopAgainstNeighborsGossip
 import it.unibo.collektive.gossip.SlowSelfStabGossip.slowSelfStabGossip
 import it.unibo.collektive.gossip.genericGossip
 import it.unibo.collektive.stdlib.ints.FieldedInts.toDouble
 import it.unibo.collektive.stdlib.processes.timeReplicated
-import it.unibo.collektive.stdlib.spreading.gossipMax
 import it.unibo.collektive.stdlib.spreading.isHappeningAnywhere
 import it.unibo.collektive.stdlib.spreading.nonStabilizingGossip
 import it.unibo.collektive.stdlib.util.hops
-import it.unibo.collektive.utils.randomFromTimeElapsed
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
@@ -50,13 +48,7 @@ fun Aggregate<Int>.thirdGossipEntrypoint(
     env: EnvironmentVariables,
     timeSensor: TimeSensor,
     randomGenerator: RandomGenerator,
-) = noLoopAgainstNeighborsGossip(
-    local = randomFromTimeElapsed(timeSensor, randomGenerator),
-//        .also { env["local-value"] = it },
-    selector = ::maxOf,
-).also {
-    env["gossip-value"] = it
-}
+) = gossipMax(localId).also { env["gossip-value"] = it }
 
 /**
  * Entrypoint for the simulation of the second implementation of the gossip algorithm with Collektive.

@@ -18,7 +18,7 @@ seeds:
 
 network-model:
   type: ConnectWithinDistance
-  parameters: [8]
+  parameters: [10]
 
 #environment:
 #  type: ImageEnvironment

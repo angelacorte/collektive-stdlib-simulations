@@ -1,3 +1,13 @@
+## [1.11.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.11.0...1.11.1) (2026-02-17)
+
+### Bug Fixes
+
+* seems to work now ([af93639](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/af93639d58d9a382f23f0fa698ba4525789ebf3a))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.11.0 [skip ci] ([49ad6b6](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/49ad6b62fd916fe7dc96cae29dbaf67de1444e0a))
+
 ## [1.11.0](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.10.1...1.11.0) (2026-02-17)
 
 ### Features

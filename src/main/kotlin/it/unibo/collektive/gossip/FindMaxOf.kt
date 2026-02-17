@@ -34,7 +34,7 @@ object FindMaxOf {
                                 else -> listOf(neighbor, current).minBy { it.path.size }
                             }
                         // Pick the best value according to the comparator
-                        in 1..Int.MAX_VALUE -> current
+                        in 1..Int.MAX_VALUE -> neighbor
                         else -> current
                     }
                 }

@@ -26,13 +26,13 @@ object FindMaxOf {
                     localId in neighbor.path -> current // Ignore paths that loop back
                     else -> when(comparator.compare(neighbor.best, current.best)) {
                         0 -> when { // If values tie, select based on path
-                                neighbor.path.size == current.path.size ->
-                                    // If paths length tie, compare their last element
-                                    // (they necessarily come from different neighbors)
-                                    listOf(neighbor, current).minBy { it.path.last() }
-                                // Select the shortest path
-                                else -> listOf(neighbor, current).minBy { it.path.size }
-                            }
+                            neighbor.path.size == current.path.size ->
+                                // If paths length tie, compare their last element
+                                // (they necessarily come from different neighbors)
+                                listOf(neighbor, current).minBy { it.path.last() }
+                            // Select the shortest path
+                            else -> listOf(neighbor, current).minBy { it.path.size }
+                        }
                         // Pick the best value according to the comparator
                         in 1..Int.MAX_VALUE -> neighbor
                         else -> current

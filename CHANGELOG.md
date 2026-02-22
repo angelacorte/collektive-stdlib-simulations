@@ -1,3 +1,22 @@
+## [1.11.2](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.11.1...1.11.2) (2026-02-22)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v28 ([dbae93f](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/dbae93fd8183f36fc8a1441fd246241d577bb6dc))
+* **deps:** update alchemist to v43.0.2 ([11eef3c](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/11eef3c094a507d6ad134c8c9a09e1eed28416f3))
+* **deps:** update alchemist to v43.0.3 ([58c287a](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/58c287ad585139d5601f164de0793a1e95cffd9d))
+* **deps:** update alchemist to v43.0.4 ([6bd6562](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/6bd65625c0b89e1ea02ef91ea6ac58a54a83b6f4))
+* **deps:** update alchemist to v43.0.5 ([bce9013](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/bce9013ab6230fe89902c9d4411d5f99fba27d43))
+* **deps:** update dependency pandas to v3.0.1 ([b7cb7ce](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/b7cb7ceef330d4d7dd8fb217ce8409e48532edac))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.11.1 [skip ci] ([c528531](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/c5285314e07c44854ff56652265c97dd81a66cc0))
+
+### Style improvements
+
+* fix indentation ([2e3fac8](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/2e3fac8adba6c6bf6688f2090c65e3844e564481))
+
 ## [1.11.1](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.11.0...1.11.1) (2026-02-17)
 
 ### Bug Fixes

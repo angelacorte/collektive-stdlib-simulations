@@ -1,3 +1,9 @@
+## [1.11.3](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.11.2...1.11.3) (2026-02-22)
+
+### Dependency updates
+
+* **core-deps:** update kotlin to v2.3.10 ([#176](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/issues/176)) ([e86eb9f](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e86eb9f25a16cedf277be2a55d2b09d85a6e7175))
+
 ## [1.11.2](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.11.1...1.11.2) (2026-02-22)
 
 ### Dependency updates

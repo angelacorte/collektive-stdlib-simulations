@@ -1,3 +1,13 @@
+## [1.11.4](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.11.3...1.11.4) (2026-02-23)
+
+### Dependency updates
+
+* **core-deps:** update collektive to v28.0.1 ([cf1d9f5](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/cf1d9f53250088c7adde28e58401b3db7f7680c6))
+
+### General maintenance
+
+* **release:** update gradle.properties .env versions to 1.11.3 [skip ci] ([e1d15b8](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/commit/e1d15b8bb4e63562446ba716b43153cfca3d1397))
+
 ## [1.11.3](https://github.com/angelacorte/experiments-2025-self-stabilizing-gossip/compare/1.11.2...1.11.3) (2026-02-22)
 
 ### Dependency updates
